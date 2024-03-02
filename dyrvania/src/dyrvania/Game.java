@@ -4,6 +4,9 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -12,7 +15,7 @@ import javax.swing.JFrame;
 import dyrvania.resources.GameFont;
 import dyrvania.strings.StringGame;
 
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,6 +44,8 @@ public class Game extends Canvas implements Runnable {
 	private boolean showFPS;
 
 	public Game() {
+		this.addKeyListener(this);
+
 		this.VERSION = "0.1";
 
 		this.WIDTH = 800;
@@ -55,14 +60,14 @@ public class Game extends Canvas implements Runnable {
 		this.rendererWidth = WIDTH;
 		this.rendererHeight = HEIGHT;
 
-		this.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
+		this.setPreferredSize(new Dimension(this.windowWidth, this.windowHeight));
 
 		this.frame = new JFrame();
 
 		this.frame.setTitle(StringGame.TITLE.getValue());
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.add(this);
-		this.frame.setResizable(true);
+		this.frame.setResizable(false);
 		this.frame.pack();
 		this.frame.setLocationRelativeTo(null);
 		this.frame.setVisible(true);
@@ -73,11 +78,58 @@ public class Game extends Canvas implements Runnable {
 		this.updateFullscreen = false;
 
 		this.fps = 0;
-		this.showFPS = true;
+		this.showFPS = false;
+	}
+
+	private void toggleFullscreen() {
+		if (this.updateFullscreen) {
+			this.frame.dispose();
+
+			if (this.isFullscreen) {
+				this.windowWidth = this.WIDTH;
+				this.windowHeight = this.HEIGHT;
+
+				this.frame.setUndecorated(false);
+			} else {
+				this.windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+				this.windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+				this.frame.setUndecorated(true);
+			}
+
+			this.setPreferredSize(new Dimension(this.windowWidth, this.windowHeight));
+			this.setScreenRatio();
+
+			this.frame.pack();
+			this.frame.setLocationRelativeTo(null);
+			this.frame.setVisible(true);
+
+			this.requestFocus();
+
+			this.isFullscreen = !this.isFullscreen;
+			this.updateFullscreen = false;
+		}
+	}
+
+	private void setScreenRatio() {
+		this.rendererWidth = (int) (this.windowHeight * this.SCREEN_RATIO);
+
+		if (this.rendererWidth > this.windowWidth) {
+			this.rendererWidth = this.windowWidth;
+			this.rendererHeight = (int) (this.windowWidth * this.SCREEN_RATIO);
+
+			this.rendererX = 0;
+			this.rendererY = (this.windowHeight - this.rendererHeight) / 2;
+		} else {
+			this.rendererHeight = this.windowHeight;
+
+			this.rendererX = (this.windowWidth - this.rendererWidth) / 2;
+			this.rendererY = 0;
+		}
 	}
 
 	private void tick() {
-		// Code
+		this.toggleFullscreen();
 	}
 
 	private void render() {
@@ -113,7 +165,8 @@ public class Game extends Canvas implements Runnable {
 		graphics.setColor(Color.BLACK);
 		graphics.fillRect(0, 0, this.windowWidth, this.windowHeight);
 
-		graphics.drawImage(this.renderer, this.rendererX, this.rendererY, this.rendererWidth, this.rendererHeight, null);
+		graphics.drawImage(this.renderer, this.rendererX, this.rendererY, this.rendererWidth, this.rendererHeight,
+				null);
 
 		bs.show();
 	}
@@ -153,6 +206,27 @@ public class Game extends Canvas implements Runnable {
 				frames = 0;
 			}
 		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// Code
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_F2) {
+			this.updateFullscreen = true;
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_F3) {
+			this.showFPS = !this.showFPS;
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// Code
 	}
 
 }
