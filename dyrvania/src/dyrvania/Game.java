@@ -7,15 +7,22 @@ import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
+import dyrvania.generics.Camera;
+import dyrvania.generics.GameStatus;
 import dyrvania.resources.GameFont;
+import dyrvania.screens.Screen;
 import dyrvania.strings.StringGame;
 
-public class Game extends Canvas implements Runnable, KeyListener {
+public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,8 +50,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private int fps;
 	private boolean showFPS;
 
+	private GameStatus gameStatus;
+	private GameStatus lastGameStatus;
+
+	private final List<Screen> screens;
+
 	public Game() {
 		this.addKeyListener(this);
+		this.addMouseListener(this);
 
 		this.VERSION = "0.1";
 
@@ -79,6 +92,63 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		this.fps = 0;
 		this.showFPS = false;
+
+		this.screens = new ArrayList<>();
+
+		this.updateGameStatus(GameStatus.SELECT_LANGUAGE);
+		this.initializeScreen();
+	}
+
+	public String getVersion() {
+		return this.VERSION;
+	}
+
+	public int getGameWidth() {
+		return this.WIDTH;
+	}
+
+	public int getGameHeight() {
+		return this.HEIGHT;
+	}
+
+	public int getRendererX() {
+		return this.rendererX;
+	}
+
+	public int getRendererY() {
+		return this.rendererY;
+	}
+
+	public int getRendererWidth() {
+		return this.rendererWidth;
+	}
+
+	public int getRendererHeight() {
+		return this.rendererHeight;
+	}
+
+	public Graphics getRender() {
+		return this.renderer.getGraphics();
+	}
+
+	public boolean isFullscreen() {
+		return this.isFullscreen;
+	}
+
+	public GameStatus getLastGameStatus() {
+		return this.lastGameStatus;
+	}
+
+	public void updateGameStatus(GameStatus gameStatus) {
+		this.lastGameStatus = this.gameStatus;
+		this.gameStatus = gameStatus;
+
+		Camera.x = 0;
+		Camera.y = 0;
+	}
+
+	public void initializeScreen() {
+		this.screens.clear();
 	}
 
 	private void toggleFullscreen() {
@@ -130,6 +200,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 	private void tick() {
 		this.toggleFullscreen();
+
+		if (this.gameStatus == GameStatus.RUN) {
+			// Code
+		} else {
+			for (Screen screen : this.screens) {
+				if (screen.getGameStatus() == this.gameStatus) {
+					screen.tick();
+					break;
+				}
+			}
+		}
 	}
 
 	private void render() {
@@ -145,7 +226,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, this.WIDTH, this.HEIGHT);
 
-		// Code
+		if (this.gameStatus == GameStatus.RUN) {
+			// Code
+		} else {
+			for (Screen screen : this.screens) {
+				if (screen.getGameStatus() == this.gameStatus) {
+					screen.render(render);
+					break;
+				}
+			}
+		}
 
 		if (this.showFPS) {
 			render.setColor(Color.BLACK);
@@ -227,6 +317,49 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// Code
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// Code
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// Code
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// Code
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if (this.gameStatus == GameStatus.RUN) {
+			// Code
+		} else {
+			for (Screen screen : this.screens) {
+				if (screen.getGameStatus() == this.gameStatus) {
+					screen.mousePressed(e);
+					break;
+				}
+			}
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if (this.gameStatus == GameStatus.RUN) {
+			// Code
+		} else {
+			for (Screen screen : this.screens) {
+				if (screen.getGameStatus() == this.gameStatus) {
+					screen.mouseReleased(e);
+					break;
+				}
+			}
+		}
 	}
 
 }
