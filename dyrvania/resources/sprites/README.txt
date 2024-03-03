@@ -1,10 +1,5 @@
-Credits go to:
+License(s): https://creativecommons.org/publicdomain/zero/1.0/
 
-/**************************************************************************************/
-
-gui.png:
-
-Mounir Tohami
-
-https://mounirtohami.itch.io
-https://mounirtohami.itch.io/pixel-art-gui-elements
+https://opengameart.org/content/fantasy-ui-box
+https://opengameart.org/content/gauntlet-cursor
+https://opengameart.org/content/gothicvania-patreons-collection
