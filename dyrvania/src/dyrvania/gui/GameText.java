@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import dyrvania.generics.Camera;
-
 public class GameText {
 
 	private final String text;
@@ -35,7 +33,7 @@ public class GameText {
 	public void render(Graphics render) {
 		render.setColor(this.color);
 		render.setFont(this.font);
-		render.drawString(this.text, this.x - Camera.x, this.y - Camera.y);
+		render.drawString(this.text, this.x, this.y);
 	}
 
 }

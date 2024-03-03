@@ -16,10 +16,11 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import dyrvania.generics.Camera;
 import dyrvania.generics.GameStatus;
 import dyrvania.resources.GameFont;
+import dyrvania.screens.OpeningScreen;
 import dyrvania.screens.Screen;
+import dyrvania.screens.Transition;
 import dyrvania.strings.StringGame;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
@@ -52,6 +53,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	private GameStatus gameStatus;
 	private GameStatus lastGameStatus;
+
+	private final Transition transition;
+	private final OpeningScreen openingScreen;
 
 	private final List<Screen> screens;
 
@@ -93,10 +97,13 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.fps = 0;
 		this.showFPS = false;
 
+		this.transition = new Transition(this, GameStatus.SELECT_LANGUAGE);
+		this.openingScreen = new OpeningScreen(this);
+
 		this.screens = new ArrayList<>();
 
-		this.updateGameStatus(GameStatus.SELECT_LANGUAGE);
 		this.initializeScreen();
+		this.updateGameStatus(GameStatus.OPENING_SCREEN);
 	}
 
 	public String getVersion() {
@@ -139,12 +146,13 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		return this.lastGameStatus;
 	}
 
+	public void setTransition(GameStatus gameStatus) {
+		this.transition.setNextGameStatus(gameStatus);
+	}
+
 	public void updateGameStatus(GameStatus gameStatus) {
 		this.lastGameStatus = this.gameStatus;
 		this.gameStatus = gameStatus;
-
-		Camera.x = 0;
-		Camera.y = 0;
 	}
 
 	public void initializeScreen() {
@@ -203,6 +211,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		if (this.gameStatus == GameStatus.RUN) {
 			// Code
+		} else if (this.gameStatus == GameStatus.TRANSITION) {
+			this.transition.tick();
+		} else if (this.gameStatus == GameStatus.OPENING_SCREEN) {
+			this.openingScreen.tick();
 		} else {
 			for (Screen screen : this.screens) {
 				if (screen.getGameStatus() == this.gameStatus) {
@@ -228,6 +240,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		if (this.gameStatus == GameStatus.RUN) {
 			// Code
+		} else if (this.gameStatus == GameStatus.TRANSITION) {
+			this.transition.render(render);
+		} else if (this.gameStatus == GameStatus.OPENING_SCREEN) {
+			this.openingScreen.render(render);
 		} else {
 			for (Screen screen : this.screens) {
 				if (screen.getGameStatus() == this.gameStatus) {
@@ -255,8 +271,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		graphics.setColor(Color.BLACK);
 		graphics.fillRect(0, 0, this.windowWidth, this.windowHeight);
 
-		graphics.drawImage(this.renderer, this.rendererX, this.rendererY, this.rendererWidth, this.rendererHeight,
-				null);
+		graphics.drawImage(this.renderer, this.rendererX, this.rendererY, this.rendererWidth, this.rendererHeight, null);
 
 		bs.show();
 	}

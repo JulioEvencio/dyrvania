@@ -8,25 +8,29 @@ import dyrvania.strings.StringError;
 public class GameFont {
 
 	private static final Font titleFont;
+	private static final Font titleLarge;
 	private static final Font defaultFont;
 
 	static {
-		Font auxTitleFont = null;
-		Font auxDefaultFont = null;
+		Font auxFont = null;
 
 		try {
-			auxTitleFont = Font.createFont(Font.TRUETYPE_FONT, GameFont.class.getResourceAsStream("/fonts/default.ttf"));
-			auxDefaultFont = Font.createFont(Font.TRUETYPE_FONT, GameFont.class.getResourceAsStream("/fonts/default.ttf"));
+			auxFont = Font.createFont(Font.TRUETYPE_FONT, GameFont.class.getResourceAsStream("/fonts/default.ttf"));
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_FONTS.getValue());
 		}
 
-		titleFont = auxTitleFont.deriveFont(Font.BOLD, 25);
-		defaultFont = auxDefaultFont.deriveFont(Font.BOLD, 15);
+		titleFont = auxFont.deriveFont(Font.BOLD, 25);
+		titleLarge = auxFont.deriveFont(Font.BOLD, 50);
+		defaultFont = auxFont.deriveFont(Font.BOLD, 15);
 	}
 
 	public static Font getTitle() {
 		return GameFont.titleFont;
+	}
+
+	public static Font getTitleLarge() {
+		return GameFont.titleLarge;
 	}
 
 	public static Font getDefault() {
