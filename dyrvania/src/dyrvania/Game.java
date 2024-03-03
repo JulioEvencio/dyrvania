@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import dyrvania.generics.GameStatus;
 import dyrvania.resources.GameAudio;
 import dyrvania.resources.GameFont;
+import dyrvania.scenes.Scene;
 import dyrvania.screens.Exit;
 import dyrvania.screens.MainMenu;
 import dyrvania.screens.OpeningScreen;
@@ -67,6 +68,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	private final OpeningScreen openingScreen;
 
 	private final List<Screen> screens;
+
+	private Scene scene;
 
 	private boolean enableAudio;
 	private GameAudio audioNow;
@@ -123,6 +126,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.transition = new Transition(this, GameStatus.OPENING_SCREEN);
 		this.openingScreen = new OpeningScreen(this);
 
+		this.scene = null;
 		this.screens = new ArrayList<>();
 
 		this.enableAudio = true;
@@ -192,6 +196,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.screens.add(new SelectLanguage(this));
 	}
 
+	public void initializeScene(Scene scene) {
+		this.scene = scene;
+	}
+
 	private void updateAudio(GameAudio audio) {
 		if (this.audioNow != audio) {
 			if (this.audioNow != null) {
@@ -259,7 +267,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.toggleFullscreen();
 
 		if (this.gameStatus == GameStatus.RUN) {
-			// Code
+			this.scene.tick();
 		} else if (this.gameStatus == GameStatus.TRANSITION) {
 			this.transition.tick();
 		} else if (this.gameStatus == GameStatus.OPENING_SCREEN) {
@@ -285,7 +293,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		Graphics render = this.renderer.getGraphics();
 
 		if (this.gameStatus == GameStatus.RUN) {
-			// Code
+			this.scene.render(render);
 		} else if (this.gameStatus == GameStatus.TRANSITION) {
 			this.transition.render(render);
 		} else if (this.gameStatus == GameStatus.OPENING_SCREEN) {

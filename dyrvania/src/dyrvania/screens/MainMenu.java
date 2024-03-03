@@ -8,6 +8,7 @@ import dyrvania.generics.GameStatus;
 import dyrvania.gui.GameButton;
 import dyrvania.gui.GameText;
 import dyrvania.resources.GameFont;
+import dyrvania.scenes.levels.Level01;
 import dyrvania.strings.StringGame;
 import dyrvania.strings.StringScreen;
 
@@ -20,7 +21,11 @@ public class MainMenu extends Screen {
 		int leftX = game.getGameWidth() / 2 - 25 - GameButton.getWidth();
 		int rightX = game.getGameWidth() / 2 + 25;
 
-		super.buttons.add(new GameButton(game, StringScreen.NEW_GAME.getValue(), leftX, 120, () -> System.out.println("New Game")));
+		super.buttons.add(new GameButton(game, StringScreen.NEW_GAME.getValue(), leftX, 120, () -> {
+			game.initializeScene(new Level01(game));
+			game.setTransition(GameStatus.RUN);
+		}));
+
 		super.buttons.add(new GameButton(game, StringScreen.LOAD_GAME.getValue(), rightX, 120, () -> System.out.println("Load Game")));
 
 		super.buttons.add(new GameButton(game, StringScreen.CREDITS.getValue(), leftX, 220, () -> System.out.println("Credits")));
