@@ -2,8 +2,11 @@ package dyrvania;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,13 +17,16 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import dyrvania.generics.GameStatus;
 import dyrvania.resources.GameFont;
 import dyrvania.screens.OpeningScreen;
 import dyrvania.screens.Screen;
+import dyrvania.screens.SelectLanguage;
 import dyrvania.screens.Transition;
+import dyrvania.strings.StringError;
 import dyrvania.strings.StringGame;
 
 public class Game extends Canvas implements Runnable, KeyListener, MouseListener {
@@ -89,6 +95,15 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.frame.setLocationRelativeTo(null);
 		this.frame.setVisible(true);
 
+		try {
+			Image imageCursor = ImageIO.read(getClass().getResource("/sprites/cursor.png"));
+			Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(imageCursor, new Point(0, 0), "cursor");
+
+			this.frame.setCursor(cursor);
+		} catch (Exception e) {
+			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());
+		}
+
 		this.renderer = new BufferedImage(this.WIDTH, this.HEIGHT, BufferedImage.TYPE_INT_RGB);
 
 		this.isFullscreen = false;
@@ -148,6 +163,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public void setTransition(GameStatus gameStatus) {
 		this.transition.setNextGameStatus(gameStatus);
+		this.updateGameStatus(GameStatus.TRANSITION);
 	}
 
 	public void updateGameStatus(GameStatus gameStatus) {
@@ -157,6 +173,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public void initializeScreen() {
 		this.screens.clear();
+
+		this.screens.add(new SelectLanguage(this));
 	}
 
 	private void toggleFullscreen() {

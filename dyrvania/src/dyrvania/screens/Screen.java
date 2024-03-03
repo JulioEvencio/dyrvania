@@ -32,15 +32,17 @@ public abstract class Screen {
 	private int mouseY;
 
 	static {
-		background = Spritesheet.getSpriteGUI(97, 37, 24, 22);
+		background = Spritesheet.getSpriteBackground(22, 542, 512, 225);
 	}
 
 	public Screen(Game game, String title) {
 		this.game = game;
 
-		game.getRender().setFont(GameFont.getTitle());
+		Graphics render = game.getRender();
 
-		int titleWidth = game.getRender().getFontMetrics().stringWidth(title);
+		render.setFont(GameFont.getTitle());
+
+		int titleWidth = render.getFontMetrics().stringWidth(title);
 
 		this.title = new GameText(title, (game.getGameWidth() - titleWidth) / 2, 80, Color.WHITE, GameFont.getTitle());
 
@@ -53,7 +55,7 @@ public abstract class Screen {
 		this.mouseX = 0;
 		this.mouseY = 0;
 
-		this.texts.add(new GameText(String.format("v %s", this.game.getVersion()), 50, 50, Color.WHITE, GameFont.getDefault()));
+		this.texts.add(new GameText(String.format("v %s", this.game.getVersion()), 25, 25, Color.WHITE, GameFont.getSmall()));
 	}
 
 	public abstract GameStatus getGameStatus();

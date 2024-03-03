@@ -9,6 +9,7 @@ public class GameFont {
 
 	private static final Font titleFont;
 	private static final Font titleLarge;
+	private static final Font smallFont;
 	private static final Font defaultFont;
 
 	static {
@@ -20,9 +21,10 @@ public class GameFont {
 			Main.exitWithError(StringError.ERROR_LOADING_FONTS.getValue());
 		}
 
-		titleFont = auxFont.deriveFont(Font.BOLD, 25);
+		titleFont = auxFont.deriveFont(Font.BOLD, 30);
 		titleLarge = auxFont.deriveFont(Font.BOLD, 50);
-		defaultFont = auxFont.deriveFont(Font.BOLD, 15);
+		smallFont = auxFont.deriveFont(Font.BOLD, 15);
+		defaultFont = auxFont.deriveFont(Font.BOLD, 20);
 	}
 
 	public static Font getTitle() {
@@ -31,6 +33,10 @@ public class GameFont {
 
 	public static Font getTitleLarge() {
 		return GameFont.titleLarge;
+	}
+
+	public static Font getSmall() {
+		return GameFont.smallFont;
 	}
 
 	public static Font getDefault() {

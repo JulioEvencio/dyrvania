@@ -32,28 +32,30 @@ public class GameButton {
 	private final EventOnClick eventOnClick;
 
 	static {
-		widthPressed = 46 * 5;
-		heightPressed = 13 * 5;
+		widthPressed = 118 * 2;
+		heightPressed = 122 / 2;
 
-		widthReleased = 46 * 5;
-		heightReleased = 14 * 5;
+		widthReleased = 118 * 2;
+		heightReleased = 122 / 2;
 
-		spriteButtonPressed = Spritesheet.getSpriteGUI(145, 98, 46, 13);
-		spriteButtonReleased = Spritesheet.getSpriteGUI(145, 81, 46, 14);
+		spriteButtonPressed = Spritesheet.getSpriteGUI(178, 12, 118, 122);
+		spriteButtonReleased = Spritesheet.getSpriteGUI(10, 7, 118, 122);
 	}
 
 	public GameButton(Game game, String text, int x, int y, EventOnClick eventOnClick) {
 		this.game = game;
 
-		game.getRender().setFont(GameFont.getDefault());
+		Graphics render = game.getRender();
 
-		int textWidth = game.getRender().getFontMetrics().stringWidth(text);
-		int textHeight = game.getRender().getFontMetrics().getHeight();
+		render.setFont(GameFont.getSmall());
+
+		int textWidth = render.getFontMetrics().stringWidth(text);
+		int textHeight = render.getFontMetrics().getHeight();
 
 		int textX = x + (GameButton.widthPressed - textWidth) / 2;
-		int textY = y + (GameButton.heightPressed - textHeight) / 2 + game.getRender().getFontMetrics().getAscent();
+		int textY = y + (GameButton.heightPressed - textHeight) / 2 + render.getFontMetrics().getAscent();
 
-		this.text = new GameText(text, textX, textY, Color.WHITE, GameFont.getDefault());
+		this.text = new GameText(text, textX, textY, Color.WHITE, GameFont.getSmall());
 
 		this.x = x;
 		this.y = y;

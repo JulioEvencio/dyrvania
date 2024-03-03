@@ -30,7 +30,7 @@ public class Transition {
 	public void tick() {
 		this.frames++;
 
-		if (this.frames > 60) {
+		if (this.frames > 10) {
 			this.frames = 0;
 			this.game.updateGameStatus(this.nextGameStatus);
 		}
