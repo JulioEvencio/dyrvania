@@ -112,13 +112,13 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.fps = 0;
 		this.showFPS = false;
 
-		this.transition = new Transition(this, GameStatus.SELECT_LANGUAGE);
+		this.transition = new Transition(this, GameStatus.OPENING_SCREEN);
 		this.openingScreen = new OpeningScreen(this);
 
 		this.screens = new ArrayList<>();
 
 		this.initializeScreen();
-		this.updateGameStatus(GameStatus.OPENING_SCREEN);
+		this.updateGameStatus(GameStatus.TRANSITION);
 	}
 
 	public String getVersion() {
