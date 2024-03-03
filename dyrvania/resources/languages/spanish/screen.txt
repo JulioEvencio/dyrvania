@@ -1,1 +1,6 @@
 F2 para habilitar/deshabilitar pantalla completa
+Nuevo Juego
+Cargar Juego
+Créditos
+Ajustes
+Salir

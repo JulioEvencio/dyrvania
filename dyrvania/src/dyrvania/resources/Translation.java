@@ -33,14 +33,18 @@ public class Translation {
 
 		try {
 			Translation.toTranslation("screen", new GameString[] {
-					StringScreen.TUTORIAL_FULL_SCREEN
+					StringScreen.TUTORIAL_FULL_SCREEN,
+					StringScreen.NEW_GAME,
+					StringScreen.LOAD_GAME,
+					StringScreen.CREDITS,
+					StringScreen.SETTINGS,
+					StringScreen.EXIT
 			});
 
 			Translation.toTranslation("level", new GameString[] {
 					// Code
 			});
 		} catch (Exception e) {
-			e.printStackTrace();
 			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());
 		}
 	}

@@ -8,4 +8,10 @@ public class StringScreen {
 
 	public static final GameString TUTORIAL_FULL_SCREEN = new GameString("Press F2 to enable/disable full screen");
 
+	public static final GameString NEW_GAME = new GameString("New Game");
+	public static final GameString LOAD_GAME = new GameString("Load Game");
+	public static final GameString CREDITS = new GameString("Credits");
+	public static final GameString SETTINGS = new GameString("Settings");
+	public static final GameString EXIT = new GameString("Exit");
+
 }

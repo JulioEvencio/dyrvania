@@ -1,1 +1,6 @@
 Pressione F2 para ativar/desativar tela cheia
+Novo Jogo
+Carregar Jogo
+Créditos
+Configurações
+Sair
