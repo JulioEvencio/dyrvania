@@ -280,9 +280,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		Graphics render = this.renderer.getGraphics();
 
-		render.setColor(Color.BLACK);
-		render.fillRect(0, 0, this.WIDTH, this.HEIGHT);
-
 		if (this.gameStatus == GameStatus.RUN) {
 			// Code
 		} else if (this.gameStatus == GameStatus.TRANSITION) {
