@@ -4,3 +4,6 @@ Carregar Jogo
 Créditos
 Configurações
 Sair
+Você quer sair do jogo?
+Sim
+Não

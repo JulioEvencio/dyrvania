@@ -4,3 +4,6 @@ Load Game
 Credits
 Settings
 Exit
+Do you want to leave the game?
+Yes
+No

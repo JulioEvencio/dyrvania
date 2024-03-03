@@ -4,3 +4,6 @@ Cargar Juego
 Créditos
 Ajustes
 Salir
+¿Quieres abandonar el juego?
+Sí
+No

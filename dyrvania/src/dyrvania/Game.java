@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import dyrvania.generics.GameStatus;
 import dyrvania.resources.GameAudio;
 import dyrvania.resources.GameFont;
+import dyrvania.screens.Exit;
 import dyrvania.screens.MainMenu;
 import dyrvania.screens.OpeningScreen;
 import dyrvania.screens.Screen;
@@ -187,6 +188,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.screens.clear();
 
 		this.screens.add(new MainMenu(this));
+		this.screens.add(new Exit(this));
 		this.screens.add(new SelectLanguage(this));
 	}
 
