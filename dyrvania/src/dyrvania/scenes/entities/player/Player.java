@@ -29,7 +29,7 @@ public class Player {
 
 		this.rect = new GameRectEntity(0, 0, scene.getSizeBaseTiles(), scene.getSizeBaseTiles());
 
-		this.speedX = 1.5;
+		this.speedX = 3;
 		this.speedY = 0;
 
 		this.keyRight = false;
@@ -37,7 +37,7 @@ public class Player {
 		this.keyJump = false;
 
 		this.isJump = false;
-		this.jumpHeight = scene.getSizeBaseTiles() * 2;
+		this.jumpHeight = 80;
 		this.jumpFrames = 0;
 	}
 
@@ -80,8 +80,8 @@ public class Player {
 	private void applyGravity() {
 		this.speedY += this.scene.getGravity();
 
-		if (this.speedY > 8) {
-			this.speedY = 8;
+		if (this.speedY > 7) {
+			this.speedY = 7;
 		}
 
 		for (double i = 0; i <= this.speedY; i += 0.5) {
@@ -120,15 +120,15 @@ public class Player {
 	}
 
 	public void jump() {
-		if (this.jumpFrames < 9) {
+		if (this.jumpFrames < 10) {
 			this.speedY = 8;
-		} else if (this.jumpFrames < 18) {
+		} else if (this.jumpFrames < 20) {
 			this.speedY = 7;
-		} else if (this.jumpFrames < 27) {
+		} else if (this.jumpFrames < 30) {
 			this.speedY = 6;
-		} else if (this.jumpFrames < 36) {
+		} else if (this.jumpFrames < 40) {
 			this.speedY = 5;
-		} else if (this.jumpFrames < 45) {
+		} else if (this.jumpFrames < 50) {
 			this.speedY = 4;
 		} else {
 			this.speedY = 3;

@@ -43,6 +43,15 @@ public abstract class Scene {
 		for (int i = 1; i < this.game.getGameWidth() / this.sizeBaseTiles - 1; i++) {
 			this.floors.add(new Floor(this.sizeBaseTiles * i, 300, this.sizeBaseTiles, this.sizeBaseTiles));
 		}
+
+		this.floors.add(new Floor(300, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(300, 300 - this.sizeBaseTiles * 2, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(400, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(400, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(500, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 2, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 3, this.sizeBaseTiles, this.sizeBaseTiles));
 	}
 
 	public double getGravity() {
