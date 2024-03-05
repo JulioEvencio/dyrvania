@@ -2,9 +2,12 @@ package dyrvania.scenes.entities.player;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
+import dyrvania.generics.GameSpriteAnimation;
+import dyrvania.resources.Spritesheet;
 import dyrvania.scenes.Scene;
 
 public class Player {
@@ -24,10 +27,12 @@ public class Player {
 	private final double jumpHeight;
 	private double jumpFrames;
 
+	private final GameSpriteAnimation spriteIdle;
+
 	public Player(Scene scene) {
 		this.scene = scene;
 
-		this.rect = new GameRectEntity(0, 0, scene.getSizeBaseTiles(), scene.getSizeBaseTiles());
+		this.rect = new GameRectEntity(0, 0, 100, 59);
 
 		this.speedX = 3;
 		this.speedY = 0;
@@ -39,6 +44,15 @@ public class Player {
 		this.isJump = false;
 		this.jumpHeight = 80;
 		this.jumpFrames = 0;
+
+		BufferedImage[] idle = new BufferedImage[4];
+
+		idle[0] = Spritesheet.getSpritePlayer(0, 0, 100, 59);
+		idle[1] = Spritesheet.getSpritePlayer(100, 0, 100, 59);
+		idle[2] = Spritesheet.getSpritePlayer(200, 0, 100, 59);
+		idle[3] = Spritesheet.getSpritePlayer(300, 0, 100, 59);
+
+		this.spriteIdle = new GameSpriteAnimation(this.rect.getRect(), 15, idle);
 	}
 
 	public GameRect getRect() {
@@ -154,12 +168,17 @@ public class Player {
 		}
 
 		this.toMove();
+
+		this.spriteIdle.setPosition(this.rect.getRect().getX(), this.rect.getRect().getY());
+		this.spriteIdle.tick();
 	}
 
 	public void render(Graphics render) {
 		render.setColor(Color.BLUE);
 		GameRect newRect = this.rect.getRect();
 		render.fillRect(newRect.getX(), newRect.getY(), newRect.getWidth(), newRect.getHeight());
+
+		this.spriteIdle.render(render);
 	}
 
 }
