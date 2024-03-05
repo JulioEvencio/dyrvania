@@ -369,11 +369,17 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// Code
+		if (this.gameStatus == GameStatus.RUN) {
+			this.scene.keyPressed(e);
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		if (this.gameStatus == GameStatus.RUN) {
+			this.scene.keyReleased(e);
+		}
+
 		if (e.getKeyCode() == KeyEvent.VK_F2) {
 			this.updateFullscreen = true;
 		}
