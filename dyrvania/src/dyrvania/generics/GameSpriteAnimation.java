@@ -32,6 +32,11 @@ public class GameSpriteAnimation {
 		this.rect.setY(y);
 	}
 
+	public void reset() {
+		this.frames = 0;
+		this.index = 0;
+	}
+
 	public void tick() {
 		this.frames++;
 
