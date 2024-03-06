@@ -3,6 +3,7 @@ package dyrvania.scenes.entities.player;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
@@ -320,6 +321,11 @@ public class Player {
 		}
 	}
 
+	private void updateCamera() {
+		Camera.x = this.rect.getRect().getX() - 400;
+		Camera.y = this.rect.getRect().getY() - 225;
+	}
+
 	public void tick() {
 		if (this.isJump) {
 			this.jump();
@@ -363,6 +369,8 @@ public class Player {
 			this.isAttacking = false;
 			this.currentSprite.reset();
 		}
+
+		this.updateCamera();
 	}
 
 	public void render(Graphics render) {
