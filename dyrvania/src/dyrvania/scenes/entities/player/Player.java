@@ -1,6 +1,5 @@
 package dyrvania.scenes.entities.player;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -52,7 +51,7 @@ public class Player {
 	public Player(Scene scene) {
 		this.scene = scene;
 
-		this.rect = new GameRectEntity(0, 0, 100, 59);
+		this.rect = new GameRectEntity(0, 0, 20, 44);
 
 		this.hpMax = 10;
 		this.hp = this.hpMax;
@@ -127,7 +126,7 @@ public class Player {
 		runRight[4] = Spritesheet.getSpritePlayer(400, 118, spriteWidth, spriteHeight);
 		runRight[5] = Spritesheet.getSpritePlayer(500, 118, spriteWidth, spriteHeight);
 
-		this.spriteRunRight = new GameSpriteAnimation(spriteRect, 15, runRight);
+		this.spriteRunRight = new GameSpriteAnimation(spriteRect, 10, runRight);
 
 		// Run Left
 		BufferedImage[] runLeft = new BufferedImage[6];
@@ -139,7 +138,7 @@ public class Player {
 		runLeft[4] = Spritesheet.getSpritePlayer(400, 177, spriteWidth, spriteHeight);
 		runLeft[5] = Spritesheet.getSpritePlayer(500, 177, spriteWidth, spriteHeight);
 
-		this.spriteRunLeft = new GameSpriteAnimation(spriteRect, 15, runLeft);
+		this.spriteRunLeft = new GameSpriteAnimation(spriteRect, 10, runLeft);
 
 		// Attack Right
 		BufferedImage[] attackRight = new BufferedImage[5];
@@ -164,6 +163,7 @@ public class Player {
 		this.spriteAttackLeft = new GameSpriteAnimation(spriteRect, 5, attackLeft);
 
 		this.updateCurrentSprite(this.spriteIdleRight);
+		this.updateSpritePosition();
 	}
 
 	public GameRect getRect() {
@@ -173,6 +173,8 @@ public class Player {
 	public void setPosition(int x, int y) {
 		this.rect.setX(x);
 		this.rect.setY(y);
+
+		this.updateSpritePosition();
 	}
 
 	public void moveRight() {
@@ -296,6 +298,14 @@ public class Player {
 		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect());
 	}
 
+	private void updateSpritePosition() {
+		if (this.isDirRight) {
+			this.currentSprite.setPosition(this.rect.getRect().getX() - 45, this.rect.getRect().getY() - 15);
+		} else {
+			this.currentSprite.setPosition(this.rect.getRect().getX() - 35, this.rect.getRect().getY() - 15);
+		}
+	}
+
 	private void updateCurrentSprite(GameSpriteAnimation newSprite) {
 		if (this.currentSprite != newSprite) {
 			if (this.currentSprite != null) {
@@ -341,7 +351,8 @@ public class Player {
 			}
 		}
 
-		this.currentSprite.setPosition(this.rect.getRect().getX(), this.rect.getRect().getY());
+		this.updateSpritePosition();
+
 		this.currentSprite.tick();
 
 		if (this.isAttacking && this.currentSprite.finishedAnimation()) {
@@ -351,10 +362,6 @@ public class Player {
 	}
 
 	public void render(Graphics render) {
-		render.setColor(Color.BLUE);
-		GameRect newRect = this.rect.getRect();
-		render.fillRect(newRect.getX(), newRect.getY(), newRect.getWidth(), newRect.getHeight());
-
 		this.currentSprite.render(render);
 	}
 
