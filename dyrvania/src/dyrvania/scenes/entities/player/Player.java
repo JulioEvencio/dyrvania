@@ -16,18 +16,25 @@ public class Player {
 
 	private final GameRectEntity rect;
 
+	private double hp;
+	private final double hpMax;
+
+	private double damage;
+	private boolean isAttacking;
+
 	private double speedX;
 	private double speedY;
 
 	private boolean keyRight;
 	private boolean keyLeft;
 	private boolean keyJump;
+	private boolean keyAttack;
 
 	private boolean isJump;
 	private final double jumpHeight;
 	private double jumpFrames;
 
-	private boolean isRight;
+	private boolean isDirRight;
 	private GameSpriteAnimation currentSprite;
 
 	private final GameSpriteAnimation spriteIdleRight;
@@ -47,18 +54,25 @@ public class Player {
 
 		this.rect = new GameRectEntity(0, 0, 100, 59);
 
+		this.hpMax = 10;
+		this.hp = this.hpMax;
+
+		this.damage = 1;
+		this.isAttacking = false;
+
 		this.speedX = 3;
 		this.speedY = 0;
 
 		this.keyRight = false;
 		this.keyLeft = false;
 		this.keyJump = false;
+		this.keyAttack = false;
 
 		this.isJump = false;
 		this.jumpHeight = 80;
 		this.jumpFrames = 0;
 
-		this.isRight = true;
+		this.isDirRight = true;
 
 		int spriteWidth = 100;
 		int spriteHeight = 59;
@@ -136,7 +150,7 @@ public class Player {
 		attackRight[3] = Spritesheet.getSpritePlayer(300, 236, spriteWidth, spriteHeight);
 		attackRight[4] = Spritesheet.getSpritePlayer(400, 236, spriteWidth, spriteHeight);
 
-		this.spriteAttackRight = new GameSpriteAnimation(spriteRect, 15, attackRight);
+		this.spriteAttackRight = new GameSpriteAnimation(spriteRect, 5, attackRight);
 
 		// Attack Left
 		BufferedImage[] attackLeft = new BufferedImage[5];
@@ -147,7 +161,7 @@ public class Player {
 		attackLeft[3] = Spritesheet.getSpritePlayer(300, 295, spriteWidth, spriteHeight);
 		attackLeft[4] = Spritesheet.getSpritePlayer(400, 295, spriteWidth, spriteHeight);
 
-		this.spriteAttackLeft = new GameSpriteAnimation(spriteRect, 15, attackLeft);
+		this.spriteAttackLeft = new GameSpriteAnimation(spriteRect, 5, attackLeft);
 
 		this.updateCurrentSprite(this.spriteIdleRight);
 	}
@@ -178,8 +192,7 @@ public class Player {
 	}
 
 	public void toJump() {
-		if (!this.isJump && !this.keyJump && !this.scene.isFree(new GameRectEntity(this.rect.getX(),
-				this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect())) {
+		if (!this.isJump && this.isOnTheFloor()) {
 			this.isJump = true;
 			this.keyJump = true;
 		}
@@ -187,6 +200,17 @@ public class Player {
 
 	public void keyJumpReleased() {
 		this.keyJump = false;
+	}
+
+	public void toAttack() {
+		if (!this.keyAttack && !this.isAttacking && this.isOnTheFloor()) {
+			this.keyAttack = true;
+			this.isAttacking = true;
+		}
+	}
+
+	public void keyAttackReleased() {
+		this.keyAttack = false;
 	}
 
 	private void applyGravity() {
@@ -197,44 +221,44 @@ public class Player {
 		}
 
 		for (double i = 0; i <= this.speedY; i += 0.5) {
-			if (this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(),
-					this.rect.getHeight()).getRect())) {
+			if (!this.isOnTheFloor()) {
 				this.rect.setY(this.rect.getY() + 0.5);
 			} else {
 				this.speedY = 0;
+				break;
 			}
 		}
 	}
 
 	private void toMove() {
-		if (this.keyRight) {
-			this.isRight = true;
+		if (this.keyRight && !this.isAttacking) {
+			this.isDirRight = true;
 
 			for (double i = 0; i <= this.speedX; i += 0.5) {
-				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + 0.5, this.rect.getY(), this.rect.getWidth(),
-						this.rect.getHeight()).getRect())) {
+				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + 0.5, this.rect.getY(), this.rect.getWidth(), this.rect.getHeight()).getRect())) {
 					this.rect.setX(this.rect.getX() + 0.5);
 
-					if (!this.isJump && this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5,
-							this.rect.getWidth(), this.rect.getHeight()).getRect())) {
+					if (!this.isJump && !this.isOnTheFloor()) {
 						this.rect.setY(this.rect.getY() + 0.5);
 					}
+				} else {
+					break;
 				}
 			}
 		}
 
-		if (this.keyLeft) {
-			this.isRight = false;
+		if (this.keyLeft && !this.isAttacking) {
+			this.isDirRight = false;
 
 			for (double i = 0; i <= this.speedX; i += 0.5) {
-				if (this.scene.isFree(new GameRectEntity(this.rect.getX() - 0.5, this.rect.getY(), this.rect.getWidth(),
-						this.rect.getHeight()).getRect())) {
+				if (this.scene.isFree(new GameRectEntity(this.rect.getX() - 0.5, this.rect.getY(), this.rect.getWidth(), this.rect.getHeight()).getRect())) {
 					this.rect.setX(this.rect.getX() - 0.5);
 
-					if (!this.isJump && this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5,
-							this.rect.getWidth(), this.rect.getHeight()).getRect())) {
+					if (!this.isJump && !this.isOnTheFloor()) {
 						this.rect.setY(this.rect.getY() + 0.5);
 					}
+				} else {
+					break;
 				}
 			}
 		}
@@ -256,16 +280,20 @@ public class Player {
 		}
 
 		for (double i = 0; i <= this.speedY; i += 0.5) {
-			if (this.jumpFrames < this.jumpHeight && this.scene.isFree(new GameRectEntity(this.rect.getX(),
-					this.rect.getY() - 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect())) {
+			if (this.jumpFrames < this.jumpHeight && this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() - 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect())) {
 				this.rect.setY(this.rect.getY() - 0.5);
 				this.jumpFrames += 0.5;
 			} else {
 				this.speedY = 0;
 				this.jumpFrames = 0;
 				this.isJump = false;
+				break;
 			}
 		}
+	}
+
+	private boolean isOnTheFloor() {
+		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect());
 	}
 
 	private void updateCurrentSprite(GameSpriteAnimation newSprite) {
@@ -287,20 +315,26 @@ public class Player {
 
 		this.toMove();
 
-		if (this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect())) {
-			if (this.isRight) {
+		if (!this.isOnTheFloor()) {
+			if (this.isDirRight) {
 				this.updateCurrentSprite(this.spriteJumpRight);
 			} else {
 				this.updateCurrentSprite(this.spriteJumpLeft);
 			}
+		} else if (this.isAttacking) {
+			if (this.isDirRight) {
+				this.updateCurrentSprite(this.spriteAttackRight);
+			} else {
+				this.updateCurrentSprite(this.spriteAttackLeft);
+			}
 		} else if (this.keyRight || this.keyLeft) {
-			if (this.isRight) {
+			if (this.isDirRight) {
 				this.updateCurrentSprite(this.spriteRunRight);
 			} else {
 				this.updateCurrentSprite(this.spriteRunLeft);
 			}
 		} else {
-			if (this.isRight) {
+			if (this.isDirRight) {
 				this.updateCurrentSprite(this.spriteIdleRight);
 			} else {
 				this.updateCurrentSprite(this.spriteIdleLeft);
@@ -309,6 +343,11 @@ public class Player {
 
 		this.currentSprite.setPosition(this.rect.getRect().getX(), this.rect.getRect().getY());
 		this.currentSprite.tick();
+
+		if (this.isAttacking && this.currentSprite.finishedAnimation()) {
+			this.isAttacking = false;
+			this.currentSprite.reset();
+		}
 	}
 
 	public void render(Graphics render) {

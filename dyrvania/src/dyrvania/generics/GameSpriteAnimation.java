@@ -7,6 +7,8 @@ public class GameSpriteAnimation {
 
 	private final GameRect rect;
 
+	private boolean finishedAnimation;
+
 	private int frames;
 	private final int maxFrames;
 
@@ -18,6 +20,8 @@ public class GameSpriteAnimation {
 	public GameSpriteAnimation(GameRect rect, int maxFrames, BufferedImage[] sprites) {
 		this.rect = rect;
 
+		this.finishedAnimation = false;
+
 		this.frames = 0;
 		this.maxFrames = maxFrames;
 
@@ -25,6 +29,10 @@ public class GameSpriteAnimation {
 		this.maxIndex = sprites.length;
 
 		this.sprites = sprites;
+	}
+
+	public int getIndex() {
+		return this.index;
 	}
 
 	public void setPosition(int x, int y) {
@@ -35,6 +43,11 @@ public class GameSpriteAnimation {
 	public void reset() {
 		this.frames = 0;
 		this.index = 0;
+		this.finishedAnimation = false;
+	}
+
+	public boolean finishedAnimation() {
+		return this.finishedAnimation;
 	}
 
 	public void tick() {
@@ -46,6 +59,7 @@ public class GameSpriteAnimation {
 
 			if (this.index >= this.maxIndex) {
 				this.index = 0;
+				this.finishedAnimation = true;
 			}
 		}
 	}

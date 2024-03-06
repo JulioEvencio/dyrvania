@@ -102,30 +102,38 @@ public abstract class Scene {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			this.player.moveRight();
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 			this.player.moveLeft();
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_Z) {
+		if (e.getKeyCode() == KeyEvent.VK_Z || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_SPACE) {
 			this.player.toJump();
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_X || e.getKeyCode() == KeyEvent.VK_K) {
+			this.player.toAttack();
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			this.player.stopRight();
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
 			this.player.stopLeft();
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_Z) {
+		if (e.getKeyCode() == KeyEvent.VK_Z || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_SPACE) {
 			this.player.keyJumpReleased();
+		}
+
+		if (e.getKeyCode() == KeyEvent.VK_X || e.getKeyCode() == KeyEvent.VK_K) {
+			this.player.keyAttackReleased();
 		}
 	}
 
