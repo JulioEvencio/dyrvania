@@ -3,6 +3,7 @@ package dyrvania.scenes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,6 +134,28 @@ public abstract class Scene {
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_X || e.getKeyCode() == KeyEvent.VK_K) {
+			this.player.keyAttackReleased();
+		}
+	}
+
+	public void mousePressed(MouseEvent e) {
+		if (e.getButton() == MouseEvent.BUTTON1) {
+			this.player.updateDir(false);
+			this.player.toAttack();
+		}
+
+		if (e.getButton() == MouseEvent.BUTTON3) {
+			this.player.updateDir(true);
+			this.player.toAttack();
+		}
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		if (e.getButton() == MouseEvent.BUTTON1) {
+			this.player.keyAttackReleased();
+		}
+
+		if (e.getButton() == MouseEvent.BUTTON3) {
 			this.player.keyAttackReleased();
 		}
 	}

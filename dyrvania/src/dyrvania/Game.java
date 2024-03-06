@@ -418,7 +418,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (this.gameStatus == GameStatus.RUN) {
-			// Code
+			this.scene.mousePressed(e);
 		} else {
 			for (Screen screen : this.screens) {
 				if (screen.getGameStatus() == this.gameStatus) {
@@ -432,7 +432,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (this.gameStatus == GameStatus.RUN) {
-			// Code
+			this.scene.mouseReleased(e);
 		} else {
 			for (Screen screen : this.screens) {
 				if (screen.getGameStatus() == this.gameStatus) {

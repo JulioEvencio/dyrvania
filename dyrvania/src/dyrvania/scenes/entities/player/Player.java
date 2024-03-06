@@ -215,6 +215,10 @@ public class Player {
 		this.keyAttack = false;
 	}
 
+	public void updateDir(boolean dir) {
+		this.isDirRight = dir;
+	}
+
 	private void applyGravity() {
 		this.speedY += this.scene.getGravity();
 
