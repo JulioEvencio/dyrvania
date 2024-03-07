@@ -1,11 +1,15 @@
 package dyrvania.generics;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 public class GameSpriteAnimation {
 
 	private final GameRect rect;
+
+	private float alpha;
 
 	private boolean finishedAnimation;
 
@@ -20,6 +24,8 @@ public class GameSpriteAnimation {
 	public GameSpriteAnimation(GameRect rect, int maxFrames, BufferedImage[] sprites) {
 		this.rect = rect;
 
+		this.alpha = 1f;
+
 		this.finishedAnimation = false;
 
 		this.frames = 0;
@@ -33,6 +39,10 @@ public class GameSpriteAnimation {
 
 	public int getIndex() {
 		return this.index;
+	}
+
+	public void setAlpha(float alpha) {
+		this.alpha = alpha;
 	}
 
 	public void setPosition(int x, int y) {
@@ -64,8 +74,11 @@ public class GameSpriteAnimation {
 		}
 	}
 
-	public void render(Graphics graphics) {
-		graphics.drawImage(this.sprites[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
+	public void render(Graphics render) {
+		Graphics2D g = (Graphics2D) render;
+
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
+		g.drawImage(this.sprites[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
 	}
 
 }

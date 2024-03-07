@@ -21,8 +21,9 @@ public class Player {
 	private int hp;
 	private final int hpMax;
 
-	private long shieldTime;
-	private LocalDateTime shieldDamage;
+	protected long shieldTime;
+	protected boolean shieldActive;
+	protected LocalDateTime shieldDamage;
 
 	private int damage;
 	private boolean isAttacking;
@@ -64,7 +65,8 @@ public class Player {
 		this.hpMax = 10;
 		this.hp = this.hpMax;
 
-		this.shieldTime = 1;
+		this.shieldTime = 2;
+		this.shieldActive = true;
 		this.shieldDamage = LocalDateTime.now().plusSeconds(this.shieldTime);
 
 		this.damage = 1;
@@ -203,9 +205,9 @@ public class Player {
 	}
 
 	public void takeDamage(int damage) {
-		if (this.shieldDamage.isBefore(LocalDateTime.now())) {
-			this.shieldDamage = LocalDateTime.now().plusSeconds(shieldTime);
+		if (!this.shieldActive) {
 			this.hp -= damage;
+			shieldDamage = LocalDateTime.now().plusSeconds(shieldTime);
 		}
 	}
 
@@ -369,7 +371,13 @@ public class Player {
 	}
 
 	public void tick() {
-		System.out.println(this.hp);
+		if (shieldDamage.isBefore(LocalDateTime.now())) {
+			this.shieldActive = false;
+			this.currentSprite.setAlpha(1f);
+		} else {
+			this.shieldActive = true;
+			this.currentSprite.setAlpha(0.5f);
+		}
 
 		if (this.isJump) {
 			this.jump();
