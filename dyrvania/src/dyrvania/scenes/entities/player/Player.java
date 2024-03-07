@@ -15,12 +15,14 @@ public class Player {
 	private Scene scene;
 
 	private final GameRectEntity rect;
+	private final GameRect rectAttack;
 
-	private double hp;
-	private final double hpMax;
+	private int hp;
+	private final int hpMax;
 
-	private double damage;
+	private int damage;
 	private boolean isAttacking;
+	private boolean canDealDamage;
 
 	private double speedX;
 	private double speedY;
@@ -53,12 +55,14 @@ public class Player {
 		this.scene = scene;
 
 		this.rect = new GameRectEntity(0, 0, 20, 44);
+		this.rectAttack = new GameRect(0, 0, 52, 44);
 
 		this.hpMax = 10;
 		this.hp = this.hpMax;
 
 		this.damage = 1;
 		this.isAttacking = false;
+		this.canDealDamage = false;
 
 		this.speedX = 3;
 		this.speedY = 0;
@@ -171,6 +175,30 @@ public class Player {
 		return this.rect.getRect();
 	}
 
+	public boolean isDead() {
+		return this.hp <= 0;
+	}
+
+	public boolean isAttacking() {
+		return this.isAttacking && this.canDealDamage;
+	}
+
+	public GameRect getAreaAttack() {
+		return this.rectAttack;
+	}
+
+	public int dealDamage() {
+		return this.damage;
+	}
+
+	public boolean finishedAnimation() {
+		return this.currentSprite.getIndex() == 0;
+	}
+
+	public void takeDamage(int damage) {
+		this.hp -= damage;
+	}
+
 	public void setPosition(int x, int y) {
 		this.rect.setX(x);
 		this.rect.setY(y);
@@ -195,7 +223,7 @@ public class Player {
 	}
 
 	public void toJump() {
-		if (!this.isJump && this.isOnTheFloor()) {
+		if (!this.isJump && !this.keyJump && this.isOnTheFloor()) {
 			this.isJump = true;
 			this.keyJump = true;
 		}
@@ -242,7 +270,8 @@ public class Player {
 			this.isDirRight = true;
 
 			for (double i = 0; i <= this.speedX; i += 0.5) {
-				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + 0.5, this.rect.getY(), this.rect.getWidth(), this.rect.getHeight()).getRect())) {
+				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + 0.5, this.rect.getY(), this.rect.getWidth(),
+						this.rect.getHeight()).getRect())) {
 					this.rect.setX(this.rect.getX() + 0.5);
 
 					if (!this.isJump && !this.isOnTheFloor()) {
@@ -258,7 +287,8 @@ public class Player {
 			this.isDirRight = false;
 
 			for (double i = 0; i <= this.speedX; i += 0.5) {
-				if (this.scene.isFree(new GameRectEntity(this.rect.getX() - 0.5, this.rect.getY(), this.rect.getWidth(), this.rect.getHeight()).getRect())) {
+				if (this.scene.isFree(new GameRectEntity(this.rect.getX() - 0.5, this.rect.getY(), this.rect.getWidth(),
+						this.rect.getHeight()).getRect())) {
 					this.rect.setX(this.rect.getX() - 0.5);
 
 					if (!this.isJump && !this.isOnTheFloor()) {
@@ -287,7 +317,8 @@ public class Player {
 		}
 
 		for (double i = 0; i <= this.speedY; i += 0.5) {
-			if (this.jumpFrames < this.jumpHeight && this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() - 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect())) {
+			if (this.jumpFrames < this.jumpHeight && this.scene.isFree(new GameRectEntity(this.rect.getX(),
+					this.rect.getY() - 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect())) {
 				this.rect.setY(this.rect.getY() - 0.5);
 				this.jumpFrames += 0.5;
 			} else {
@@ -300,7 +331,8 @@ public class Player {
 	}
 
 	private boolean isOnTheFloor() {
-		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect());
+		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(),
+				this.rect.getHeight()).getRect());
 	}
 
 	private void updateSpritePosition() {
@@ -361,13 +393,30 @@ public class Player {
 			}
 		}
 
+		if (this.isDirRight) {
+			this.rectAttack.setX((int) this.rect.getX());
+		} else {
+			this.rectAttack.setX((int) this.rect.getX() - 32);
+		}
+
+		this.rectAttack.setY((int) this.rect.getY());
+
 		this.updateSpritePosition();
 
 		this.currentSprite.tick();
 
-		if (this.isAttacking && this.currentSprite.finishedAnimation()) {
-			this.isAttacking = false;
-			this.currentSprite.reset();
+		if (this.isAttacking) {
+			if (this.currentSprite.getIndex() == 2 || this.currentSprite.getIndex() == 3) {
+				this.canDealDamage = true;
+			} else {
+				this.canDealDamage = false;
+			}
+
+			if (this.currentSprite.finishedAnimation()) {
+				this.isAttacking = false;
+				this.currentSprite.reset();
+				this.canDealDamage = false;
+			}
 		}
 
 		this.updateCamera();

@@ -25,7 +25,8 @@ public abstract class Scene {
 	protected char[][] map;
 
 	private final Player player;
-	private final Skeleton skeleton;
+
+	private final List<Skeleton> skeletons;
 
 	private final List<Floor> floors;
 
@@ -41,8 +42,11 @@ public abstract class Scene {
 		this.player = new Player(this);
 		this.player.setPosition(250, 0);
 
-		this.skeleton = new Skeleton(this);
-		this.skeleton.setPosition(400, 0);
+		this.skeletons = new ArrayList<>();
+
+		this.skeletons.add(new Skeleton(this, 200, 0));
+		this.skeletons.add(new Skeleton(this, 400, 0));
+		this.skeletons.add(new Skeleton(this, 700, 0));
 
 		this.floors = new ArrayList<>();
 
@@ -97,8 +101,27 @@ public abstract class Scene {
 	}
 
 	public void tick() {
+		List<Skeleton> skeletonsRemove = new ArrayList<>();
+
 		this.player.tick();
-		this.skeleton.tick();
+
+		for (Skeleton skeleton : this.skeletons) {
+			if (this.player.isAttacking() && this.player.getAreaAttack().isColliding(skeleton.getRect())) {
+				skeleton.takeDamage(this.player.dealDamage());
+			}
+
+			if (skeleton.isDead()) {
+				skeletonsRemove.add(skeleton);
+			} else {
+				skeleton.tick();
+			}
+
+			if (this.player.finishedAnimation()) {
+				skeleton.resetShield();
+			}
+		}
+
+		this.skeletons.removeAll(skeletonsRemove);
 	}
 
 	public void render(Graphics render) {
@@ -111,8 +134,10 @@ public abstract class Scene {
 			}
 		}
 
-		if (this.canRender(this.skeleton.getRect())) {
-			this.skeleton.render(render);
+		for (Skeleton skeleton : this.skeletons) {
+			if (this.canRender(skeleton.getRect())) {
+				skeleton.render(render);
+			}
 		}
 
 		this.player.render(render);

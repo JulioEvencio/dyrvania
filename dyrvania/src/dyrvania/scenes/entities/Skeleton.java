@@ -20,6 +20,7 @@ public class Skeleton {
 	private final int hpMax;
 
 	private int damage;
+	private boolean hasAShield;
 
 	private double speedX;
 	private double speedY;
@@ -30,15 +31,16 @@ public class Skeleton {
 	private final GameSpriteAnimation spriteRunRight;
 	private final GameSpriteAnimation spriteRunLeft;
 
-	public Skeleton(Scene scene) {
+	public Skeleton(Scene scene, int x, int y) {
 		this.scene = scene;
 
-		this.rect = new GameRectEntity(0, 0, 44, 52);
+		this.rect = new GameRectEntity(x, y, 44, 52);
 
-		this.hpMax = 1;
-		this.hp = 1;
+		this.hpMax = 3;
+		this.hp = this.hpMax;
 
 		this.damage = 1;
+		this.hasAShield = false;
 
 		this.speedX = 0.5;
 		this.speedY = 0;
@@ -48,7 +50,7 @@ public class Skeleton {
 		int spriteWidth = 44;
 		int spriteHeight = 52;
 
-		GameRect spriteRect = new GameRect(0, 0, spriteWidth, spriteHeight);
+		GameRect spriteRect = new GameRect(x, y, spriteWidth, spriteHeight);
 
 		// Run Right
 		BufferedImage[] runRight = new BufferedImage[8];
@@ -74,6 +76,25 @@ public class Skeleton {
 
 	public GameRect getRect() {
 		return this.rect.getRect();
+	}
+
+	public boolean isDead() {
+		return this.hp <= 0;
+	}
+
+	public int dealDamage() {
+		return this.damage;
+	}
+
+	public void takeDamage(int damage) {
+		if (!this.hasAShield) {
+			this.hp -= damage;
+			this.hasAShield = true;
+		}
+	}
+
+	public void resetShield() {
+		this.hasAShield = false;
 	}
 
 	public void setPosition(int x, int y) {
@@ -103,7 +124,8 @@ public class Skeleton {
 	private void toMove() {
 		if (this.isOnTheFloor()) {
 			double vel;
-			GameRectEntity newRect = new GameRectEntity(this.rect.getX(), this.rect.getY(), this.rect.getWidth(), this.rect.getHeight());
+			GameRectEntity newRect = new GameRectEntity(this.rect.getX(), this.rect.getY(), this.rect.getWidth(),
+					this.rect.getHeight());
 
 			if (this.isDirRight) {
 				vel = 0.5;
@@ -116,7 +138,8 @@ public class Skeleton {
 			newRect.setY(newRect.getY() + 0.5);
 
 			for (double i = 0; i <= this.speedX; i += 0.5) {
-				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + vel, this.rect.getY(), this.rect.getWidth(), this.rect.getHeight()).getRect())) {
+				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + vel, this.rect.getY(), this.rect.getWidth(),
+						this.rect.getHeight()).getRect())) {
 					this.rect.setX(this.rect.getX() + vel);
 
 					if (!this.isOnTheFloor()) {
@@ -134,7 +157,8 @@ public class Skeleton {
 	}
 
 	private boolean isOnTheFloor() {
-		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect());
+		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(),
+				this.rect.getHeight()).getRect());
 	}
 
 	private void updateSpritePosition() {
