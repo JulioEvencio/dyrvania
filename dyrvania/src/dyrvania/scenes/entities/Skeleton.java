@@ -34,7 +34,7 @@ public class Skeleton {
 	public Skeleton(Scene scene, int x, int y) {
 		this.scene = scene;
 
-		this.rect = new GameRectEntity(x, y, 44, 52);
+		this.rect = new GameRectEntity(x, y, 20, 40);
 
 		this.hpMax = 3;
 		this.hp = this.hpMax;
@@ -124,8 +124,7 @@ public class Skeleton {
 	private void toMove() {
 		if (this.isOnTheFloor()) {
 			double vel;
-			GameRectEntity newRect = new GameRectEntity(this.rect.getX(), this.rect.getY(), this.rect.getWidth(),
-					this.rect.getHeight());
+			GameRectEntity newRect = new GameRectEntity(this.rect.getX(), this.rect.getY(), this.rect.getWidth(), this.rect.getHeight());
 
 			if (this.isDirRight) {
 				vel = 0.5;
@@ -138,14 +137,14 @@ public class Skeleton {
 			newRect.setY(newRect.getY() + 0.5);
 
 			for (double i = 0; i <= this.speedX; i += 0.5) {
-				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + vel, this.rect.getY(), this.rect.getWidth(),
-						this.rect.getHeight()).getRect())) {
+				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + vel, this.rect.getY(), this.rect.getWidth(), this.rect.getHeight()).getRect())) {
 					this.rect.setX(this.rect.getX() + vel);
 
 					if (!this.isOnTheFloor()) {
 						this.rect.setY(this.rect.getY() + 0.5);
 					}
 				} else {
+					this.isDirRight = !this.isDirRight;
 					break;
 				}
 			}
@@ -157,15 +156,14 @@ public class Skeleton {
 	}
 
 	private boolean isOnTheFloor() {
-		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(),
-				this.rect.getHeight()).getRect());
+		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect());
 	}
 
 	private void updateSpritePosition() {
 		if (this.isDirRight) {
-			this.currentSprite.setPosition(this.rect.getRect().getX() - 0, this.rect.getRect().getY() - 0);
+			this.currentSprite.setPosition(this.rect.getRect().getX() - 11, this.rect.getRect().getY() - 11);
 		} else {
-			this.currentSprite.setPosition(this.rect.getRect().getX() - 0, this.rect.getRect().getY() - 0);
+			this.currentSprite.setPosition(this.rect.getRect().getX() - 14, this.rect.getRect().getY() - 11);
 		}
 	}
 

@@ -1,4 +1,4 @@
-package dyrvania.scenes.entities.player;
+package dyrvania.scenes.entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -282,8 +282,7 @@ public class Player {
 			this.isDirRight = true;
 
 			for (double i = 0; i <= this.speedX; i += 0.5) {
-				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + 0.5, this.rect.getY(), this.rect.getWidth(),
-						this.rect.getHeight()).getRect())) {
+				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + 0.5, this.rect.getY(), this.rect.getWidth(), this.rect.getHeight()).getRect())) {
 					this.rect.setX(this.rect.getX() + 0.5);
 
 					if (!this.isJump && !this.isOnTheFloor()) {
@@ -299,8 +298,7 @@ public class Player {
 			this.isDirRight = false;
 
 			for (double i = 0; i <= this.speedX; i += 0.5) {
-				if (this.scene.isFree(new GameRectEntity(this.rect.getX() - 0.5, this.rect.getY(), this.rect.getWidth(),
-						this.rect.getHeight()).getRect())) {
+				if (this.scene.isFree(new GameRectEntity(this.rect.getX() - 0.5, this.rect.getY(), this.rect.getWidth(), this.rect.getHeight()).getRect())) {
 					this.rect.setX(this.rect.getX() - 0.5);
 
 					if (!this.isJump && !this.isOnTheFloor()) {
@@ -329,8 +327,7 @@ public class Player {
 		}
 
 		for (double i = 0; i <= this.speedY; i += 0.5) {
-			if (this.jumpFrames < this.jumpHeight && this.scene.isFree(new GameRectEntity(this.rect.getX(),
-					this.rect.getY() - 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect())) {
+			if (this.jumpFrames < this.jumpHeight && this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() - 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect())) {
 				this.rect.setY(this.rect.getY() - 0.5);
 				this.jumpFrames += 0.5;
 			} else {
@@ -343,8 +340,7 @@ public class Player {
 	}
 
 	private boolean isOnTheFloor() {
-		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(),
-				this.rect.getHeight()).getRect());
+		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect());
 	}
 
 	private void updateSpritePosition() {

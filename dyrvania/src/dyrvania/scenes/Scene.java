@@ -10,8 +10,8 @@ import java.util.List;
 import dyrvania.Game;
 import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
+import dyrvania.scenes.entities.Player;
 import dyrvania.scenes.entities.Skeleton;
-import dyrvania.scenes.entities.player.Player;
 import dyrvania.scenes.tiles.Floor;
 
 public abstract class Scene {

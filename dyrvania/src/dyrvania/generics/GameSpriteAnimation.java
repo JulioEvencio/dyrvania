@@ -75,10 +75,15 @@ public class GameSpriteAnimation {
 	}
 
 	public void render(Graphics render) {
-		Graphics2D g = (Graphics2D) render;
+		if (this.alpha == 1f) {
+			render.drawImage(this.sprites[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
+		} else if (this.frames % 2 == 0) {
+			Graphics2D g = (Graphics2D) render;
 
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
-		g.drawImage(this.sprites[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.alpha));
+			g.drawImage(this.sprites[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		}
 	}
 
 }
