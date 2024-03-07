@@ -10,6 +10,7 @@ import java.util.List;
 import dyrvania.Game;
 import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
+import dyrvania.scenes.entities.Skeleton;
 import dyrvania.scenes.entities.player.Player;
 import dyrvania.scenes.tiles.Floor;
 
@@ -24,6 +25,7 @@ public abstract class Scene {
 	protected char[][] map;
 
 	private final Player player;
+	private final Skeleton skeleton;
 
 	private final List<Floor> floors;
 
@@ -39,6 +41,9 @@ public abstract class Scene {
 		this.player = new Player(this);
 		this.player.setPosition(250, 0);
 
+		this.skeleton = new Skeleton(this);
+		this.skeleton.setPosition(400, 0);
+
 		this.floors = new ArrayList<>();
 
 		for (int i = 1; i < this.game.getGameWidth() / this.sizeBaseTiles - 1; i++) {
@@ -48,11 +53,17 @@ public abstract class Scene {
 		this.floors.add(new Floor(300, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300, 300 - this.sizeBaseTiles * 2, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(400, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(400, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(500, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 2, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 3, this.sizeBaseTiles, this.sizeBaseTiles));
+
+		this.floors.add(new Floor(300 + 32, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(300 + 32 * 2, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(300 + 32 * 3, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(300 + 32 * 4, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(300 + 32 * 5, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(300 + 32 * 6, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 	}
 
 	public double getGravity() {
@@ -87,6 +98,7 @@ public abstract class Scene {
 
 	public void tick() {
 		this.player.tick();
+		this.skeleton.tick();
 	}
 
 	public void render(Graphics render) {
@@ -97,6 +109,10 @@ public abstract class Scene {
 			if (this.canRender(floor.getRect())) {
 				floor.render(render);
 			}
+		}
+
+		if (this.canRender(this.skeleton.getRect())) {
+			this.skeleton.render(render);
 		}
 
 		this.player.render(render);
