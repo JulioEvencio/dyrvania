@@ -116,6 +116,10 @@ public abstract class Scene {
 				skeleton.tick();
 			}
 
+			if (this.player.getRect().isColliding(skeleton.getRect())) {
+				this.player.takeDamage(skeleton.dealDamage());
+			}
+
 			if (this.player.finishedAnimation()) {
 				skeleton.resetShield();
 			}

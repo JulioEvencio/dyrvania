@@ -2,6 +2,7 @@ package dyrvania.scenes.entities.player;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.time.LocalDateTime;
 
 import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
@@ -19,6 +20,9 @@ public class Player {
 
 	private int hp;
 	private final int hpMax;
+
+	private long shieldTime;
+	private LocalDateTime shieldDamage;
 
 	private int damage;
 	private boolean isAttacking;
@@ -59,6 +63,9 @@ public class Player {
 
 		this.hpMax = 10;
 		this.hp = this.hpMax;
+
+		this.shieldTime = 1;
+		this.shieldDamage = LocalDateTime.now().plusSeconds(this.shieldTime);
 
 		this.damage = 1;
 		this.isAttacking = false;
@@ -196,7 +203,10 @@ public class Player {
 	}
 
 	public void takeDamage(int damage) {
-		this.hp -= damage;
+		if (this.shieldDamage.isBefore(LocalDateTime.now())) {
+			this.shieldDamage = LocalDateTime.now().plusSeconds(shieldTime);
+			this.hp -= damage;
+		}
 	}
 
 	public void setPosition(int x, int y) {
@@ -359,6 +369,8 @@ public class Player {
 	}
 
 	public void tick() {
+		System.out.println(this.hp);
+
 		if (this.isJump) {
 			this.jump();
 		} else {
