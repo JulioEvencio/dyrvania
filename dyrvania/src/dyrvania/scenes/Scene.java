@@ -11,7 +11,10 @@ import dyrvania.Game;
 import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
 import dyrvania.scenes.entities.Player;
-import dyrvania.scenes.entities.Skeleton;
+import dyrvania.scenes.entities.enemies.Enemy;
+import dyrvania.scenes.entities.enemies.Skeleton;
+import dyrvania.scenes.entities.enemies.Skull;
+import dyrvania.scenes.entities.enemies.Thing;
 import dyrvania.scenes.tiles.Floor;
 
 public abstract class Scene {
@@ -26,7 +29,7 @@ public abstract class Scene {
 
 	private final Player player;
 
-	private final List<Skeleton> skeletons;
+	private final List<Enemy> enemies;
 
 	private final List<Floor> floors;
 
@@ -42,11 +45,11 @@ public abstract class Scene {
 		this.player = new Player(this);
 		this.player.setPosition(250, 0);
 
-		this.skeletons = new ArrayList<>();
+		this.enemies = new ArrayList<>();
 
-		this.skeletons.add(new Skeleton(this, 200, 0));
-		this.skeletons.add(new Skeleton(this, 400, 0));
-		this.skeletons.add(new Skeleton(this, 700, 0));
+		this.enemies.add(new Skull(this, 200, 0));
+		this.enemies.add(new Thing(this, 400, 0));
+		this.enemies.add(new Skeleton(this, 700, 0));
 
 		this.floors = new ArrayList<>();
 
@@ -62,12 +65,12 @@ public abstract class Scene {
 		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 2, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 3, this.sizeBaseTiles, this.sizeBaseTiles));
 
-		this.floors.add(new Floor(300 + 32, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300 + 32 * 2, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300 + 32 * 3, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300 + 32 * 4, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300 + 32 * 5, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300 + 32 * 6, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(300 + 32 * 7, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 	}
 
 	public double getGravity() {
@@ -101,31 +104,31 @@ public abstract class Scene {
 	}
 
 	public void tick() {
-		List<Skeleton> skeletonsRemove = new ArrayList<>();
+		List<Enemy> enemiesRemove = new ArrayList<>();
 
 		this.player.tick();
 
-		for (Skeleton skeleton : this.skeletons) {
-			if (this.player.isAttacking() && this.player.getAreaAttack().isColliding(skeleton.getRect())) {
-				skeleton.takeDamage(this.player.dealDamage());
+		for (Enemy enemy : this.enemies) {
+			if (this.player.isAttacking() && this.player.getAreaAttack().isColliding(enemy.getRect())) {
+				enemy.takeDamage(this.player.dealDamage());
 			}
 
-			skeleton.tick();
+			enemy.tick();
 
-			if (skeleton.isDead()) {
-				skeletonsRemove.add(skeleton);
+			if (enemy.isDead()) {
+				enemiesRemove.add(enemy);
 			}
 
-			if (this.player.getRect().isColliding(skeleton.getRect())) {
-				this.player.takeDamage(skeleton.dealDamage());
+			if (this.player.getRect().isColliding(enemy.getRect())) {
+				this.player.takeDamage(enemy.dealDamage());
 			}
 
 			if (this.player.finishedAnimation()) {
-				skeleton.resetShield();
+				enemy.resetShield();
 			}
 		}
 
-		this.skeletons.removeAll(skeletonsRemove);
+		this.enemies.removeAll(enemiesRemove);
 	}
 
 	public void render(Graphics render) {
@@ -138,9 +141,9 @@ public abstract class Scene {
 			}
 		}
 
-		for (Skeleton skeleton : this.skeletons) {
-			if (this.canRender(skeleton.getRect())) {
-				skeleton.render(render);
+		for (Enemy enemy : this.enemies) {
+			if (this.canRender(enemy.getRect())) {
+				enemy.render(render);
 			}
 		}
 

@@ -13,6 +13,8 @@ public class Spritesheet {
 	private static final BufferedImage spritesheetTiles;
 	private static final BufferedImage spritesheetDeath;
 	private static final BufferedImage spritesheetPlayer;
+	private static final BufferedImage spritesheetThing;
+	private static final BufferedImage spritesheetSkull;
 	private static final BufferedImage spritesheetSkeleton;
 	private static final BufferedImage spritesheetBackground;
 
@@ -21,6 +23,8 @@ public class Spritesheet {
 		BufferedImage auxSpritesheetTiles = null;
 		BufferedImage auxSpritesheetDeath = null;
 		BufferedImage auxSpritesheetPlayer = null;
+		BufferedImage auxSpritesheetThing = null;
+		BufferedImage auxSpritesheetSkull = null;
 		BufferedImage auxSpritesheetSkeleton = null;
 		BufferedImage auxSpritesheetBackground = null;
 
@@ -29,6 +33,8 @@ public class Spritesheet {
 			auxSpritesheetTiles = ImageIO.read(Spritesheet.class.getResource("/sprites/tiles.png"));
 			auxSpritesheetDeath = ImageIO.read(Spritesheet.class.getResource("/sprites/death.png"));
 			auxSpritesheetPlayer = ImageIO.read(Spritesheet.class.getResource("/sprites/player.png"));
+			auxSpritesheetThing = ImageIO.read(Spritesheet.class.getResource("/sprites/thing.png"));
+			auxSpritesheetSkull = ImageIO.read(Spritesheet.class.getResource("/sprites/skull.png"));
 			auxSpritesheetSkeleton = ImageIO.read(Spritesheet.class.getResource("/sprites/skeleton.png"));
 			auxSpritesheetBackground = ImageIO.read(Spritesheet.class.getResource("/sprites/background.png"));
 		} catch (Exception e) {
@@ -39,6 +45,8 @@ public class Spritesheet {
 		spritesheetTiles = auxSpritesheetTiles;
 		spritesheetDeath = auxSpritesheetDeath;
 		spritesheetPlayer = auxSpritesheetPlayer;
+		spritesheetThing = auxSpritesheetThing;
+		spritesheetSkull = auxSpritesheetSkull;
 		spritesheetSkeleton = auxSpritesheetSkeleton;
 		spritesheetBackground = auxSpritesheetBackground;
 	}
@@ -57,6 +65,14 @@ public class Spritesheet {
 
 	public static BufferedImage getSpritePlayer(int x, int y, int width, int height) {
 		return Spritesheet.spritesheetPlayer.getSubimage(x, y, width, height);
+	}
+
+	public static BufferedImage getSpriteThing(int x, int y, int width, int height) {
+		return Spritesheet.spritesheetThing.getSubimage(x, y, width, height);
+	}
+
+	public static BufferedImage getSpriteSkull(int x, int y, int width, int height) {
+		return Spritesheet.spritesheetSkull.getSubimage(x, y, width, height);
 	}
 
 	public static BufferedImage getSpriteSkeleton(int x, int y, int width, int height) {

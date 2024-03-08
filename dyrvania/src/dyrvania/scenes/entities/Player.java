@@ -436,6 +436,8 @@ public class Player {
 		}
 
 		this.updateCamera();
+
+		System.out.println(this.hp);
 	}
 
 	public void render(Graphics render) {

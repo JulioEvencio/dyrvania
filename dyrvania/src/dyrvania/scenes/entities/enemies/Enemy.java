@@ -1,20 +1,18 @@
-package dyrvania.scenes.entities;
+package dyrvania.scenes.entities.enemies;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
 import dyrvania.generics.GameUtil;
-import dyrvania.resources.Spritesheet;
 import dyrvania.scenes.Scene;
 
-public class Skeleton {
+public abstract class Enemy {
 
-	private final Scene scene;
+	protected final Scene scene;
 
-	private final GameRectEntity rect;
+	protected final GameRectEntity rect;
 
 	private int hp;
 	private final int hpMax;
@@ -22,67 +20,39 @@ public class Skeleton {
 	private int damage;
 	private boolean hasAShield;
 
-	private double speedX;
-	private double speedY;
+	protected double speedX;
+	protected double speedY;
 
-	private boolean isDirRight;
-	private GameSpriteAnimation currentSprite;
+	protected boolean isDirRight;
+	protected GameSpriteAnimation currentSprite;
 
-	private final GameSpriteAnimation spriteRunRight;
-	private final GameSpriteAnimation spriteRunLeft;
-	private final GameSpriteAnimation spriteDeath;
+	protected GameSpriteAnimation spriteRunRight;
+	protected GameSpriteAnimation spriteRunLeft;
+	protected GameSpriteAnimation spriteDeath;
 
-	public Skeleton(Scene scene, int x, int y) {
+	public Enemy(Scene scene, int x, int y, int width, int height, int hp, int damage, double speedX) {
 		this.scene = scene;
 
-		this.rect = new GameRectEntity(x, y, 20, 40);
+		this.rect = new GameRectEntity(x, y, width, height);
 
-		this.hpMax = 3;
+		this.hpMax = hp;
 		this.hp = this.hpMax;
 
-		this.damage = 1;
+		this.damage = damage;
 		this.hasAShield = false;
 
-		this.speedX = 0.5;
+		this.speedX = speedX;
 		this.speedY = 0;
 
 		this.isDirRight = GameUtil.generateRandomNumber(0, 1) == 0;
 
-		int spriteWidth = 44;
-		int spriteHeight = 52;
+		this.loadSprites();
 
-		GameRect spriteRect = new GameRect(x, y, spriteWidth, spriteHeight);
-
-		// Run Right
-		BufferedImage[] runRight = new BufferedImage[8];
-
-		for (int i = 0; i < 8; i++) {
-			runRight[i] = Spritesheet.getSpriteSkeleton(spriteWidth * i, 104, spriteWidth, spriteHeight);
-		}
-
-		spriteRunRight = new GameSpriteAnimation(spriteRect, 5, runRight);
-
-		// Run Left
-		BufferedImage[] runLeft = new BufferedImage[8];
-
-		for (int i = 0; i < 8; i++) {
-			runLeft[i] = Spritesheet.getSpriteSkeleton(spriteWidth * i, 156, spriteWidth, spriteHeight);
-		}
-
-		spriteRunLeft = new GameSpriteAnimation(spriteRect, 5, runLeft);
-
-		// Death
-		BufferedImage[] death = new BufferedImage[5];
-
-		for (int i = 0; i < 5; i++) {
-			death[i] = Spritesheet.getSpriteDeath(spriteWidth * i, 0, spriteWidth, spriteHeight);
-		}
-
-		spriteDeath = new GameSpriteAnimation(spriteRect, 5, death);
-
-		this.updateCurrentSprite(this.spriteRunRight);
-		this.updateSpritePosition();
+		this.setCurrentSprite(this.spriteRunRight);
+		this.setSpritePosition();
 	}
+
+	protected abstract void loadSprites();
 
 	public GameRect getRect() {
 		return this.rect.getRect();
@@ -111,10 +81,10 @@ public class Skeleton {
 		this.rect.setX(x);
 		this.rect.setY(y);
 
-		this.updateSpritePosition();
+		this.setSpritePosition();
 	}
 
-	private void applyGravity() {
+	protected void applyGravity() {
 		this.speedY += this.scene.getGravity();
 
 		if (this.speedY > 7) {
@@ -131,7 +101,7 @@ public class Skeleton {
 		}
 	}
 
-	private void toMove() {
+	protected void toMove() {
 		if (this.isOnTheFloor()) {
 			double vel;
 			GameRectEntity newRect = new GameRectEntity(this.rect.getX(), this.rect.getY(), this.rect.getWidth(), this.rect.getHeight());
@@ -165,19 +135,13 @@ public class Skeleton {
 		}
 	}
 
-	private boolean isOnTheFloor() {
+	protected boolean isOnTheFloor() {
 		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect());
 	}
 
-	private void updateSpritePosition() {
-		if (this.isDirRight) {
-			this.currentSprite.setPosition(this.rect.getRect().getX() - 11, this.rect.getRect().getY() - 11);
-		} else {
-			this.currentSprite.setPosition(this.rect.getRect().getX() - 14, this.rect.getRect().getY() - 11);
-		}
-	}
+	protected abstract void setSpritePosition();
 
-	private void updateCurrentSprite(GameSpriteAnimation newSprite) {
+	private void setCurrentSprite(GameSpriteAnimation newSprite) {
 		if (this.currentSprite != newSprite) {
 			if (this.currentSprite != null) {
 				this.currentSprite.reset();
@@ -191,15 +155,15 @@ public class Skeleton {
 		if (this.hp > 0) {
 			this.applyGravity();
 			this.toMove();
-			this.updateSpritePosition();
+			this.setSpritePosition();
 
 			if (this.isDirRight) {
-				this.updateCurrentSprite(this.spriteRunLeft);
+				this.setCurrentSprite(this.spriteRunRight);
 			} else {
-				this.updateCurrentSprite(this.spriteRunRight);
+				this.setCurrentSprite(this.spriteRunLeft);
 			}
 		} else {
-			this.updateCurrentSprite(this.spriteDeath);
+			this.setCurrentSprite(this.spriteDeath);
 		}
 
 		this.currentSprite.tick();
