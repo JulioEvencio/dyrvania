@@ -66,8 +66,8 @@ public class Player {
 		this.hp = this.hpMax;
 
 		this.shieldTime = 2;
-		this.shieldActive = true;
-		this.shieldDamage = LocalDateTime.now().plusSeconds(this.shieldTime);
+		this.shieldActive = false;
+		this.shieldDamage = LocalDateTime.now().minusSeconds(this.shieldTime);
 
 		this.damage = 1;
 		this.isAttacking = false;

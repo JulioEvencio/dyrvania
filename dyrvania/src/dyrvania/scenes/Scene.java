@@ -110,10 +110,10 @@ public abstract class Scene {
 				skeleton.takeDamage(this.player.dealDamage());
 			}
 
+			skeleton.tick();
+
 			if (skeleton.isDead()) {
 				skeletonsRemove.add(skeleton);
-			} else {
-				skeleton.tick();
 			}
 
 			if (this.player.getRect().isColliding(skeleton.getRect())) {

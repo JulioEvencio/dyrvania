@@ -1,6 +1,7 @@
 package dyrvania.generics;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -20,6 +21,7 @@ public class GameSpriteAnimation {
 	private final int maxIndex;
 
 	private final BufferedImage[] sprites;
+	private final BufferedImage[] spritesDamage;
 
 	public GameSpriteAnimation(GameRect rect, int maxFrames, BufferedImage[] sprites) {
 		this.rect = rect;
@@ -35,6 +37,11 @@ public class GameSpriteAnimation {
 		this.maxIndex = sprites.length;
 
 		this.sprites = sprites;
+		this.spritesDamage = new BufferedImage[this.sprites.length];
+
+		for (int i = 0; i < this.spritesDamage.length; i++) {
+			this.spritesDamage[i] = this.createSpritesDamage(this.sprites[i]);
+		}
 	}
 
 	public int getIndex() {
@@ -74,6 +81,28 @@ public class GameSpriteAnimation {
 		}
 	}
 
+	private BufferedImage createSpritesDamage(BufferedImage original) {
+		BufferedImage damaged = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = damaged.createGraphics();
+
+		g.drawImage(original, 0, 0, null);
+
+		for (int y = 0; y < original.getHeight(); y++) {
+			for (int x = 0; x < original.getWidth(); x++) {
+				int pixel = original.getRGB(x, y);
+
+				if ((pixel >> 24) != 0x00) {
+					g.setColor(new Color(255, 0, 0, 128));
+					g.fillRect(x, y, 1, 1);
+				}
+			}
+		}
+
+		g.dispose();
+
+		return damaged;
+	}
+
 	public void render(Graphics render) {
 		if (this.alpha == 1f) {
 			render.drawImage(this.sprites[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
@@ -84,6 +113,12 @@ public class GameSpriteAnimation {
 			g.drawImage(this.sprites[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		}
+	}
+
+	public void renderDamage(Graphics render) {
+		Graphics2D g = (Graphics2D) render;
+
+		g.drawImage(this.spritesDamage[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
 	}
 
 }

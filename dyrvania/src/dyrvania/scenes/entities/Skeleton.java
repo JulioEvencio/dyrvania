@@ -30,6 +30,7 @@ public class Skeleton {
 
 	private final GameSpriteAnimation spriteRunRight;
 	private final GameSpriteAnimation spriteRunLeft;
+	private final GameSpriteAnimation spriteDeath;
 
 	public Skeleton(Scene scene, int x, int y) {
 		this.scene = scene;
@@ -70,6 +71,15 @@ public class Skeleton {
 
 		spriteRunLeft = new GameSpriteAnimation(spriteRect, 5, runLeft);
 
+		// Death
+		BufferedImage[] death = new BufferedImage[5];
+
+		for (int i = 0; i < 5; i++) {
+			death[i] = Spritesheet.getSpriteDeath(spriteWidth * i, 0, spriteWidth, spriteHeight);
+		}
+
+		spriteDeath = new GameSpriteAnimation(spriteRect, 5, death);
+
 		this.updateCurrentSprite(this.spriteRunRight);
 		this.updateSpritePosition();
 	}
@@ -79,7 +89,7 @@ public class Skeleton {
 	}
 
 	public boolean isDead() {
-		return this.hp <= 0;
+		return this.hp <= 0 && this.currentSprite.finishedAnimation();
 	}
 
 	public int dealDamage() {
@@ -178,21 +188,29 @@ public class Skeleton {
 	}
 
 	public void tick() {
-		this.applyGravity();
-		this.toMove();
-		this.updateSpritePosition();
+		if (this.hp > 0) {
+			this.applyGravity();
+			this.toMove();
+			this.updateSpritePosition();
 
-		if (this.isDirRight) {
-			this.updateCurrentSprite(this.spriteRunLeft);
+			if (this.isDirRight) {
+				this.updateCurrentSprite(this.spriteRunLeft);
+			} else {
+				this.updateCurrentSprite(this.spriteRunRight);
+			}
 		} else {
-			this.updateCurrentSprite(this.spriteRunRight);
+			this.updateCurrentSprite(this.spriteDeath);
 		}
 
 		this.currentSprite.tick();
 	}
 
 	public void render(Graphics render) {
-		this.currentSprite.render(render);
+		if (this.hasAShield) {
+			this.currentSprite.renderDamage(render);
+		} else {
+			this.currentSprite.render(render);
+		}
 	}
 
 }
