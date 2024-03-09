@@ -6,6 +6,7 @@ import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
 import dyrvania.generics.GameUtil;
+import dyrvania.resources.GameAudio;
 import dyrvania.scenes.Scene;
 
 public abstract class Enemy {
@@ -30,6 +31,8 @@ public abstract class Enemy {
 	protected GameSpriteAnimation spriteRunLeft;
 	protected GameSpriteAnimation spriteDeath;
 
+	private final GameAudio audioHit;
+
 	public Enemy(Scene scene, int x, int y, int width, int height, int hp, int damage, double speedX) {
 		this.scene = scene;
 
@@ -50,6 +53,8 @@ public abstract class Enemy {
 
 		this.setCurrentSprite(this.spriteRunRight);
 		this.setSpritePosition();
+
+		this.audioHit = new GameAudio("/audios/hit.wav");
 	}
 
 	protected abstract void loadSprites();
@@ -68,6 +73,9 @@ public abstract class Enemy {
 
 	public void takeDamage(int damage) {
 		if (!this.hasAShield) {
+			this.audioHit.stop();
+			this.audioHit.play();
+
 			this.hp -= damage;
 			this.hasAShield = true;
 		}

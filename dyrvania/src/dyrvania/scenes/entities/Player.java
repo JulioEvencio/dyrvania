@@ -8,6 +8,7 @@ import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
+import dyrvania.resources.GameAudio;
 import dyrvania.resources.Spritesheet;
 import dyrvania.scenes.Scene;
 
@@ -55,6 +56,10 @@ public class Player {
 
 	private final GameSpriteAnimation spriteAttackRight;
 	private final GameSpriteAnimation spriteAttackLeft;
+
+	private final GameAudio audioJump;
+	private final GameAudio audioHit;
+	private final GameAudio audioAttack;
 
 	public Player(Scene scene) {
 		this.scene = scene;
@@ -178,6 +183,10 @@ public class Player {
 
 		this.updateCurrentSprite(this.spriteIdleRight);
 		this.updateSpritePosition();
+
+		this.audioJump = new GameAudio("/audios/jump.wav");
+		this.audioHit = new GameAudio("/audios/hit_player.wav");
+		this.audioAttack = new GameAudio("/audios/attack.wav");
 	}
 
 	public GameRect getRect() {
@@ -206,6 +215,9 @@ public class Player {
 
 	public void takeDamage(int damage) {
 		if (!this.shieldActive) {
+			this.audioHit.stop();
+			this.audioHit.play();
+
 			this.hp -= damage;
 			this.shieldDamage = LocalDateTime.now().plusSeconds(this.shieldTime);
 		}
@@ -236,6 +248,9 @@ public class Player {
 
 	public void toJump() {
 		if (!this.isJump && !this.keyJump && this.isOnTheFloor()) {
+			this.audioJump.stop();
+			this.audioJump.play();
+
 			this.isJump = true;
 			this.keyJump = true;
 		}
@@ -247,6 +262,9 @@ public class Player {
 
 	public void toAttack() {
 		if (!this.keyAttack && !this.isAttacking && this.isOnTheFloor()) {
+			this.audioAttack.stop();
+			this.audioAttack.play();
+
 			this.keyAttack = true;
 			this.isAttacking = true;
 		}
