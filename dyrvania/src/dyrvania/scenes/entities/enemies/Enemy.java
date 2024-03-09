@@ -2,6 +2,7 @@ package dyrvania.scenes.entities.enemies;
 
 import java.awt.Graphics;
 
+import dyrvania.generics.GameDamage;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
@@ -18,7 +19,8 @@ public abstract class Enemy {
 	private int hp;
 	private final int hpMax;
 
-	private int damage;
+	private GameDamage damage;
+
 	private boolean hasAShield;
 
 	protected double speedX;
@@ -33,7 +35,7 @@ public abstract class Enemy {
 
 	private final GameAudio audioHit;
 
-	public Enemy(Scene scene, int x, int y, int width, int height, int hp, int damage, double speedX) {
+	public Enemy(Scene scene, int x, int y, int width, int height, int hp, GameDamage damage, double speedX) {
 		this.scene = scene;
 
 		this.rect = new GameRectEntity(x, y, width, height);
@@ -67,16 +69,16 @@ public abstract class Enemy {
 		return this.hp <= 0 && this.currentSprite.finishedAnimation();
 	}
 
-	public int dealDamage() {
+	public GameDamage dealDamage() {
 		return this.damage;
 	}
 
-	public void takeDamage(int damage) {
+	public void takeDamage(GameDamage damage) {
 		if (!this.hasAShield) {
 			this.audioHit.stop();
 			this.audioHit.play();
 
-			this.hp -= damage;
+			this.hp -= damage.getDamage();
 			this.hasAShield = true;
 		}
 	}

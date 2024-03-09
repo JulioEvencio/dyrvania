@@ -2,6 +2,8 @@ package dyrvania.scenes.entities.enemies;
 
 import java.awt.image.BufferedImage;
 
+import dyrvania.generics.GameDamage;
+import dyrvania.generics.GameDamage.GameDamageType;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
@@ -13,7 +15,7 @@ import dyrvania.scenes.Scene;
 public class Skull extends Enemy {
 
 	public Skull(Scene scene, int x, int y) {
-		super(scene, x, y, 16, 18, 1, 1, 1);
+		super(scene, x, y, 16, 18, 1, new GameDamage(3, GameDamageType.FIRE), 1);
 
 		super.speedY = (GameUtil.generateRandomNumber(0, 1) == 1) ? 1 : -1;
 	}

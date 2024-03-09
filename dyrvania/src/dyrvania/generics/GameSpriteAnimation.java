@@ -22,6 +22,7 @@ public class GameSpriteAnimation {
 
 	private final BufferedImage[] sprites;
 	private final BufferedImage[] spritesDamage;
+	private final BufferedImage[] spritesPoisoned;
 
 	public GameSpriteAnimation(GameRect rect, int maxFrames, BufferedImage[] sprites) {
 		this.rect = rect;
@@ -38,9 +39,11 @@ public class GameSpriteAnimation {
 
 		this.sprites = sprites;
 		this.spritesDamage = new BufferedImage[this.sprites.length];
+		this.spritesPoisoned = new BufferedImage[this.sprites.length];
 
 		for (int i = 0; i < this.spritesDamage.length; i++) {
-			this.spritesDamage[i] = this.createSpritesDamage(this.sprites[i]);
+			this.spritesDamage[i] = this.createSpritesColor(this.sprites[i], new Color(100, 0, 0, 128));
+			this.spritesPoisoned[i] = this.createSpritesColor(this.sprites[i], new Color(0, 100, 0, 128));
 		}
 	}
 
@@ -81,9 +84,9 @@ public class GameSpriteAnimation {
 		}
 	}
 
-	private BufferedImage createSpritesDamage(BufferedImage original) {
-		BufferedImage damaged = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = damaged.createGraphics();
+	private BufferedImage createSpritesColor(BufferedImage original, Color color) {
+		BufferedImage sprite = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = sprite.createGraphics();
 
 		g.drawImage(original, 0, 0, null);
 
@@ -92,7 +95,7 @@ public class GameSpriteAnimation {
 				int pixel = original.getRGB(x, y);
 
 				if ((pixel >> 24) != 0x00) {
-					g.setColor(new Color(255, 0, 0, 128));
+					g.setColor(color);
 					g.fillRect(x, y, 1, 1);
 				}
 			}
@@ -100,7 +103,7 @@ public class GameSpriteAnimation {
 
 		g.dispose();
 
-		return damaged;
+		return sprite;
 	}
 
 	public void render(Graphics render) {
@@ -119,6 +122,12 @@ public class GameSpriteAnimation {
 		Graphics2D g = (Graphics2D) render;
 
 		g.drawImage(this.spritesDamage[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
+	}
+
+	public void renderPoisoned(Graphics render) {
+		Graphics2D g = (Graphics2D) render;
+
+		g.drawImage(this.spritesPoisoned[this.index], this.rect.getX() - Camera.x, this.rect.getY() - Camera.y, this.rect.getWidth(), this.rect.getHeight(), null);
 	}
 
 }

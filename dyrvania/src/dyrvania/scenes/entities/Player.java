@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 import dyrvania.generics.Camera;
+import dyrvania.generics.GameDamage;
+import dyrvania.generics.GameDamage.GameDamageType;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
@@ -24,11 +26,15 @@ public class Player {
 	private int hp;
 	private final int hpMax;
 
+	private int poisonControl;
+	private boolean isPoisoning;
+
 	protected long shieldTime;
 	protected boolean shieldActive;
 	protected LocalDateTime shieldDamage;
 
-	private int damage;
+	private GameDamage damage;
+
 	private boolean isAttacking;
 	private boolean canDealDamage;
 
@@ -72,11 +78,14 @@ public class Player {
 		this.hpMax = 10;
 		this.hp = this.hpMax;
 
+		this.poisonControl = 0;
+		this.isPoisoning = false;
+
 		this.shieldTime = 2;
 		this.shieldActive = false;
 		this.shieldDamage = LocalDateTime.now().minusSeconds(this.shieldTime);
 
-		this.damage = 1;
+		this.damage = new GameDamage(1, GameDamageType.FIRE);
 		this.isAttacking = false;
 		this.canDealDamage = false;
 
@@ -207,7 +216,7 @@ public class Player {
 		return this.rectAttack;
 	}
 
-	public int dealDamage() {
+	public GameDamage dealDamage() {
 		return this.damage;
 	}
 
@@ -215,13 +224,17 @@ public class Player {
 		return this.currentSprite.getIndex() == 0;
 	}
 
-	public void takeDamage(int damage) {
+	public void takeDamage(GameDamage damage) {
 		if (!this.shieldActive) {
 			this.audioHit.stop();
 			this.audioHit.play();
 
-			this.hp -= damage;
+			this.hp -= damage.getDamage();
 			this.shieldDamage = LocalDateTime.now().plusSeconds(this.shieldTime);
+
+			if (damage.getType() == GameDamageType.POISON) {
+				this.isPoisoning = true;
+			}
 		}
 	}
 
@@ -387,6 +400,21 @@ public class Player {
 	}
 
 	public void tick() {
+		if (this.isPoisoning && this.hp > 1) {
+			this.poisonControl++;
+
+			if (this.poisonControl == 300) {
+				this.audioHit.stop();
+				this.audioHit.play();
+
+				this.hp--;
+				this.poisonControl = 0;
+			}
+		} else {
+			this.poisonControl = 0;
+			this.isPoisoning = false;
+		}
+
 		if (this.shieldDamage.isBefore(LocalDateTime.now())) {
 			this.shieldActive = false;
 			this.currentSprite.setAlpha(1f);
@@ -459,7 +487,11 @@ public class Player {
 	}
 
 	public void render(Graphics render) {
-		this.currentSprite.render(render);
+		if (this.isPoisoning) {
+			this.currentSprite.renderPoisoned(render);
+		} else {
+			this.currentSprite.render(render);
+		}
 
 		this.renderHp(render);
 		this.renderAttack(render);
@@ -482,7 +514,7 @@ public class Player {
 
 		render.setColor(Color.WHITE);
 		render.setFont(GameFont.getTinyFont());
-		render.drawString(String.format("ATK: %02d", this.damage), 175, 20);
+		render.drawString(String.format("ATK: %02d", this.damage.getDamage()), 175, 20);
 
 		render.drawRect(165, 5, 90, 20);
 	}

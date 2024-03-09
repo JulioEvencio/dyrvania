@@ -2,6 +2,8 @@ package dyrvania.scenes.entities.enemies;
 
 import java.awt.image.BufferedImage;
 
+import dyrvania.generics.GameDamage;
+import dyrvania.generics.GameDamage.GameDamageType;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameSpriteAnimation;
 import dyrvania.generics.GameSpriteAnimationFactory;
@@ -11,7 +13,7 @@ import dyrvania.scenes.Scene;
 public class Thing extends Enemy {
 
 	public Thing(Scene scene, int x, int y) {
-		super(scene, x, y, 15, 35, 10, 1, 0.1);
+		super(scene, x, y, 15, 35, 10, new GameDamage(1, GameDamageType.POISON), 0.1);
 	}
 
 	@Override
