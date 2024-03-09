@@ -11,6 +11,7 @@ public class GameFont {
 	private static final Font titleLarge;
 	private static final Font smallFont;
 	private static final Font defaultFont;
+	private static final Font tinyFont;
 
 	static {
 		Font auxFont = null;
@@ -25,6 +26,7 @@ public class GameFont {
 		titleLarge = auxFont.deriveFont(Font.BOLD, 50);
 		smallFont = auxFont.deriveFont(Font.BOLD, 15);
 		defaultFont = auxFont.deriveFont(Font.BOLD, 20);
+		tinyFont = auxFont.deriveFont(Font.BOLD, 10);
 	}
 
 	public static Font getTitle() {
@@ -41,6 +43,10 @@ public class GameFont {
 
 	public static Font getDefault() {
 		return GameFont.defaultFont;
+	}
+
+	public static Font getTinyFont() {
+		return GameFont.tinyFont;
 	}
 
 }

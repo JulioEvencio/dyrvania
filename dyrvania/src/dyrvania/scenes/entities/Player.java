@@ -1,5 +1,6 @@
 package dyrvania.scenes.entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
 import dyrvania.resources.GameAudio;
+import dyrvania.resources.GameFont;
 import dyrvania.resources.Spritesheet;
 import dyrvania.scenes.Scene;
 
@@ -458,6 +460,31 @@ public class Player {
 
 	public void render(Graphics render) {
 		this.currentSprite.render(render);
+
+		this.renderHp(render);
+		this.renderAttack(render);
+	}
+
+	private void renderHp(Graphics render) {
+		render.setColor(Color.BLACK);
+		render.fillRect(5, 5, 150, 20);
+
+		render.setColor(Color.WHITE);
+		render.setFont(GameFont.getTinyFont());
+		render.drawString(String.format("HP: %03d | %03d", this.hp, this.hpMax), 15, 20);
+
+		render.drawRect(5, 5, 150, 20);
+	}
+
+	private void renderAttack(Graphics render) {
+		render.setColor(Color.BLACK);
+		render.fillRect(165, 5, 90, 20);
+
+		render.setColor(Color.WHITE);
+		render.setFont(GameFont.getTinyFont());
+		render.drawString(String.format("ATK: %02d", this.damage), 175, 20);
+
+		render.drawRect(165, 5, 90, 20);
 	}
 
 }
