@@ -44,10 +44,10 @@ public class Skeleton extends Enemy {
 
 	@Override
 	protected void setSpritePosition() {
-		if (this.isDirRight) {
-			this.currentSprite.setPosition(this.rect.getRect().getX() - 14, this.rect.getRect().getY() - 12);
+		if (super.isDirRight) {
+			super.currentSprite.setPosition(super.rect.getRect().getX() - 14, super.rect.getRect().getY() - 12);
 		} else {
-			this.currentSprite.setPosition(this.rect.getRect().getX() - 20, this.rect.getRect().getY() - 12);
+			super.currentSprite.setPosition(super.rect.getRect().getX() - 20, super.rect.getRect().getY() - 12);
 		}
 	}
 

@@ -44,10 +44,10 @@ public class Thing extends Enemy {
 
 	@Override
 	protected void setSpritePosition() {
-		if (this.isDirRight) {
-			this.currentSprite.setPosition(this.rect.getRect().getX() - 8, this.rect.getRect().getY() - 10);
+		if (super.isDirRight) {
+			super.currentSprite.setPosition(super.rect.getRect().getX() - 8, super.rect.getRect().getY() - 10);
 		} else {
-			this.currentSprite.setPosition(this.rect.getRect().getX() - 9, this.rect.getRect().getY() - 10);
+			super.currentSprite.setPosition(super.rect.getRect().getX() - 9, super.rect.getRect().getY() - 10);
 		}
 	}
 

@@ -60,7 +60,7 @@ public class Player {
 		this.scene = scene;
 
 		this.rect = new GameRectEntity(0, 0, 20, 44);
-		this.rectAttack = new GameRect(0, 0, 52, 44);
+		this.rectAttack = new GameRect(0, 0, 31, 12);
 
 		this.hpMax = 10;
 		this.hp = this.hpMax;
@@ -207,7 +207,7 @@ public class Player {
 	public void takeDamage(int damage) {
 		if (!this.shieldActive) {
 			this.hp -= damage;
-			shieldDamage = LocalDateTime.now().plusSeconds(shieldTime);
+			this.shieldDamage = LocalDateTime.now().plusSeconds(this.shieldTime);
 		}
 	}
 
@@ -367,7 +367,7 @@ public class Player {
 	}
 
 	public void tick() {
-		if (shieldDamage.isBefore(LocalDateTime.now())) {
+		if (this.shieldDamage.isBefore(LocalDateTime.now())) {
 			this.shieldActive = false;
 			this.currentSprite.setAlpha(1f);
 		} else {
@@ -410,12 +410,12 @@ public class Player {
 		}
 
 		if (this.isDirRight) {
-			this.rectAttack.setX((int) this.rect.getX());
+			this.rectAttack.setX((int) this.rect.getX() + 20);
 		} else {
-			this.rectAttack.setX((int) this.rect.getX() - 32);
+			this.rectAttack.setX((int) this.rect.getX() - 31);
 		}
 
-		this.rectAttack.setY((int) this.rect.getY());
+		this.rectAttack.setY((int) this.rect.getY() + 11);
 
 		this.updateSpritePosition();
 
@@ -436,8 +436,6 @@ public class Player {
 		}
 
 		this.updateCamera();
-
-		System.out.println(this.hp);
 	}
 
 	public void render(Graphics render) {

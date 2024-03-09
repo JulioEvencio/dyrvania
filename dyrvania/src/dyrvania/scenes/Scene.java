@@ -43,24 +43,31 @@ public abstract class Scene {
 		this.buildGame();
 
 		this.player = new Player(this);
-		this.player.setPosition(250, 0);
+		this.player.setPosition(250, 50);
 
 		this.enemies = new ArrayList<>();
 
-		this.enemies.add(new Skull(this, 200, 0));
-		this.enemies.add(new Thing(this, 400, 0));
-		this.enemies.add(new Skeleton(this, 700, 0));
+		this.enemies.add(new Skull(this, 200, 50));
+		this.enemies.add(new Thing(this, 400, 50));
+		this.enemies.add(new Skeleton(this, 700, 50));
 
 		this.floors = new ArrayList<>();
 
 		for (int i = 1; i < this.game.getGameWidth() / this.sizeBaseTiles - 1; i++) {
 			this.floors.add(new Floor(this.sizeBaseTiles * i, 300, this.sizeBaseTiles, this.sizeBaseTiles));
+			this.floors.add(new Floor(this.sizeBaseTiles * i, 0, this.sizeBaseTiles, this.sizeBaseTiles));
+		}
+
+		for (int i = 1; i < this.game.getGameHeight() / this.sizeBaseTiles - 1; i++) {
+			this.floors.add(new Floor(0, this.sizeBaseTiles * i, this.sizeBaseTiles, this.sizeBaseTiles));
+			this.floors.add(new Floor(this.game.getGameHeight() + 300, this.sizeBaseTiles * i, this.sizeBaseTiles, this.sizeBaseTiles));
 		}
 
 		this.floors.add(new Floor(300, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300, 300 - this.sizeBaseTiles * 2, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(400, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(500, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+		this.floors.add(new Floor(200, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 2, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 3, this.sizeBaseTiles, this.sizeBaseTiles));
