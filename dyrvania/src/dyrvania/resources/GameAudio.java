@@ -5,6 +5,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 
 import dyrvania.Main;
 import dyrvania.strings.StringError;
@@ -14,6 +15,10 @@ public class GameAudio {
 	private Clip clip;
 
 	public GameAudio(String fileName) {
+		this(fileName, 0.0f);
+	}
+
+	public GameAudio(String fileName, float volume) {
 		try (AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(GameAudio.class.getResource(fileName))) {
 			AudioFormat format = audioInputStream.getFormat();
 			DataLine.Info info = new DataLine.Info(Clip.class, format);
@@ -29,6 +34,9 @@ public class GameAudio {
 					this.clip.open(newAudioInputStream);
 				}
 			}
+
+			FloatControl gainControl = (FloatControl) this.clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(volume);
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_AUDIOS.getValue());
 		}

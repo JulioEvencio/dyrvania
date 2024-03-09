@@ -54,7 +54,7 @@ public abstract class Enemy {
 		this.setCurrentSprite(this.spriteRunRight);
 		this.setSpritePosition();
 
-		this.audioHit = new GameAudio("/audios/hit.wav");
+		this.audioHit = new GameAudio("/audios/hit.wav", -15f);
 	}
 
 	protected abstract void loadSprites();
