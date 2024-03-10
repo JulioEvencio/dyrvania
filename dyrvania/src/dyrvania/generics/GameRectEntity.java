@@ -2,13 +2,13 @@ package dyrvania.generics;
 
 public class GameRectEntity {
 
-	private double x;
-	private double y;
+	private float x;
+	private float y;
 
 	private int width;
 	private int height;
 
-	public GameRectEntity(double x, double y, int width, int height) {
+	public GameRectEntity(float x, float y, int width, int height) {
 		this.x = x;
 		this.y = y;
 
@@ -16,24 +16,24 @@ public class GameRectEntity {
 		this.height = height;
 	}
 
-	public double getX() {
-		return x;
+	public float getX() {
+		return this.x;
 	}
 
-	public void setX(double x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 
-	public double getY() {
-		return y;
+	public float getY() {
+		return this.y;
 	}
 
-	public void setY(double y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public void setWidth(int width) {
@@ -41,7 +41,7 @@ public class GameRectEntity {
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public void setHeight(int height) {
@@ -49,7 +49,7 @@ public class GameRectEntity {
 	}
 
 	public GameRect getRect() {
-		return new GameRect((int) x, (int) y, width, height);
+		return new GameRect((int) this.x, (int) this.y, this.width, this.height);
 	}
 
 }

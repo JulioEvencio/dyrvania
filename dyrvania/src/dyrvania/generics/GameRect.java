@@ -17,7 +17,7 @@ public class GameRect {
 	}
 
 	public int getX() {
-		return x;
+		return this.x;
 	}
 
 	public void setX(int x) {
@@ -25,7 +25,7 @@ public class GameRect {
 	}
 
 	public int getY() {
-		return y;
+		return this.y;
 	}
 
 	public void setY(int y) {
@@ -33,7 +33,7 @@ public class GameRect {
 	}
 
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 
 	public void setWidth(int width) {
@@ -41,7 +41,7 @@ public class GameRect {
 	}
 
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 
 	public void setHeight(int height) {
@@ -49,10 +49,7 @@ public class GameRect {
 	}
 
 	public boolean isColliding(GameRect rect) {
-		boolean collisionX = (this.x < rect.x + rect.width) && (this.x + this.width > rect.x);
-		boolean collisionY = (this.y < rect.y + rect.height) && (this.y + this.height > rect.y);
-
-		return collisionX && collisionY;
+		return this.x < rect.x + rect.width && this.x + this.width > rect.x && this.y < rect.y + rect.height && this.y + this.height > rect.y;
 	}
 
 	public boolean wasClicked(int x, int y) {

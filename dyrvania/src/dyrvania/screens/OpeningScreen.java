@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import dyrvania.Game;
+import dyrvania.generics.GameColors;
 import dyrvania.generics.GameStatus;
 import dyrvania.gui.GameText;
 import dyrvania.resources.GameFont;
@@ -34,7 +35,7 @@ public class OpeningScreen {
 		int textX = (game.getGameWidth() - textWidth) / 2;
 		int textY = (game.getGameHeight() - textHeight) / 2 + render.getFontMetrics().getAscent();
 
-		this.title = new GameText(StringGame.TITLE.getValue(), textX, textY, Color.WHITE, GameFont.getTitleLarge());
+		this.title = new GameText(StringGame.TITLE.getValue(), textX, textY, GameColors.WHITE, GameFont.getTitleLarge());
 	}
 
 	public void tick() {

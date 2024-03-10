@@ -7,7 +7,7 @@ import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
 import dyrvania.generics.GameUtil;
-import dyrvania.resources.GameAudio;
+import dyrvania.managers.GameManagerAudio;
 import dyrvania.scenes.Scene;
 
 public abstract class Enemy {
@@ -23,8 +23,8 @@ public abstract class Enemy {
 
 	private boolean hasAShield;
 
-	protected double speedX;
-	protected double speedY;
+	protected float speedX;
+	protected float speedY;
 
 	protected boolean isDirRight;
 	protected GameSpriteAnimation currentSprite;
@@ -33,9 +33,7 @@ public abstract class Enemy {
 	protected GameSpriteAnimation spriteRunLeft;
 	protected GameSpriteAnimation spriteDeath;
 
-	private final GameAudio audioHit;
-
-	public Enemy(Scene scene, int x, int y, int width, int height, int hp, GameDamage damage, double speedX) {
+	public Enemy(Scene scene, int x, int y, int width, int height, int hp, GameDamage damage, float speedX) {
 		this.scene = scene;
 
 		this.rect = new GameRectEntity(x, y, width, height);
@@ -47,7 +45,7 @@ public abstract class Enemy {
 		this.hasAShield = false;
 
 		this.speedX = speedX;
-		this.speedY = 0;
+		this.speedY = 0f;
 
 		this.isDirRight = GameUtil.generateRandomNumber(0, 1) == 0;
 
@@ -55,8 +53,6 @@ public abstract class Enemy {
 
 		this.setCurrentSprite(this.spriteRunRight);
 		this.setSpritePosition();
-
-		this.audioHit = new GameAudio("/audios/hit.wav", -15f);
 	}
 
 	protected abstract void loadSprites();
@@ -75,8 +71,7 @@ public abstract class Enemy {
 
 	public void takeDamage(GameDamage damage) {
 		if (!this.hasAShield) {
-			this.audioHit.stop();
-			this.audioHit.play();
+			GameManagerAudio.getAudioEnemyHit().play();
 
 			this.hp -= damage.getDamage();
 			this.hasAShield = true;
@@ -97,15 +92,15 @@ public abstract class Enemy {
 	protected void applyGravity() {
 		this.speedY += this.scene.getGravity();
 
-		if (this.speedY > 7) {
-			this.speedY = 7;
+		if (this.speedY > 7f) {
+			this.speedY = 7f;
 		}
 
-		for (double i = 0; i <= this.speedY; i += 0.5) {
+		for (float i = 0f; i <= this.speedY; i += 0.5f) {
 			if (!this.isOnTheFloor()) {
-				this.rect.setY(this.rect.getY() + 0.5);
+				this.rect.setY(this.rect.getY() + 0.5f);
 			} else {
-				this.speedY = 0;
+				this.speedY = 0f;
 				break;
 			}
 		}
@@ -113,25 +108,25 @@ public abstract class Enemy {
 
 	protected void toMove() {
 		if (this.isOnTheFloor()) {
-			double vel;
+			float vel;
 			GameRectEntity newRect = new GameRectEntity(this.rect.getX(), this.rect.getY(), this.rect.getWidth(), this.rect.getHeight());
 
 			if (this.isDirRight) {
-				vel = 0.5;
+				vel = 0.5f;
 				newRect.setX(newRect.getX() + newRect.getWidth());
 			} else {
-				vel = -0.5;
+				vel = -0.5f;
 				newRect.setX(newRect.getX() - newRect.getWidth());
 			}
 
-			newRect.setY(newRect.getY() + 0.5);
+			newRect.setY(newRect.getY() + 0.5f);
 
-			for (double i = 0; i <= this.speedX; i += 0.5) {
+			for (float i = 0f; i <= this.speedX; i += 0.5f) {
 				if (this.scene.isFree(new GameRectEntity(this.rect.getX() + vel, this.rect.getY(), this.rect.getWidth(), this.rect.getHeight()).getRect())) {
 					this.rect.setX(this.rect.getX() + vel);
 
 					if (!this.isOnTheFloor()) {
-						this.rect.setY(this.rect.getY() + 0.5);
+						this.rect.setY(this.rect.getY() + 0.5f);
 					}
 				} else {
 					this.isDirRight = !this.isDirRight;
@@ -146,7 +141,7 @@ public abstract class Enemy {
 	}
 
 	protected boolean isOnTheFloor() {
-		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5, this.rect.getWidth(), this.rect.getHeight()).getRect());
+		return !this.scene.isFree(new GameRectEntity(this.rect.getX(), this.rect.getY() + 0.5f, this.rect.getWidth(), this.rect.getHeight()).getRect());
 	}
 
 	protected abstract void setSpritePosition();

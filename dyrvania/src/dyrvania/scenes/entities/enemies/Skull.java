@@ -15,7 +15,7 @@ import dyrvania.scenes.Scene;
 public class Skull extends Enemy {
 
 	public Skull(Scene scene, int x, int y) {
-		super(scene, x, y, 16, 18, 1, new GameDamage(3, GameDamageType.FIRE), 1);
+		super(scene, x, y, 16, 18, 1, new GameDamage(3, GameDamageType.FIRE), 1f);
 
 		super.speedY = (GameUtil.generateRandomNumber(0, 1) == 1) ? 1 : -1;
 	}
@@ -59,15 +59,15 @@ public class Skull extends Enemy {
 
 	@Override
 	protected void toMove() {
-		double velX;
+		float velX;
 
 		if (super.isDirRight) {
-			velX = 0.5;
+			velX = 0.5f;
 		} else {
-			velX = -0.5;
+			velX = -0.5f;
 		}
 
-		for (double i = 0; i <= super.speedX; i += 0.5) {
+		for (float i = 0f; i <= super.speedX; i += 0.5f) {
 			if (super.scene.isFree(new GameRectEntity(super.rect.getX() + velX, super.rect.getY(), super.rect.getWidth(), super.rect.getHeight()).getRect())) {
 				super.rect.setX(super.rect.getX() + velX);
 			} else {

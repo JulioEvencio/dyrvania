@@ -2,10 +2,8 @@ package dyrvania;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -20,11 +18,12 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
+import dyrvania.generics.GameColors;
 import dyrvania.generics.GameStatus;
+import dyrvania.managers.GameManagerAudio;
 import dyrvania.resources.GameAudio;
 import dyrvania.resources.GameFont;
 import dyrvania.scenes.Scene;
-import dyrvania.scenes.levels.Level01;
 import dyrvania.screens.Exit;
 import dyrvania.screens.MainMenu;
 import dyrvania.screens.OpeningScreen;
@@ -44,7 +43,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	private final int WIDTH;
 	private final int HEIGHT;
-	private final double SCREEN_RATIO;
+
+	private final float SCREEN_RATIO;
 
 	private int windowWidth;
 	private int windowHeight;
@@ -75,8 +75,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	private boolean enableAudio;
 	private GameAudio audioNow;
 
-	private final GameAudio audioMenu;
-
 	public Game() {
 		this.addKeyListener(this);
 		this.addMouseListener(this);
@@ -85,7 +83,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		this.WIDTH = 800;
 		this.HEIGHT = 450;
-		this.SCREEN_RATIO = (double) this.WIDTH / (double) this.HEIGHT;
+
+		this.SCREEN_RATIO = (float) this.WIDTH / (float) this.HEIGHT;
 
 		this.windowWidth = this.WIDTH;
 		this.windowHeight = this.HEIGHT;
@@ -108,10 +107,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.frame.setVisible(true);
 
 		try {
-			Image imageCursor = ImageIO.read(getClass().getResource("/sprites/cursor.png"));
-			Cursor cursor = Toolkit.getDefaultToolkit().createCustomCursor(imageCursor, new Point(0, 0), "cursor");
-
-			this.frame.setCursor(cursor);
+			this.frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(ImageIO.read(getClass().getResource("/sprites/cursor.png")), new Point(0, 0), "cursor"));
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());
 		}
@@ -132,13 +128,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		this.enableAudio = true;
 
-		this.audioMenu = new GameAudio("/audios/menu.wav");
-
-		this.updateAudio(this.audioMenu);
+		this.setAudio(GameManagerAudio.getAudioMenu());
 		this.initializeScreen();
-		this.scene = new Level01(this);
-		this.updateGameStatus(GameStatus.RUN);
-		// this.updateGameStatus(GameStatus.OPENING_SCREEN);
+		this.setGameStatus(GameStatus.TRANSITION);
 	}
 
 	public String getVersion() {
@@ -183,10 +175,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public void setTransition(GameStatus gameStatus) {
 		this.transition.setNextGameStatus(gameStatus);
-		this.updateGameStatus(GameStatus.TRANSITION);
+		this.setGameStatus(GameStatus.TRANSITION);
 	}
 
-	public void updateGameStatus(GameStatus gameStatus) {
+	public void setGameStatus(GameStatus gameStatus) {
 		this.lastGameStatus = this.gameStatus;
 		this.gameStatus = gameStatus;
 	}
@@ -203,7 +195,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.scene = scene;
 	}
 
-	private void updateAudio(GameAudio audio) {
+	private void setAudio(GameAudio audio) {
 		if (this.audioNow != audio) {
 			if (this.audioNow != null) {
 				this.audioNow.stop();
@@ -262,7 +254,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	private void tick() {
 		if (this.enableAudio) {
-			this.audioNow.play();
+			this.audioNow.loop();
 		} else {
 			this.audioNow.stop();
 		}
@@ -311,10 +303,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		}
 
 		if (this.showFPS) {
-			render.setColor(Color.BLACK);
+			render.setColor(GameColors.BLACK);
 			render.fillRect(this.WIDTH - 200, 10, 180, 30);
 
-			render.setColor(Color.WHITE);
+			render.setColor(GameColors.WHITE);
 			render.setFont(GameFont.getSmall());
 			render.drawString(String.format("FPS: %d", this.fps), this.WIDTH - 180, 32);
 
@@ -349,6 +341,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		while (true) {
 			frames++;
+
 			long now = System.nanoTime();
 
 			delta += (now - lastTime) / ns;

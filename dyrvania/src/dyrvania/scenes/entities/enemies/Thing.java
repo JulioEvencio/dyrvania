@@ -13,7 +13,7 @@ import dyrvania.scenes.Scene;
 public class Thing extends Enemy {
 
 	public Thing(Scene scene, int x, int y) {
-		super(scene, x, y, 15, 35, 10, new GameDamage(1, GameDamageType.POISON), 0.1);
+		super(scene, x, y, 15, 35, 10, new GameDamage(1, GameDamageType.POISON), 0.1f);
 	}
 
 	@Override

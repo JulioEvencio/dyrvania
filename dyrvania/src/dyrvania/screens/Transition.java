@@ -1,9 +1,9 @@
 package dyrvania.screens;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import dyrvania.Game;
+import dyrvania.generics.GameColors;
 import dyrvania.generics.GameStatus;
 
 public class Transition {
@@ -32,12 +32,12 @@ public class Transition {
 
 		if (this.frames > 10) {
 			this.frames = 0;
-			this.game.updateGameStatus(this.nextGameStatus);
+			this.game.setGameStatus(this.nextGameStatus);
 		}
 	}
 
 	public void render(Graphics render) {
-		render.setColor(Color.BLACK);
+		render.setColor(GameColors.BLACK);
 		render.fillRect(0, 0, this.game.getGameWidth(), this.game.getHeight());
 	}
 

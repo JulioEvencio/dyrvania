@@ -1,9 +1,9 @@
 package dyrvania.screens;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import dyrvania.Game;
+import dyrvania.generics.GameColors;
 import dyrvania.generics.GameStatus;
 import dyrvania.gui.GameButton;
 import dyrvania.gui.GameText;
@@ -31,7 +31,7 @@ public class MainMenu extends Screen {
 		super.buttons.add(new GameButton(game, StringScreen.CREDITS.getValue(), leftX, 220, () -> System.out.println("Credits")));
 		super.buttons.add(new GameButton(game, StringScreen.SETTINGS.getValue(), rightX, 220, () -> System.out.println("Settings")));
 
-		super.buttons.add(new GameButton(game, StringScreen.EXIT.getValue(), centerX, 320, () -> game.updateGameStatus(GameStatus.EXIT)));
+		super.buttons.add(new GameButton(game, StringScreen.EXIT.getValue(), centerX, 320, () -> game.setGameStatus(GameStatus.EXIT)));
 
 		Graphics render = game.getRender();
 
@@ -39,7 +39,7 @@ public class MainMenu extends Screen {
 
 		int fullScreenWidth = render.getFontMetrics().stringWidth(StringScreen.TUTORIAL_FULL_SCREEN.getValue());
 
-		super.texts.add(new GameText(StringScreen.TUTORIAL_FULL_SCREEN.getValue(), (game.getGameWidth() - fullScreenWidth) / 2, 420, Color.WHITE, GameFont.getSmall()));
+		super.texts.add(new GameText(StringScreen.TUTORIAL_FULL_SCREEN.getValue(), (game.getGameWidth() - fullScreenWidth) / 2, 420, GameColors.WHITE, GameFont.getSmall()));
 	}
 
 	@Override

@@ -86,8 +86,8 @@ public class GameButton {
 			x -= this.game.getRendererX();
 			y -= this.game.getRendererY();
 
-			x *= (double) this.game.getGameWidth() / (double) this.game.getRendererWidth();
-			y *= (double) this.game.getGameHeight() / (double) this.game.getRendererHeight();
+			x *= (float) this.game.getGameWidth() / (float) this.game.getRendererWidth();
+			y *= (float) this.game.getGameHeight() / (float) this.game.getRendererHeight();
 		}
 
 		return x >= this.x && x <= this.x + GameButton.widthPressed && y >= this.y && y <= this.y + GameButton.heightPressed;

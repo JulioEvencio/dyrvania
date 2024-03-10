@@ -1,6 +1,5 @@
 package dyrvania.screens;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -8,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dyrvania.Game;
+import dyrvania.generics.GameColors;
 import dyrvania.generics.GameStatus;
 import dyrvania.gui.GameButton;
 import dyrvania.gui.GameText;
@@ -44,7 +44,7 @@ public abstract class Screen {
 
 		int titleWidth = render.getFontMetrics().stringWidth(title);
 
-		this.title = new GameText(title, (game.getGameWidth() - titleWidth) / 2, 80, Color.WHITE, GameFont.getTitle());
+		this.title = new GameText(title, (game.getGameWidth() - titleWidth) / 2, 80, GameColors.WHITE, GameFont.getTitle());
 
 		this.texts = new ArrayList<>();
 		this.buttons = new ArrayList<>();
@@ -55,7 +55,7 @@ public abstract class Screen {
 		this.mouseX = 0;
 		this.mouseY = 0;
 
-		this.texts.add(new GameText(String.format("v %s", this.game.getVersion()), 25, 25, Color.WHITE, GameFont.getSmall()));
+		this.texts.add(new GameText(String.format("v %s", this.game.getVersion()), 25, 25, GameColors.WHITE, GameFont.getSmall()));
 	}
 
 	public abstract GameStatus getGameStatus();

@@ -13,7 +13,7 @@ import dyrvania.scenes.Scene;
 public class Skeleton extends Enemy {
 
 	public Skeleton(Scene scene, int x, int y) {
-		super(scene, x, y, 10, 40, 3, new GameDamage(1, GameDamageType.NORMAL), 0.5);
+		super(scene, x, y, 10, 40, 3, new GameDamage(1, GameDamageType.NORMAL), 0.5f);
 	}
 
 	@Override

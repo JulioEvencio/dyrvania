@@ -1,9 +1,9 @@
 package dyrvania.screens;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import dyrvania.Game;
+import dyrvania.generics.GameColors;
 import dyrvania.generics.GameStatus;
 import dyrvania.gui.GameButton;
 import dyrvania.gui.GameText;
@@ -30,14 +30,14 @@ public class SelectLanguage extends Screen {
 
 		int fullScreenWidth = render.getFontMetrics().stringWidth(StringScreen.TUTORIAL_FULL_SCREEN.getValue());
 
-		super.texts.add(new GameText(StringScreen.TUTORIAL_FULL_SCREEN.getValue(), (game.getGameWidth() - fullScreenWidth) / 2, 420, Color.WHITE, GameFont.getSmall()));
+		super.texts.add(new GameText(StringScreen.TUTORIAL_FULL_SCREEN.getValue(), (game.getGameWidth() - fullScreenWidth) / 2, 420, GameColors.WHITE, GameFont.getSmall()));
 	}
 
 	private void selectLanguage(Language language, Game game) {
 		Translation.changeTheLanguage(language);
 
 		game.initializeScreen();
-		game.updateGameStatus(GameStatus.MAIN_MENU);
+		game.setGameStatus(GameStatus.MAIN_MENU);
 	}
 
 	@Override

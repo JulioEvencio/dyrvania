@@ -43,6 +43,13 @@ public class GameAudio {
 	}
 
 	public void play() {
+		this.stop();
+
+		this.clip.setFramePosition(0);
+		this.clip.start();
+	}
+
+	public void loop() {
 		if (!this.clip.isRunning()) {
 			this.clip.setFramePosition(0);
 			this.clip.start();

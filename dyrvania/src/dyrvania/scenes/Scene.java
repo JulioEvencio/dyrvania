@@ -10,7 +10,7 @@ import java.util.List;
 import dyrvania.Game;
 import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
-import dyrvania.resources.GameAudio;
+import dyrvania.managers.GameManagerAudio;
 import dyrvania.scenes.entities.Player;
 import dyrvania.scenes.entities.enemies.Enemy;
 import dyrvania.scenes.entities.enemies.Skeleton;
@@ -24,7 +24,7 @@ public abstract class Scene {
 
 	private final Game game;
 
-	private final double gravity;
+	private final float gravity;
 
 	private final int sizeBaseTiles;
 
@@ -39,12 +39,10 @@ public abstract class Scene {
 
 	private final List<Floor> floors;
 
-	private final GameAudio audioObject;
-
 	public Scene(Game game) {
 		this.game = game;
 
-		this.gravity = 0.5;
+		this.gravity = 0.5f;
 
 		this.sizeBaseTiles = 32;
 
@@ -64,6 +62,11 @@ public abstract class Scene {
 		this.enemies.add(new Skull(this, 200, 50));
 		this.enemies.add(new Thing(this, 400, 50));
 		this.enemies.add(new Skeleton(this, 700, 50));
+		
+		for (int i = 0; i < 999; i++) {
+			System.out.println(i);
+			// this.enemies.add(new Skeleton(this, 700, 50));
+		}
 
 		this.floors = new ArrayList<>();
 
@@ -92,8 +95,6 @@ public abstract class Scene {
 		this.floors.add(new Floor(300 + 32 * 5, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300 + 32 * 6, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300 + 32 * 7, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-
-		this.audioObject = new GameAudio("/audios/objects.wav");
 	}
 
 	public double getGravity() {
@@ -154,16 +155,14 @@ public abstract class Scene {
 		this.enemies.removeAll(enemiesRemove);
 
 		if (this.life != null && this.player.getRect().isColliding(this.life.getRect())) {
-			this.audioObject.stop();
-			this.audioObject.play();
+			GameManagerAudio.getAudioObject().play();
 
 			this.player.increaseHp();
 			this.life = null;
 		}
 
 		if (this.sword != null && this.player.getRect().isColliding(this.sword.getRect())) {
-			this.audioObject.stop();
-			this.audioObject.play();
+			GameManagerAudio.getAudioObject().play();
 
 			this.player.increaseAttack();
 			this.sword = null;
@@ -235,12 +234,12 @@ public abstract class Scene {
 
 	public void mousePressed(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1) {
-			this.player.updateDir(false);
+			this.player.setDir(false);
 			this.player.toAttack();
 		}
 
 		if (e.getButton() == MouseEvent.BUTTON3) {
-			this.player.updateDir(true);
+			this.player.setDir(true);
 			this.player.toAttack();
 		}
 	}
