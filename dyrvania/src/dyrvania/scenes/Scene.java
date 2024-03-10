@@ -62,11 +62,6 @@ public abstract class Scene {
 		this.enemies.add(new Skull(this, 200, 50));
 		this.enemies.add(new Thing(this, 400, 50));
 		this.enemies.add(new Skeleton(this, 700, 50));
-		
-		for (int i = 0; i < 999; i++) {
-			System.out.println(i);
-			// this.enemies.add(new Skeleton(this, 700, 50));
-		}
 
 		this.floors = new ArrayList<>();
 

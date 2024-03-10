@@ -176,7 +176,7 @@ public abstract class Enemy {
 
 	public void render(Graphics render) {
 		if (this.hasAShield) {
-			this.currentSprite.renderDamage(render);
+			this.currentSprite.renderSpritesSecondary(render);
 		} else {
 			this.currentSprite.render(render);
 		}

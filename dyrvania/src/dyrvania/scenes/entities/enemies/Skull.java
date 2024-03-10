@@ -1,15 +1,12 @@
 package dyrvania.scenes.entities.enemies;
 
-import java.awt.image.BufferedImage;
-
 import dyrvania.generics.GameDamage;
 import dyrvania.generics.GameDamage.GameDamageType;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
-import dyrvania.generics.GameSpriteAnimation;
-import dyrvania.generics.GameSpriteAnimationFactory;
 import dyrvania.generics.GameUtil;
-import dyrvania.resources.Spritesheet;
+import dyrvania.managers.GameManagerSpriteDeath;
+import dyrvania.managers.entities.enemies.GameManagerSpriteSkull;
 import dyrvania.scenes.Scene;
 
 public class Skull extends Enemy {
@@ -22,30 +19,12 @@ public class Skull extends Enemy {
 
 	@Override
 	public void loadSprites() {
-		int spriteWidth = 96;
-		int spriteHeight = 112;
+		GameRect spriteRect = new GameRect(0, 0, 96 / 3, 112 / 3);
 
-		GameRect spriteRect = new GameRect(0, 0, spriteWidth / 3, spriteHeight / 3);
+		super.spriteRunRight = GameManagerSpriteSkull.createSpriteRunRight(spriteRect);
+		super.spriteRunLeft = GameManagerSpriteSkull.createSpriteRunLeft(spriteRect);
 
-		// Run Right
-		BufferedImage[] runRight = new BufferedImage[8];
-
-		for (int i = 0; i < runRight.length; i++) {
-			runRight[i] = Spritesheet.getSpriteSkull(spriteWidth * i, 112, spriteWidth, spriteHeight);
-		}
-
-		super.spriteRunRight = new GameSpriteAnimation(spriteRect, 5, runRight);
-
-		// Run Left
-		BufferedImage[] runLeft = new BufferedImage[8];
-
-		for (int i = 0; i < runLeft.length; i++) {
-			runLeft[i] = Spritesheet.getSpriteSkull(spriteWidth * i, 0, spriteWidth, spriteHeight);
-		}
-
-		super.spriteRunLeft = new GameSpriteAnimation(spriteRect, 5, runLeft);
-
-		super.spriteDeath = GameSpriteAnimationFactory.createSpriteDeath(spriteRect);
+		super.spriteDeath = GameManagerSpriteDeath.createSpriteDeath(spriteRect);
 	}
 
 	@Override

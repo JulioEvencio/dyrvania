@@ -1,7 +1,6 @@
 package dyrvania.scenes.entities;
 
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 import dyrvania.generics.Camera;
@@ -12,8 +11,8 @@ import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
 import dyrvania.managers.GameManagerAudio;
+import dyrvania.managers.entities.GameManagerSpritePlayer;
 import dyrvania.resources.GameFont;
-import dyrvania.resources.Spritesheet;
 import dyrvania.scenes.Scene;
 
 public class Player {
@@ -99,94 +98,19 @@ public class Player {
 
 		this.isDirRight = true;
 
-		int spriteWidth = 100;
-		int spriteHeight = 59;
+		GameRect spriteRect = new GameRect(0, 0, 100, 59);
 
-		GameRect spriteRect = new GameRect(0, 0, spriteWidth, spriteHeight);
+		this.spriteIdleRight = GameManagerSpritePlayer.createSpriteIdleRight(spriteRect);
+		this.spriteIdleLeft = GameManagerSpritePlayer.createSpriteIdleLeft(spriteRect);
 
-		this.currentSprite = null;
+		this.spriteJumpRight = GameManagerSpritePlayer.createSpriteJumpRight(spriteRect);
+		this.spriteJumpLeft = GameManagerSpritePlayer.createSpriteJumpLeft(spriteRect);
 
-		// Idle Right
-		BufferedImage[] idleRight = new BufferedImage[4];
+		this.spriteRunRight = GameManagerSpritePlayer.createSpriteRunRight(spriteRect);
+		this.spriteRunLeft = GameManagerSpritePlayer.createSpriteRunLeft(spriteRect);
 
-		idleRight[0] = Spritesheet.getSpritePlayer(0, 0, spriteWidth, spriteHeight);
-		idleRight[1] = Spritesheet.getSpritePlayer(100, 0, spriteWidth, spriteHeight);
-		idleRight[2] = Spritesheet.getSpritePlayer(200, 0, spriteWidth, spriteHeight);
-		idleRight[3] = Spritesheet.getSpritePlayer(300, 0, spriteWidth, spriteHeight);
-
-		this.spriteIdleRight = new GameSpriteAnimation(spriteRect, 15, idleRight);
-
-		// Idle Left
-		BufferedImage[] idleLeft = new BufferedImage[4];
-
-		idleLeft[0] = Spritesheet.getSpritePlayer(0, 59, spriteWidth, spriteHeight);
-		idleLeft[1] = Spritesheet.getSpritePlayer(100, 59, spriteWidth, spriteHeight);
-		idleLeft[2] = Spritesheet.getSpritePlayer(200, 59, spriteWidth, spriteHeight);
-		idleLeft[3] = Spritesheet.getSpritePlayer(300, 59, spriteWidth, spriteHeight);
-
-		this.spriteIdleLeft = new GameSpriteAnimation(spriteRect, 15, idleLeft);
-
-		// Jump Right
-		BufferedImage[] jumpRight = new BufferedImage[2];
-
-		jumpRight[0] = Spritesheet.getSpritePlayer(400, 0, spriteWidth, spriteHeight);
-		jumpRight[1] = Spritesheet.getSpritePlayer(500, 0, spriteWidth, spriteHeight);
-
-		this.spriteJumpRight = new GameSpriteAnimation(spriteRect, 15, jumpRight);
-
-		// Jump Left
-		BufferedImage[] jumpLeft = new BufferedImage[2];
-
-		jumpLeft[0] = Spritesheet.getSpritePlayer(400, 59, spriteWidth, spriteHeight);
-		jumpLeft[1] = Spritesheet.getSpritePlayer(500, 59, spriteWidth, spriteHeight);
-
-		this.spriteJumpLeft = new GameSpriteAnimation(spriteRect, 15, jumpLeft);
-
-		// Run Right
-		BufferedImage[] runRight = new BufferedImage[6];
-
-		runRight[0] = Spritesheet.getSpritePlayer(0, 118, spriteWidth, spriteHeight);
-		runRight[1] = Spritesheet.getSpritePlayer(100, 118, spriteWidth, spriteHeight);
-		runRight[2] = Spritesheet.getSpritePlayer(200, 118, spriteWidth, spriteHeight);
-		runRight[3] = Spritesheet.getSpritePlayer(300, 118, spriteWidth, spriteHeight);
-		runRight[4] = Spritesheet.getSpritePlayer(400, 118, spriteWidth, spriteHeight);
-		runRight[5] = Spritesheet.getSpritePlayer(500, 118, spriteWidth, spriteHeight);
-
-		this.spriteRunRight = new GameSpriteAnimation(spriteRect, 10, runRight);
-
-		// Run Left
-		BufferedImage[] runLeft = new BufferedImage[6];
-
-		runLeft[0] = Spritesheet.getSpritePlayer(0, 177, spriteWidth, spriteHeight);
-		runLeft[1] = Spritesheet.getSpritePlayer(100, 177, spriteWidth, spriteHeight);
-		runLeft[2] = Spritesheet.getSpritePlayer(200, 177, spriteWidth, spriteHeight);
-		runLeft[3] = Spritesheet.getSpritePlayer(300, 177, spriteWidth, spriteHeight);
-		runLeft[4] = Spritesheet.getSpritePlayer(400, 177, spriteWidth, spriteHeight);
-		runLeft[5] = Spritesheet.getSpritePlayer(500, 177, spriteWidth, spriteHeight);
-
-		this.spriteRunLeft = new GameSpriteAnimation(spriteRect, 10, runLeft);
-
-		// Attack Right
-		BufferedImage[] attackRight = new BufferedImage[5];
-
-		attackRight[0] = Spritesheet.getSpritePlayer(0, 236, spriteWidth, spriteHeight);
-		attackRight[1] = Spritesheet.getSpritePlayer(100, 236, spriteWidth, spriteHeight);
-		attackRight[2] = Spritesheet.getSpritePlayer(200, 236, spriteWidth, spriteHeight);
-		attackRight[3] = Spritesheet.getSpritePlayer(300, 236, spriteWidth, spriteHeight);
-		attackRight[4] = Spritesheet.getSpritePlayer(400, 236, spriteWidth, spriteHeight);
-
-		this.spriteAttackRight = new GameSpriteAnimation(spriteRect, 5, attackRight);
-
-		// Attack Left
-		BufferedImage[] attackLeft = new BufferedImage[5];
-
-		attackLeft[0] = Spritesheet.getSpritePlayer(0, 295, spriteWidth, spriteHeight);
-		attackLeft[1] = Spritesheet.getSpritePlayer(100, 295, spriteWidth, spriteHeight);
-		attackLeft[2] = Spritesheet.getSpritePlayer(200, 295, spriteWidth, spriteHeight);
-		attackLeft[3] = Spritesheet.getSpritePlayer(300, 295, spriteWidth, spriteHeight);
-		attackLeft[4] = Spritesheet.getSpritePlayer(400, 295, spriteWidth, spriteHeight);
-
-		this.spriteAttackLeft = new GameSpriteAnimation(spriteRect, 5, attackLeft);
+		this.spriteAttackRight = GameManagerSpritePlayer.createSpriteAttackRight(spriteRect);
+		this.spriteAttackLeft = GameManagerSpritePlayer.createSpriteAttackLeft(spriteRect);
 
 		this.setCurrentSprite(this.spriteIdleRight);
 		this.setSpritePosition();
@@ -222,6 +146,10 @@ public class Player {
 
 			this.hp -= damage.getDamage();
 			this.shieldDamage = LocalDateTime.now().plusSeconds(this.shieldTime);
+
+			if (this.hp < 0) {
+				this.hp = 0;
+			}
 
 			if (damage.getType() == GameDamageType.POISON) {
 				this.isPoisoning = true;
@@ -488,7 +416,7 @@ public class Player {
 
 	public void render(Graphics render) {
 		if (this.isPoisoning) {
-			this.currentSprite.renderPoisoned(render);
+			this.currentSprite.renderSpritesSecondary(render);
 		} else {
 			this.currentSprite.render(render);
 		}
