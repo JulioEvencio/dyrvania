@@ -24,7 +24,7 @@ public class Player {
 	private final GameRect rectAttack;
 
 	private int hp;
-	private final int hpMax;
+	private int hpMax;
 
 	private int poisonControl;
 	private boolean isPoisoning;
@@ -287,6 +287,12 @@ public class Player {
 
 	public void keyAttackReleased() {
 		this.keyAttack = false;
+	}
+
+	public void increaseHp() {
+		if (this.hpMax < 999) {
+			this.hpMax++;
+		}
 	}
 
 	public void increaseAttack() {

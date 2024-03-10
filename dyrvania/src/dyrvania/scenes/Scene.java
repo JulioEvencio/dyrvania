@@ -16,6 +16,7 @@ import dyrvania.scenes.entities.enemies.Enemy;
 import dyrvania.scenes.entities.enemies.Skeleton;
 import dyrvania.scenes.entities.enemies.Skull;
 import dyrvania.scenes.entities.enemies.Thing;
+import dyrvania.scenes.objects.Life;
 import dyrvania.scenes.objects.Sword;
 import dyrvania.scenes.tiles.Floor;
 
@@ -29,6 +30,7 @@ public abstract class Scene {
 
 	protected char[][] map;
 
+	private Life life;
 	private Sword sword;
 
 	private final Player player;
@@ -47,6 +49,9 @@ public abstract class Scene {
 		this.sizeBaseTiles = 32;
 
 		this.buildGame();
+
+		this.life = new Life();
+		this.life.setPosition(200, 270);
 
 		this.sword = new Sword();
 		this.sword.setPosition(600, 270);
@@ -148,6 +153,14 @@ public abstract class Scene {
 
 		this.enemies.removeAll(enemiesRemove);
 
+		if (this.life != null && this.player.getRect().isColliding(this.life.getRect())) {
+			this.audioObject.stop();
+			this.audioObject.play();
+
+			this.player.increaseHp();
+			this.life = null;
+		}
+
 		if (this.sword != null && this.player.getRect().isColliding(this.sword.getRect())) {
 			this.audioObject.stop();
 			this.audioObject.play();
@@ -165,6 +178,10 @@ public abstract class Scene {
 			if (this.canRender(floor.getRect())) {
 				floor.render(render);
 			}
+		}
+
+		if (this.life != null && this.canRender(this.life.getRect())) {
+			this.life.render(render);
 		}
 
 		if (this.sword != null && this.canRender(this.sword.getRect())) {
