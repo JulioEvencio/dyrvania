@@ -4,3 +4,4 @@ https://opengameart.org/content/dark-shrine-loop
 https://opengameart.org/content/jumping-man-sounds
 https://opengameart.org/content/game-sound-effects
 https://opengameart.org/content/5-hit-sounds-dying
+https://opengameart.org/content/plingy-coin

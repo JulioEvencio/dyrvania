@@ -289,6 +289,12 @@ public class Player {
 		this.keyAttack = false;
 	}
 
+	public void increaseAttack() {
+		if (this.damage.getDamage() < 99) {
+			this.damage.setDamage(this.damage.getDamage() + 1);
+		}
+	}
+
 	public void updateDir(boolean dir) {
 		this.isDirRight = dir;
 	}

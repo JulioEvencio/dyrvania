@@ -11,6 +11,7 @@ public class Spritesheet {
 
 	private static final BufferedImage spritesheetGUI;
 	private static final BufferedImage spritesheetTiles;
+	private static final BufferedImage spritesheetIcons;
 	private static final BufferedImage spritesheetDeath;
 	private static final BufferedImage spritesheetPlayer;
 	private static final BufferedImage spritesheetThing;
@@ -21,6 +22,7 @@ public class Spritesheet {
 	static {
 		BufferedImage auxSpritesheetGUI = null;
 		BufferedImage auxSpritesheetTiles = null;
+		BufferedImage auxSpritesheetIcons = null;
 		BufferedImage auxSpritesheetDeath = null;
 		BufferedImage auxSpritesheetPlayer = null;
 		BufferedImage auxSpritesheetThing = null;
@@ -31,6 +33,7 @@ public class Spritesheet {
 		try {
 			auxSpritesheetGUI = ImageIO.read(Spritesheet.class.getResource("/sprites/gui.png"));
 			auxSpritesheetTiles = ImageIO.read(Spritesheet.class.getResource("/sprites/tiles.png"));
+			auxSpritesheetIcons = ImageIO.read(Spritesheet.class.getResource("/sprites/icons.png"));
 			auxSpritesheetDeath = ImageIO.read(Spritesheet.class.getResource("/sprites/death.png"));
 			auxSpritesheetPlayer = ImageIO.read(Spritesheet.class.getResource("/sprites/player.png"));
 			auxSpritesheetThing = ImageIO.read(Spritesheet.class.getResource("/sprites/thing.png"));
@@ -43,6 +46,7 @@ public class Spritesheet {
 
 		spritesheetGUI = auxSpritesheetGUI;
 		spritesheetTiles = auxSpritesheetTiles;
+		spritesheetIcons = auxSpritesheetIcons;
 		spritesheetDeath = auxSpritesheetDeath;
 		spritesheetPlayer = auxSpritesheetPlayer;
 		spritesheetThing = auxSpritesheetThing;
@@ -57,6 +61,10 @@ public class Spritesheet {
 
 	public static BufferedImage getSpriteTiles(int x, int y, int width, int height) {
 		return Spritesheet.spritesheetTiles.getSubimage(x, y, width, height);
+	}
+
+	public static BufferedImage getSpriteIcons(int x, int y, int width, int height) {
+		return Spritesheet.spritesheetIcons.getSubimage(x, y, width, height);
 	}
 
 	public static BufferedImage getSpriteDeath(int x, int y, int width, int height) {

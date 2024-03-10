@@ -2,7 +2,7 @@ package dyrvania.generics;
 
 public class GameDamage {
 
-	private final int damage;
+	private int damage;
 	private final GameDamageType type;
 
 	public enum GameDamageType {
@@ -15,11 +15,15 @@ public class GameDamage {
 	}
 
 	public int getDamage() {
-		return damage;
+		return this.damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 
 	public GameDamageType getType() {
-		return type;
+		return this.type;
 	}
 
 }

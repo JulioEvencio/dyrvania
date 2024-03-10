@@ -10,11 +10,13 @@ import java.util.List;
 import dyrvania.Game;
 import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
+import dyrvania.resources.GameAudio;
 import dyrvania.scenes.entities.Player;
 import dyrvania.scenes.entities.enemies.Enemy;
 import dyrvania.scenes.entities.enemies.Skeleton;
 import dyrvania.scenes.entities.enemies.Skull;
 import dyrvania.scenes.entities.enemies.Thing;
+import dyrvania.scenes.objects.Sword;
 import dyrvania.scenes.tiles.Floor;
 
 public abstract class Scene {
@@ -27,11 +29,15 @@ public abstract class Scene {
 
 	protected char[][] map;
 
+	private Sword sword;
+
 	private final Player player;
 
 	private final List<Enemy> enemies;
 
 	private final List<Floor> floors;
+
+	private final GameAudio audioObject;
 
 	public Scene(Game game) {
 		this.game = game;
@@ -41,6 +47,9 @@ public abstract class Scene {
 		this.sizeBaseTiles = 32;
 
 		this.buildGame();
+
+		this.sword = new Sword();
+		this.sword.setPosition(600, 270);
 
 		this.player = new Player(this);
 		this.player.setPosition(250, 50);
@@ -78,6 +87,8 @@ public abstract class Scene {
 		this.floors.add(new Floor(300 + 32 * 5, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300 + 32 * 6, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 		this.floors.add(new Floor(300 + 32 * 7, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+
+		this.audioObject = new GameAudio("/audios/objects.wav");
 	}
 
 	public double getGravity() {
@@ -136,6 +147,14 @@ public abstract class Scene {
 		}
 
 		this.enemies.removeAll(enemiesRemove);
+
+		if (this.sword != null && this.player.getRect().isColliding(this.sword.getRect())) {
+			this.audioObject.stop();
+			this.audioObject.play();
+
+			this.player.increaseAttack();
+			this.sword = null;
+		}
 	}
 
 	public void render(Graphics render) {
@@ -146,6 +165,10 @@ public abstract class Scene {
 			if (this.canRender(floor.getRect())) {
 				floor.render(render);
 			}
+		}
+
+		if (this.sword != null && this.canRender(this.sword.getRect())) {
+			this.sword.render(render);
 		}
 
 		for (Enemy enemy : this.enemies) {
