@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import dyrvania.scenes.entities.enemies.Thing;
 import dyrvania.scenes.objects.Life;
 import dyrvania.scenes.objects.Sword;
 import dyrvania.scenes.tiles.Floor;
+import dyrvania.scenes.tiles.Wall;
 
 public abstract class Scene {
 
@@ -28,7 +30,8 @@ public abstract class Scene {
 
 	private final int sizeBaseTiles;
 
-	protected char[][] map;
+	private int width;
+	private int height;
 
 	private Life life;
 	private Sword sword;
@@ -38,6 +41,7 @@ public abstract class Scene {
 	private final List<Enemy> enemies;
 
 	private final List<Floor> floors;
+	private final List<Wall> walls;
 
 	public Scene(Game game) {
 		this.game = game;
@@ -46,64 +50,81 @@ public abstract class Scene {
 
 		this.sizeBaseTiles = 32;
 
-		this.buildGame();
-
-		this.life = new Life();
-		this.life.setPosition(200, 270);
-
-		this.sword = new Sword();
-		this.sword.setPosition(600, 270);
-
 		this.player = new Player(this);
-		this.player.setPosition(250, 50);
 
 		this.enemies = new ArrayList<>();
-
-		this.enemies.add(new Skull(this, 200, 50));
-		this.enemies.add(new Thing(this, 400, 50));
-		this.enemies.add(new Skeleton(this, 700, 50));
-
 		this.floors = new ArrayList<>();
+		this.walls = new ArrayList<>();
 
-		for (int i = 1; i < this.game.getGameWidth() / this.sizeBaseTiles - 1; i++) {
-			this.floors.add(new Floor(this.sizeBaseTiles * i, 300, this.sizeBaseTiles, this.sizeBaseTiles));
-			this.floors.add(new Floor(this.sizeBaseTiles * i, 0, this.sizeBaseTiles, this.sizeBaseTiles));
-		}
+		this.buildGame();
+	}
 
-		for (int i = 1; i < this.game.getGameHeight() / this.sizeBaseTiles - 1; i++) {
-			this.floors.add(new Floor(0, this.sizeBaseTiles * i, this.sizeBaseTiles, this.sizeBaseTiles));
-			this.floors.add(new Floor(this.game.getGameHeight() + 300, this.sizeBaseTiles * i, this.sizeBaseTiles, this.sizeBaseTiles));
-		}
-
-		this.floors.add(new Floor(300, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(300, 300 - this.sizeBaseTiles * 2, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(400, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(500, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(200, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 2, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(100, 300 - this.sizeBaseTiles * 3, this.sizeBaseTiles, this.sizeBaseTiles));
-
-		this.floors.add(new Floor(300 + 32 * 2, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(300 + 32 * 3, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(300 + 32 * 4, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(300 + 32 * 5, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(300 + 32 * 6, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-		this.floors.add(new Floor(300 + 32 * 7, 200 - this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+	public Game getGame() {
+		return this.game;
 	}
 
 	public double getGravity() {
 		return this.gravity;
 	}
 
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getHeight() {
+		return this.height;
+	}
+
 	public int getSizeBaseTiles() {
 		return this.sizeBaseTiles;
 	}
 
-	protected abstract void initializeLevel();
+	protected abstract BufferedImage loadLevel();
 
 	private void buildGame() {
-		this.initializeLevel();
+		BufferedImage map = this.loadLevel();
+
+		int[] pixels = new int[map.getWidth() * map.getHeight()];
+
+		this.width = map.getWidth();
+		this.height = map.getHeight();
+
+		map.getRGB(0, 0, map.getWidth(), map.getHeight(), pixels, 0, map.getWidth());
+
+		for (int x = 0; x < map.getWidth(); x++) {
+			for (int y = 0; y < map.getHeight(); y++) {
+				int currentPixel = pixels[x + (y * map.getWidth())];
+
+				switch (currentPixel) {
+				case 0xFFFFFFFF:
+					this.walls.add(new Wall(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+					break;
+				case 0xFFFF00FF:
+					this.floors.add(new Floor(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+					break;
+				case 0xFFFF6400:
+					this.enemies.add(new Skeleton(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles - 8));
+					break;
+				case 0xFFFFFF00:
+					this.enemies.add(new Skull(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles));
+					break;
+				case 0xFF00FF00:
+					this.enemies.add(new Thing(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles - 3));
+					break;
+				case 0xFF0000FF:
+					this.player.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles - 12);
+					break;
+				case 0xFF00FFFF:
+					this.sword = new Sword();
+					this.sword.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
+					break;
+				case 0xFFFF0000:
+					this.life = new Life();
+					this.life.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
+					break;
+				}
+			}
+		}
 	}
 
 	public boolean isFree(GameRect rect) {
@@ -113,13 +134,17 @@ public abstract class Scene {
 			}
 		}
 
+		for (Wall wall : this.walls) {
+			if (wall.getRect().isColliding(rect)) {
+				return false;
+			}
+		}
+
 		return true;
 	}
 
 	private boolean canRender(GameRect rect) {
-		GameRect areaCamera = new GameRect(Camera.x, Camera.y, this.game.getGameWidth(), this.game.getGameHeight());
-
-		return areaCamera.isColliding(rect);
+		return new GameRect(Camera.x, Camera.y, this.game.getGameWidth(), this.game.getGameHeight()).isColliding(rect);
 	}
 
 	public void tick() {
@@ -167,6 +192,12 @@ public abstract class Scene {
 	public void render(Graphics render) {
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, this.game.getGameWidth(), this.game.getGameHeight());
+
+		for (Wall wall : this.walls) {
+			if (this.canRender(wall.getRect())) {
+				wall.render(render);
+			}
+		}
 
 		for (Floor floor : this.floors) {
 			if (this.canRender(floor.getRect())) {

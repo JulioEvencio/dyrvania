@@ -93,7 +93,7 @@ public class Player {
 		this.keyAttack = false;
 
 		this.isJump = false;
-		this.jumpHeight = 80f;
+		this.jumpHeight = 100f;
 		this.jumpFrames = 0f;
 
 		this.isDirRight = true;
@@ -324,8 +324,8 @@ public class Player {
 	}
 
 	private void setCamera() {
-		Camera.x = this.rect.getRect().getX() - 400;
-		Camera.y = this.rect.getRect().getY() - 225;
+		Camera.x = Camera.clamp(this.rect.getRect().getX() - (this.scene.getGame().getGameWidth() / 2), 0, this.scene.getWidth() * this.scene.getSizeBaseTiles() - this.scene.getGame().getGameWidth());
+		Camera.y = Camera.clamp(this.rect.getRect().getY() - (this.scene.getGame().getGameHeight() / 2), 0, this.scene.getHeight() * this.scene.getSizeBaseTiles() - this.scene.getGame().getGameHeight());
 	}
 
 	public void tick() {
