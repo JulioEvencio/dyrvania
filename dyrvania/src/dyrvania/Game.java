@@ -24,7 +24,7 @@ import dyrvania.managers.GameManagerAudio;
 import dyrvania.resources.GameAudio;
 import dyrvania.resources.GameFont;
 import dyrvania.scenes.Scene;
-import dyrvania.scenes.levels.Level01;
+import dyrvania.scenes.levels.Tutorial;
 import dyrvania.screens.Exit;
 import dyrvania.screens.MainMenu;
 import dyrvania.screens.OpeningScreen;
@@ -131,7 +131,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		this.setAudio(GameManagerAudio.getAudioMenu());
 		this.initializeScreen();
-		this.initializeScene(new Level01(this));
+		this.initializeScene(new Tutorial(this));
 		this.setGameStatus(GameStatus.TRANSITION);
 	}
 
