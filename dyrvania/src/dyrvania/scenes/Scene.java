@@ -178,6 +178,7 @@ public abstract class Scene {
 			GameManagerAudio.getAudioObject().play();
 
 			this.player.increaseHp();
+			this.player.toHeal();
 			this.life = null;
 		}
 

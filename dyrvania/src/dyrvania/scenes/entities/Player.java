@@ -206,6 +206,10 @@ public class Player {
 		this.keyAttack = false;
 	}
 
+	public void toHeal() {
+		this.hp = this.hpMax;
+	}
+
 	public void increaseHp() {
 		if (this.hpMax < 999) {
 			this.hpMax++;
