@@ -70,7 +70,7 @@ public class Player {
 		this.rect = new GameRectEntity(0, 0, 20, 44);
 		this.rectAttack = new GameRect(0, 0, 31, 12);
 
-		this.hpMax = 10;
+		this.hpMax = 9;
 		this.hp = this.hpMax;
 
 		this.poisonControl = 0;
@@ -80,7 +80,7 @@ public class Player {
 		this.shieldActive = false;
 		this.shieldDamage = LocalDateTime.now().minusSeconds(this.shieldTime);
 
-		this.damage = new GameDamage(1, GameDamageType.FIRE);
+		this.damage = new GameDamage(0, GameDamageType.FIRE);
 		this.isAttacking = false;
 		this.canDealDamage = false;
 
