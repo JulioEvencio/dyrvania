@@ -166,6 +166,10 @@ public abstract class Scene {
 						if (currentPixel == this.teleportCurrent.getColor()) {
 							this.player.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles - 12);
 						}
+
+						if (this.teleportCurrent.getColor() == 0xFFFF3900) {
+							this.player.toJumpSpecial();
+						}
 				}
 			}
 		}

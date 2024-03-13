@@ -189,6 +189,10 @@ public class Player {
 		}
 	}
 
+	public void toJumpSpecial() {
+		this.isJump = true;
+	}
+
 	public void keyJumpReleased() {
 		this.keyJump = false;
 	}
