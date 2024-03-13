@@ -10,16 +10,16 @@ import dyrvania.scenes.Scene;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
 
-public class Tutorial extends Scene {
+public class Level01 extends Scene {
 
-	public Tutorial(Game game, Teleport teleport) {
+	public Level01(Game game, Teleport teleport) {
 		super(game, teleport);
 	}
 
 	@Override
 	protected BufferedImage loadLevel() {
 		try {
-			return ImageIO.read(this.getClass().getResource("/levels/tutorial.png"));
+			return ImageIO.read(this.getClass().getResource("/levels/level-01.png"));
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());
 		}
@@ -29,7 +29,7 @@ public class Tutorial extends Scene {
 
 	@Override
 	protected Scene nextScene() {
-		return new Level01(super.getGame(), super.getTeleportCurrent());
+		return new Tutorial(super.getGame(), super.getTeleportCurrent());
 	}
 
 }

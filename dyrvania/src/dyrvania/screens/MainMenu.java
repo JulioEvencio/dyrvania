@@ -22,7 +22,7 @@ public class MainMenu extends Screen {
 		int rightX = game.getGameWidth() / 2 + 25;
 
 		super.buttons.add(new GameButton(game, StringScreen.NEW_GAME.getValue(), leftX, 120, () -> {
-			game.initializeScene(new Tutorial(game));
+			game.initializeScene(new Tutorial(game, null));
 			game.setTransition(GameStatus.RUN);
 		}));
 

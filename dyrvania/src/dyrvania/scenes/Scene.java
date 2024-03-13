@@ -11,6 +11,7 @@ import java.util.List;
 import dyrvania.Game;
 import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
+import dyrvania.generics.GameStatus;
 import dyrvania.managers.GameManagerAudio;
 import dyrvania.scenes.entities.Player;
 import dyrvania.scenes.entities.enemies.Enemy;
@@ -19,6 +20,7 @@ import dyrvania.scenes.entities.enemies.Skull;
 import dyrvania.scenes.entities.enemies.Thing;
 import dyrvania.scenes.objects.Life;
 import dyrvania.scenes.objects.Sword;
+import dyrvania.scenes.objects.Teleport;
 import dyrvania.scenes.tiles.Floor;
 import dyrvania.scenes.tiles.Wall;
 
@@ -33,6 +35,9 @@ public abstract class Scene {
 	private int width;
 	private int height;
 
+	private Teleport teleportCurrent;
+	private final List<Teleport> teleports;
+
 	private Life life;
 	private Sword sword;
 
@@ -43,12 +48,20 @@ public abstract class Scene {
 	private final List<Floor> floors;
 	private final List<Wall> walls;
 
-	public Scene(Game game) {
+	public Scene(Game game, Teleport teleport) {
 		this.game = game;
 
 		this.gravity = 0.5f;
 
 		this.sizeBaseTiles = 32;
+
+		if (teleport == null) {
+			this.teleportCurrent = new Teleport(this, 0, 0, 0xFF0000FF, false);
+		} else {
+			this.teleportCurrent = teleport;
+		}
+
+		this.teleports = new ArrayList<>();
 
 		this.player = new Player(this);
 
@@ -61,6 +74,10 @@ public abstract class Scene {
 
 	public Game getGame() {
 		return this.game;
+	}
+
+	protected Teleport getTeleportCurrent() {
+		return this.teleportCurrent;
 	}
 
 	public double getGravity() {
@@ -81,6 +98,8 @@ public abstract class Scene {
 
 	protected abstract BufferedImage loadLevel();
 
+	protected abstract Scene nextScene();
+
 	private void buildGame() {
 		BufferedImage map = this.loadLevel();
 
@@ -96,32 +115,41 @@ public abstract class Scene {
 				int currentPixel = pixels[x + (y * map.getWidth())];
 
 				switch (currentPixel) {
-				case 0xFFFFFFFF:
-					this.walls.add(new Wall(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-					break;
-				case 0xFFFF00FF:
-					this.floors.add(new Floor(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-					break;
-				case 0xFFFF6400:
-					this.enemies.add(new Skeleton(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles - 8));
-					break;
-				case 0xFFFFFF00:
-					this.enemies.add(new Skull(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles));
-					break;
-				case 0xFF00FF00:
-					this.enemies.add(new Thing(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles - 3));
-					break;
-				case 0xFF0000FF:
-					this.player.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles - 12);
-					break;
-				case 0xFF00FFFF:
-					this.sword = new Sword();
-					this.sword.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
-					break;
-				case 0xFFFF0000:
-					this.life = new Life();
-					this.life.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
-					break;
+					case 0xFFFFFFFF:
+						this.walls.add(new Wall(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+						break;
+					case 0xFFFF00FF:
+						this.floors.add(new Floor(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+						break;
+					case 0xFFFF6400:
+						this.enemies.add(new Skeleton(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles - 8));
+						break;
+					case 0xFFFFFF00:
+						this.enemies.add(new Skull(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles));
+						break;
+					case 0xFF00FF00:
+						this.enemies.add(new Thing(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles - 3));
+						break;
+						/////////////////////////////////////////////////////////////////////////////////////////////
+					case 0xFF070732:
+						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFF0000FF, false));
+						break;
+					case 0xFFFA81B5:
+						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFFFF006c, false));
+						break;
+						/////////////////////////////////////////////////////////////////////////////////////////////
+					case 0xFF00FFFF:
+						this.sword = new Sword();
+						this.sword.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
+						break;
+					case 0xFFFF0000:
+						this.life = new Life();
+						this.life.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
+						break;
+					default:
+						if (currentPixel == this.teleportCurrent.getColor()) {
+							this.player.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles - 12);
+						}
 				}
 			}
 		}
@@ -187,6 +215,18 @@ public abstract class Scene {
 
 			this.player.increaseAttack();
 			this.sword = null;
+		}
+
+		for (Teleport teleport : this.teleports) {
+			if (teleport.getRect().isColliding(this.player.getRect())) {
+				this.teleportCurrent = teleport;
+				break;
+			}
+		}
+
+		if (!this.canRender(this.player.getRect())) {
+			this.game.initializeScene(this.nextScene());
+			this.game.setTransition(GameStatus.RUN);
 		}
 	}
 

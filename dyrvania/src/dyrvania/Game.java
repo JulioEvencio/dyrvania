@@ -131,7 +131,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		this.setAudio(GameManagerAudio.getAudioMenu());
 		this.initializeScreen();
-		this.initializeScene(new Tutorial(this));
+		this.initializeScene(new Tutorial(this, null));
 		this.setGameStatus(GameStatus.TRANSITION);
 	}
 
