@@ -130,14 +130,30 @@ public abstract class Scene {
 					case 0xFF00FF00:
 						this.enemies.add(new Thing(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles - 3));
 						break;
-						/////////////////////////////////////////////////////////////////////////////////////////////
 					case 0xFF070732:
 						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFF0000FF, false));
 						break;
 					case 0xFFFA81B5:
 						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFFFF006c, false));
 						break;
-						/////////////////////////////////////////////////////////////////////////////////////////////
+					case 0xFF7D4DD9:
+						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFF5800FF, false));
+						break;
+					case 0xFF358A66:
+						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFF00FF93, false));
+						break;
+					case 0xFF518B1D:
+						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFF7AFF00, false));
+						break;
+					case 0xFFC7B04F:
+						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFF8F7300, false));
+						break;
+					case 0xFF7B4131:
+						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFFFF3900, false));
+						break;
+					case 0xFF0C252C:
+						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFF02495D, false));
+						break;
 					case 0xFF00FFFF:
 						this.sword = new Sword();
 						this.sword.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
