@@ -10,21 +10,26 @@ import dyrvania.scenes.Scene;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
 
-public class Level01 extends Scene {
+public class SaveLeft extends Save {
 
-	public Level01(Game game, Teleport teleport) {
-		super(game, teleport);
+	public SaveLeft(Game game, Teleport teleport, String lastScene) {
+		super(game, teleport, lastScene);
+	}
+
+	@Override
+	protected boolean isSceneRight() {
+		return false;
 	}
 
 	@Override
 	protected String currentLevelString() {
-		return "level-01";
+		return "save-left";
 	}
 
 	@Override
 	protected BufferedImage loadLevel() {
 		try {
-			return ImageIO.read(this.getClass().getResource("/levels/level-01.png"));
+			return ImageIO.read(this.getClass().getResource("/levels/save-01.png"));
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());
 		}

@@ -17,6 +17,11 @@ public class Level06 extends Scene {
 	}
 
 	@Override
+	protected String currentLevelString() {
+		return "level-06";
+	}
+
+	@Override
 	protected BufferedImage loadLevel() {
 		try {
 			return ImageIO.read(this.getClass().getResource("/levels/level-06.png"));

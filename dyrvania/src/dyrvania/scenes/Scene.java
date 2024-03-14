@@ -13,6 +13,8 @@ import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameStatus;
 import dyrvania.managers.GameManagerAudio;
+import dyrvania.saves.GameSave;
+import dyrvania.saves.GameSaveManager;
 import dyrvania.scenes.entities.Player;
 import dyrvania.scenes.entities.enemies.Enemy;
 import dyrvania.scenes.entities.enemies.Skeleton;
@@ -63,7 +65,16 @@ public abstract class Scene {
 
 		this.teleports = new ArrayList<>();
 
+		if (GameSaveManager.getSave() == null) {
+			GameSaveManager.setSave(new GameSave(9, 9, 0, false, null, false));
+		}
+
 		this.player = new Player(this);
+
+		this.player.setHp(GameSaveManager.getSave().getHp());
+		this.player.setHpMax(GameSaveManager.getSave().getHpMax());
+		this.player.setDamage(GameSaveManager.getSave().getDamage());
+		this.player.setPoisoning(GameSaveManager.getSave().isPoisoning());
 
 		this.enemies = new ArrayList<>();
 		this.floors = new ArrayList<>();
@@ -95,6 +106,8 @@ public abstract class Scene {
 	public int getSizeBaseTiles() {
 		return this.sizeBaseTiles;
 	}
+
+	protected abstract String currentLevelString();
 
 	protected abstract BufferedImage loadLevel();
 
@@ -155,12 +168,16 @@ public abstract class Scene {
 						this.teleports.add(new Teleport(this, x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFF02495D, false));
 						break;
 					case 0xFF00FFFF:
-						this.sword = new Sword();
-						this.sword.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
+						if (!GameSaveManager.getSave().getSwords().contains(this.currentLevelString())) {
+							this.sword = new Sword();
+							this.sword.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
+						}
 						break;
 					case 0xFFFF0000:
-						this.life = new Life();
-						this.life.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
+						if (!GameSaveManager.getSave().getLifes().contains(this.currentLevelString())) {
+							this.life = new Life();
+							this.life.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
+						}
 						break;
 					default:
 						if (currentPixel == this.teleportCurrent.getColor()) {
@@ -213,6 +230,9 @@ public abstract class Scene {
 
 			if (this.player.getRect().isColliding(enemy.getRect())) {
 				this.player.takeDamage(enemy.dealDamage());
+
+				GameSaveManager.getSave().setHp(this.player.getHp());
+				GameSaveManager.getSave().setPoisoning(this.player.isPoisoning());
 			}
 
 			if (this.player.finishedAnimation()) {
@@ -228,6 +248,9 @@ public abstract class Scene {
 			this.player.increaseHp();
 			this.player.toHeal();
 			this.life = null;
+
+			GameSaveManager.getSave().setHpMax(this.player.getHpMax());
+			GameSaveManager.getSave().getLifes().add(this.currentLevelString());
 		}
 
 		if (this.sword != null && this.player.getRect().isColliding(this.sword.getRect())) {
@@ -235,6 +258,9 @@ public abstract class Scene {
 
 			this.player.increaseAttack();
 			this.sword = null;
+
+			GameSaveManager.getSave().setDamage(this.player.getDamage());
+			GameSaveManager.getSave().getSwords().add(this.currentLevelString());
 		}
 
 		for (Teleport teleport : this.teleports) {

@@ -116,6 +116,26 @@ public class Player {
 		this.setSpritePosition();
 	}
 
+	public int getHp() {
+		return this.hp;
+	}
+
+	public int getHpMax() {
+		return this.hpMax;
+	}
+
+	public int getDamage() {
+		return this.damage.getDamage();
+	}
+
+	public boolean isPoisoning() {
+		return this.isPoisoning;
+	}
+
+	public void setPoisoning(boolean isPoisoning) {
+		this.isPoisoning = isPoisoning;
+	}
+
 	public GameRect getRect() {
 		return this.rect.getRect();
 	}
@@ -155,6 +175,18 @@ public class Player {
 				this.isPoisoning = true;
 			}
 		}
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public void setHpMax(int hpMax) {
+		this.hpMax = hpMax;
+	}
+
+	public void setDamage(int damage) {
+		this.damage.setDamage(damage);
 	}
 
 	public void setPosition(int x, int y) {
@@ -211,6 +243,7 @@ public class Player {
 	}
 
 	public void toHeal() {
+		this.isPoisoning = false;
 		this.hp = this.hpMax;
 	}
 
