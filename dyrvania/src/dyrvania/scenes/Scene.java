@@ -87,7 +87,6 @@ public abstract class Scene {
 	protected void savePlayer() {
 		this.player.setHp(GameSaveManager.getSave().getHpMax());
 		this.player.setPoisoning(false);
-		this.player.setDir(GameSaveManager.getSave().isDirRight());
 
 		GameSaveManager.getSave().setHp(GameSaveManager.getSave().getHpMax());
 		GameSaveManager.getSave().setPoisoning(false);

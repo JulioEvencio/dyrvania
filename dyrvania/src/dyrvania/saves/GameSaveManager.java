@@ -59,7 +59,7 @@ public class GameSaveManager {
 		try (ObjectInput in = new ObjectInputStream(new FileInputStream("data/save.obj"))) {
 			GameSaveManager.save = (GameSave) in.readObject();
 		} catch (Exception e) {
-			GameSaveManager.saveData();
+			// Code
 		}
 	}
 

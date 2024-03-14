@@ -8,7 +8,11 @@ import dyrvania.generics.GameStatus;
 import dyrvania.gui.GameButton;
 import dyrvania.gui.GameText;
 import dyrvania.resources.GameFont;
+import dyrvania.saves.GameSaveManager;
+import dyrvania.scenes.levels.SaveLeft;
+import dyrvania.scenes.levels.SaveRight;
 import dyrvania.scenes.levels.Tutorial;
+import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringGame;
 import dyrvania.strings.StringScreen;
 
@@ -26,7 +30,21 @@ public class MainMenu extends Screen {
 			game.setTransition(GameStatus.RUN);
 		}));
 
-		super.buttons.add(new GameButton(game, StringScreen.LOAD_GAME.getValue(), rightX, 120, () -> System.out.println("Load Game")));
+		super.buttons.add(new GameButton(game, StringScreen.LOAD_GAME.getValue(), rightX, 120, () -> {
+			GameSaveManager.loadData();
+
+			if (GameSaveManager.getSave() == null || GameSaveManager.getSave().getLastScene() == null) {
+				System.out.println("Sem dados salvos!");
+			} else {
+				if (GameSaveManager.getSave().isSceneSaveRight()) {
+					game.initializeScene(new SaveRight(game, new Teleport(0, 0, 0xFF0000FF, false), GameSaveManager.getSave().getLastScene()));
+				} else {
+					game.initializeScene(new SaveLeft(game, new Teleport(0, 0, 0xFFFF006C, false), GameSaveManager.getSave().getLastScene()));
+				}
+
+				game.setTransition(GameStatus.RUN);
+			}
+		}));
 
 		super.buttons.add(new GameButton(game, StringScreen.CREDITS.getValue(), leftX, 220, () -> System.out.println("Credits")));
 		super.buttons.add(new GameButton(game, StringScreen.SETTINGS.getValue(), rightX, 220, () -> System.out.println("Settings")));

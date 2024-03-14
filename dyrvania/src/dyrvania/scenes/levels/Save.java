@@ -28,6 +28,8 @@ public abstract class Save extends Scene {
 
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			super.savePlayer();
+
+			GameSaveManager.getSave().setSceneSaveRight(this.isSceneRight());
 			GameSaveManager.saveData();
 		}
 	}
