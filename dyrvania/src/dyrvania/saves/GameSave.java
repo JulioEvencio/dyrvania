@@ -12,6 +12,7 @@ public class GameSave implements Serializable {
 	private int hpMax;
 	private int damage;
 	private boolean isPoisoning;
+	private boolean isDirRight;
 
 	private String lastScene;
 
@@ -20,11 +21,12 @@ public class GameSave implements Serializable {
 	private List<String> swords;
 	private List<String> lifes;
 
-	public GameSave(int hp, int hpMax, int damage, boolean isPoisoning, String lastScene, boolean sceneSaveRight) {
+	public GameSave(int hp, int hpMax, int damage, boolean isPoisoning, boolean isDirRight, String lastScene, boolean sceneSaveRight) {
 		this.hp = hp;
 		this.hpMax = hpMax;
 		this.damage = damage;
 		this.isPoisoning = isPoisoning;
+		this.isDirRight = isDirRight;
 
 		this.lastScene = lastScene;
 
@@ -64,6 +66,14 @@ public class GameSave implements Serializable {
 
 	public void setPoisoning(boolean isPoisoning) {
 		this.isPoisoning = isPoisoning;
+	}
+
+	public boolean isDirRight() {
+		return this.isDirRight;
+	}
+
+	public void setIsDirRight(boolean isDirRight) {
+		this.isDirRight = isDirRight;
 	}
 
 	public String getLastScene() {

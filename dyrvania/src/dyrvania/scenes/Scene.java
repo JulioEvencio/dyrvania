@@ -66,7 +66,7 @@ public abstract class Scene {
 		this.teleports = new ArrayList<>();
 
 		if (GameSaveManager.getSave() == null) {
-			GameSaveManager.setSave(new GameSave(9, 9, 0, false, null, false));
+			GameSaveManager.setSave(new GameSave(10, 10, 1, false, true, null, false));
 		}
 
 		this.player = new Player(this);
@@ -75,6 +75,7 @@ public abstract class Scene {
 		this.player.setHpMax(GameSaveManager.getSave().getHpMax());
 		this.player.setDamage(GameSaveManager.getSave().getDamage());
 		this.player.setPoisoning(GameSaveManager.getSave().isPoisoning());
+		this.player.setDir(GameSaveManager.getSave().isDirRight());
 
 		this.enemies = new ArrayList<>();
 		this.floors = new ArrayList<>();
@@ -230,9 +231,6 @@ public abstract class Scene {
 
 			if (this.player.getRect().isColliding(enemy.getRect())) {
 				this.player.takeDamage(enemy.dealDamage());
-
-				GameSaveManager.getSave().setHp(this.player.getHp());
-				GameSaveManager.getSave().setPoisoning(this.player.isPoisoning());
 			}
 
 			if (this.player.finishedAnimation()) {
@@ -269,6 +267,10 @@ public abstract class Scene {
 				break;
 			}
 		}
+
+		GameSaveManager.getSave().setHp(this.player.getHp());
+		GameSaveManager.getSave().setPoisoning(this.player.isPoisoning());
+		GameSaveManager.getSave().setIsDirRight(this.player.isDirRight());
 
 		if (!this.canRender(this.player.getRect())) {
 			this.game.initializeScene(this.nextScene());

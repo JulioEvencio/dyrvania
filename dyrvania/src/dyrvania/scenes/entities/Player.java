@@ -259,6 +259,10 @@ public class Player {
 		}
 	}
 
+	public boolean isDirRight() {
+		return this.isDirRight;
+	}
+
 	public void setDir(boolean dir) {
 		this.isDirRight = dir;
 	}
