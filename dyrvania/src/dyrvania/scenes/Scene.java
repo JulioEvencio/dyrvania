@@ -15,6 +15,7 @@ import dyrvania.generics.GameStatus;
 import dyrvania.managers.GameManagerAudio;
 import dyrvania.saves.GameSave;
 import dyrvania.saves.GameSaveManager;
+import dyrvania.scenes.backgrounds.Background;
 import dyrvania.scenes.entities.Player;
 import dyrvania.scenes.entities.enemies.Enemy;
 import dyrvania.scenes.entities.enemies.Skeleton;
@@ -23,6 +24,7 @@ import dyrvania.scenes.entities.enemies.Thing;
 import dyrvania.scenes.objects.Life;
 import dyrvania.scenes.objects.Sword;
 import dyrvania.scenes.objects.Teleport;
+import dyrvania.scenes.tiles.BackgroundTile;
 import dyrvania.scenes.tiles.Floor;
 import dyrvania.scenes.tiles.Wall;
 
@@ -47,10 +49,13 @@ public abstract class Scene {
 
 	private final List<Enemy> enemies;
 
+	private final List<Background> backgrounds;
+	private final List<BackgroundTile> backgroundsTiles;
+
 	private final List<Floor> floors;
 	private final List<Wall> walls;
 
-	public Scene(Game game, Teleport teleport) {
+	public Scene(Game game, Teleport teleport, List<Background> backgrounds) {
 		this.game = game;
 
 		this.gravity = 0.5f;
@@ -76,6 +81,9 @@ public abstract class Scene {
 		this.player.setDamage(GameSaveManager.getSave().getDamage());
 		this.player.setPoisoning(GameSaveManager.getSave().isPoisoning());
 		this.player.setDir(GameSaveManager.getSave().isDirRight());
+
+		this.backgrounds = backgrounds;
+		this.backgroundsTiles = new ArrayList<>();
 
 		this.enemies = new ArrayList<>();
 		this.floors = new ArrayList<>();
@@ -136,6 +144,10 @@ public abstract class Scene {
 		for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
 				int currentPixel = pixels[x + (y * map.getWidth())];
+
+				if (this.backgrounds.isEmpty()) {
+					this.backgroundsTiles.add(new BackgroundTile(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+				}
 
 				switch (currentPixel) {
 					case 0xFFFFFFFF:
@@ -290,6 +302,16 @@ public abstract class Scene {
 	public void render(Graphics render) {
 		render.setColor(Color.BLACK);
 		render.fillRect(0, 0, this.game.getGameWidth(), this.game.getGameHeight());
+
+		for (Background background : this.backgrounds) {
+			background.render(render);
+		}
+
+		for (BackgroundTile background : this.backgroundsTiles) {
+			if (this.canRender(background.getRect())) {
+				background.render(render);
+			}
+		}
 
 		for (Wall wall : this.walls) {
 			if (this.canRender(wall.getRect())) {

@@ -32,7 +32,7 @@ public abstract class Screen {
 	private int mouseY;
 
 	static {
-		background = Spritesheet.getSpriteBackground(22, 542, 512, 225);
+		background = Spritesheet.getSpriteBackground(12, 332, 512, 224);
 	}
 
 	public Screen(Game game, String title) {

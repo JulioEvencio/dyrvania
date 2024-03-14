@@ -1,6 +1,7 @@
 package dyrvania.scenes.levels;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -13,7 +14,7 @@ import dyrvania.strings.StringError;
 public class Level06 extends Scene {
 
 	public Level06(Game game, Teleport teleport) {
-		super(game, teleport);
+		super(game, teleport, new ArrayList<>());
 	}
 
 	@Override

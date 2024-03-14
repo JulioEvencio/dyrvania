@@ -1,6 +1,7 @@
 package dyrvania.scenes.levels;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import dyrvania.Game;
 import dyrvania.saves.GameSaveManager;
@@ -10,7 +11,7 @@ import dyrvania.scenes.objects.Teleport;
 public abstract class Save extends Scene {
 
 	public Save(Game game, Teleport teleport, String lastScene) {
-		super(game, teleport);
+		super(game, teleport, new ArrayList<>());
 
 		GameSaveManager.getSave().setLastScene(lastScene);
 	}
