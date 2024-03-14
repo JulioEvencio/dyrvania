@@ -1,20 +1,23 @@
 package dyrvania.scenes.levels;
 
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
 import dyrvania.Game;
 import dyrvania.Main;
-import dyrvania.scenes.Scene;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
 
-public class SaveRight extends Scene {
+public class SaveRight extends Save {
 
-	public SaveRight(Game game, Teleport teleport) {
-		super(game, teleport);
+	public SaveRight(Game game, Teleport teleport, String lastScene) {
+		super(game, teleport, lastScene);
+	}
+
+	@Override
+	protected boolean isSceneRight() {
+		return true;
 	}
 
 	@Override
@@ -31,26 +34,6 @@ public class SaveRight extends Scene {
 		}
 
 		return null;
-	}
-
-	@Override
-	protected Scene nextScene() {
-		Teleport teleport = super.getTeleportCurrent();
-
-		if (teleport.getColor() == 0xFFFF006C) {
-			return new Tutorial(super.getGame(), teleport);
-		}
-
-		return new Level02(super.getGame(), teleport);
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		super.keyReleased(e);
-
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			System.out.println("Jogo Salvo");
-		}
 	}
 
 }

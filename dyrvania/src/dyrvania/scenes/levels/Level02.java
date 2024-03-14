@@ -36,6 +36,10 @@ public class Level02 extends Scene {
 	protected Scene nextScene() {
 		Teleport teleport = super.getTeleportCurrent();
 
+		if (teleport.getColor() == 0xFF0000FF) {
+			return new SaveRight(super.getGame(), teleport, this.currentLevelString());
+		}
+
 		if (teleport.getColor() == 0xFF7AFF00) {
 			return new Level03(super.getGame(), teleport);
 		}

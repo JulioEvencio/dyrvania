@@ -6,7 +6,6 @@ import javax.imageio.ImageIO;
 
 import dyrvania.Game;
 import dyrvania.Main;
-import dyrvania.scenes.Scene;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
 
@@ -35,17 +34,6 @@ public class SaveLeft extends Save {
 		}
 
 		return null;
-	}
-
-	@Override
-	protected Scene nextScene() {
-		Teleport teleport = super.getTeleportCurrent();
-
-		if (teleport.getColor() == 0xFFFF006C) {
-			return new Tutorial(super.getGame(), teleport);
-		}
-
-		return new Level02(super.getGame(), teleport);
 	}
 
 }

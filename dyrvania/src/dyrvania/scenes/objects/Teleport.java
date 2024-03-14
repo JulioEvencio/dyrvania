@@ -1,7 +1,6 @@
 package dyrvania.scenes.objects;
 
 import dyrvania.generics.GameRect;
-import dyrvania.scenes.Scene;
 
 public class Teleport {
 
@@ -11,10 +10,10 @@ public class Teleport {
 
 	private final boolean isJump;
 
-	public Teleport(Scene scene, int x, int y, int color, boolean isJump) {
+	public Teleport(int x, int y, int color, boolean isJump) {
 		this.color = color;
 
-		this.rect = new GameRect(x, y, scene.getSizeBaseTiles(), scene.getSizeBaseTiles());
+		this.rect = new GameRect(x, y, 32, 32);
 
 		this.isJump = isJump;
 	}
