@@ -61,6 +61,10 @@ public abstract class Enemy {
 		return this.rect.getRect();
 	}
 
+	public boolean isAnimationDead() {
+		return this.currentSprite == this.spriteDeath;
+	}
+
 	public boolean isDead() {
 		return this.hp <= 0 && this.currentSprite.finishedAnimation();
 	}

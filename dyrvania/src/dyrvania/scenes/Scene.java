@@ -235,7 +235,7 @@ public abstract class Scene {
 		return true;
 	}
 
-	private boolean canRender(GameRect rect) {
+	public boolean canRender(GameRect rect) {
 		return new GameRect(Camera.x, Camera.y, this.game.getGameWidth(), this.game.getGameHeight()).isColliding(rect);
 	}
 
@@ -255,7 +255,7 @@ public abstract class Scene {
 				enemiesRemove.add(enemy);
 			}
 
-			if (this.player.getRect().isColliding(enemy.getRect())) {
+			if (this.player.getRect().isColliding(enemy.getRect()) && !enemy.isAnimationDead()) {
 				this.player.takeDamage(enemy.dealDamage());
 			}
 

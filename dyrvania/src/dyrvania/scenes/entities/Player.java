@@ -443,7 +443,7 @@ public class Player {
 		this.currentSprite.tick();
 
 		if (this.isAttacking) {
-			if (this.currentSprite.getIndex() == 2 || this.currentSprite.getIndex() == 3) {
+			if (this.currentSprite.getIndex() == 2 || this.currentSprite.getIndex() == 3 || this.currentSprite.getIndex() == 4) {
 				this.canDealDamage = true;
 			} else {
 				this.canDealDamage = false;
