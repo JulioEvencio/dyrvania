@@ -1,0 +1,13 @@
+Press F2 to enable/disable full screen
+Press F3 to show/hide FPS
+Press F4 to enable/disable music
+Press P or ESC to pause the game
+Press the A and D keys or the left and right arrow keys to move
+Press Z, J or SPACEBAR to jump
+Press X, K key, right click or left click to attack
+Collect swords to increase your attack
+Collect the red weaklings to increase your maximum health
+Press enter to save the game
+Game saved
+Life restored
+Negative effects removed

@@ -53,7 +53,10 @@ public class MainMenu extends Screen {
 		}));
 
 		super.buttons.add(new GameButton(game, StringScreen.CREDITS.getValue(), leftX, 220, () -> System.out.println("Credits")));
-		super.buttons.add(new GameButton(game, StringScreen.SETTINGS.getValue(), rightX, 220, () -> System.out.println("Settings")));
+
+		super.buttons.add(new GameButton(game, StringScreen.TUTORIAL.getValue(), rightX, 220, () -> {
+			game.setGameStatus(GameStatus.TUTORIAL);
+		}));
 
 		super.buttons.add(new GameButton(game, StringScreen.EXIT.getValue(), centerX, 320, () -> game.setGameStatus(GameStatus.EXIT)));
 

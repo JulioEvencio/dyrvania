@@ -1,0 +1,13 @@
+Pressione F2 para ativar/desativar tela inteira
+Pressione F3 para mostrar/ocultar FPS
+Pressione F4 para ativar/desativar música
+Pressione P ou ESC para pausar o jogo
+Pressione as teclas A e D ou as setas esquerda e direita para mover
+Pressione Z, J ou barra de espaço para pular
+Pressione a tecla X, K ou os cliques do mouse para atacar
+Colete as espadas para aumentar seu ataque
+Colete os fracos vermelhos para aumentar sua saúde máxima
+Pressione Enter para salvar o jogo
+Jogo salvo
+Vida restaurada
+Efeitos negativos removidos

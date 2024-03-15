@@ -8,15 +8,27 @@ import javax.imageio.ImageIO;
 
 import dyrvania.Game;
 import dyrvania.Main;
+import dyrvania.gui.GameTextRender;
 import dyrvania.scenes.Scene;
-import dyrvania.scenes.backgrounds.BackgroundCloud;
+import dyrvania.scenes.backgrounds.BackgroundMoon;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
+import dyrvania.strings.StringLevel;
 
 public class Tutorial extends Scene {
 
 	public Tutorial(Game game, Teleport teleport) {
-		super(game, teleport, new ArrayList<>(List.of(new BackgroundCloud(game, 0, 0))));
+		super(game, teleport, new ArrayList<>(List.of(new BackgroundMoon(game, 0, 0))));
+
+		super.texts.add(new GameTextRender(game, StringLevel.TUTORIAL_PAUSE.getValue(), 80, 110));
+
+		super.texts.add(new GameTextRender(game, StringLevel.TUTORIAL_MOVE.getValue(), 80, 150));
+		super.texts.add(new GameTextRender(game, StringLevel.TUTORIAL_JUMP.getValue(), 80, 190));
+		super.texts.add(new GameTextRender(game, StringLevel.TUTORIAL_ATTACK.getValue(), 80, 230));
+
+		super.texts.add(new GameTextRender(game, StringLevel.TUTORIAL_OBJECT_SWORD.getValue(), 80, 270));
+
+		super.texts.add(new GameTextRender(game, StringLevel.TUTORIAL_OBJECT_LIFE.getValue(), 80, 310));
 	}
 
 	@Override

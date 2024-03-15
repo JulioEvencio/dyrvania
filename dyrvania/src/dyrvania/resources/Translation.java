@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import dyrvania.Main;
 import dyrvania.strings.GameString;
 import dyrvania.strings.StringError;
+import dyrvania.strings.StringLevel;
 import dyrvania.strings.StringScreen;
 
 public class Translation {
@@ -37,7 +38,7 @@ public class Translation {
 					StringScreen.NEW_GAME,
 					StringScreen.LOAD_GAME,
 					StringScreen.CREDITS,
-					StringScreen.SETTINGS,
+					StringScreen.TUTORIAL,
 					StringScreen.EXIT,
 					StringScreen.EXIT_GAME,
 					StringScreen.YES,
@@ -49,7 +50,19 @@ public class Translation {
 			});
 
 			Translation.toTranslation("level", new GameString[] {
-					// Code
+					StringLevel.TUTORIAL_FULL_SCREEN,
+					StringLevel.TUTORIAL_FPS,
+					StringLevel.TUTORIAL_MUSIC,
+					StringLevel.TUTORIAL_PAUSE,
+					StringLevel.TUTORIAL_MOVE,
+					StringLevel.TUTORIAL_JUMP,
+					StringLevel.TUTORIAL_ATTACK,
+					StringLevel.TUTORIAL_OBJECT_SWORD,
+					StringLevel.TUTORIAL_OBJECT_LIFE,
+					StringLevel.INFO_SAVE,
+					StringLevel.INFO_GAME_SAVED,
+					StringLevel.INFO_LIFE_RESTORED,
+					StringLevel.INFO_NEGATIVE_EFFECTS_REMOVED
 			});
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());

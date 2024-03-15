@@ -2,7 +2,7 @@ F2 para habilitar/deshabilitar pantalla completa
 Nuevo Juego
 Cargar Juego
 Créditos
-Ajustes
+Tutorial
 Salir
 ¿Quieres abandonar el juego?
 Sí

@@ -2,7 +2,7 @@ Pressione F2 para ativar/desativar tela cheia
 Novo Jogo
 Carregar Jogo
 Créditos
-Configurações
+Tutorial
 Sair
 Você quer sair do jogo?
 Sim

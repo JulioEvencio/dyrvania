@@ -1,0 +1,13 @@
+Pulsa F2 para activar o desactivar la pantalla completa
+Pulsa F3 para mostrar/ocultar FPS
+Pulsa F4 para habilitar/deshabilitar la música
+Pulsa P o ESC para pausar el juego
+Pulsa A y D o las flecha izquierda y derecha para moverse
+Pulsa Z, J o BARRA ESPACIADORA para saltar
+Pulsa la tecla X, K o haga clic con el mouse para atacar
+Recoge espadas para aumentar tu ataque
+Recoge a los débiles rojos para aumentar tu salud máxima
+Pulsa Enter para guardar el juego
+Juego guardado
+Vida restaurada
+Se eliminaron los efectos negativos

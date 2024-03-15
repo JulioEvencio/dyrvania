@@ -11,7 +11,7 @@ public class StringScreen {
 	public static final GameString NEW_GAME = new GameString("New Game");
 	public static final GameString LOAD_GAME = new GameString("Load Game");
 	public static final GameString CREDITS = new GameString("Credits");
-	public static final GameString SETTINGS = new GameString("Settings");
+	public static final GameString TUTORIAL = new GameString("Tutorial");
 	public static final GameString EXIT = new GameString("Exit");
 
 	public static final GameString EXIT_GAME = new GameString("Do you want to leave the game?");

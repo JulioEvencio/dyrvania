@@ -12,6 +12,7 @@ import dyrvania.Game;
 import dyrvania.generics.Camera;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameStatus;
+import dyrvania.gui.GameTextRender;
 import dyrvania.managers.GameManagerAudio;
 import dyrvania.saves.GameSave;
 import dyrvania.saves.GameSaveManager;
@@ -39,6 +40,8 @@ public abstract class Scene {
 	private int width;
 	private int height;
 
+	protected final List<GameTextRender> texts;
+
 	private Teleport teleportCurrent;
 	private final List<Teleport> teleports;
 
@@ -61,6 +64,8 @@ public abstract class Scene {
 		this.gravity = 0.5f;
 
 		this.sizeBaseTiles = 32;
+
+		this.texts = new ArrayList<>();
 
 		if (teleport == null) {
 			this.teleportCurrent = new Teleport(0, 0, 0xFF0000FF, false);
@@ -310,6 +315,12 @@ public abstract class Scene {
 		for (BackgroundTile background : this.backgroundsTiles) {
 			if (this.canRender(background.getRect())) {
 				background.render(render);
+			}
+		}
+
+		for (GameTextRender textRender : this.texts) {
+			if (this.canRender(textRender.getRect())) {
+				textRender.render(render);
 			}
 		}
 
