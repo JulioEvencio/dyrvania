@@ -26,14 +26,20 @@ public class MainMenu extends Screen {
 		int rightX = game.getGameWidth() / 2 + 25;
 
 		super.buttons.add(new GameButton(game, StringScreen.NEW_GAME.getValue(), leftX, 120, () -> {
-			game.initializeScene(new Tutorial(game, null));
-			game.setTransition(GameStatus.RUN);
+			GameSaveManager.loadData();
+
+			if (GameSaveManager.saveIsEmpty()) {
+				game.initializeScene(new Tutorial(game, null));
+				game.setTransition(GameStatus.RUN);
+			} else {
+				game.setGameStatus(GameStatus.CONFIRM_NEW_GAME);
+			}
 		}));
 
 		super.buttons.add(new GameButton(game, StringScreen.LOAD_GAME.getValue(), rightX, 120, () -> {
 			GameSaveManager.loadData();
 
-			if (GameSaveManager.getSave() == null || GameSaveManager.getSave().getLastScene() == null) {
+			if (GameSaveManager.saveIsEmpty()) {
 				game.setGameStatus(GameStatus.NO_DATA);
 			} else {
 				if (GameSaveManager.getSave().isSceneSaveRight()) {

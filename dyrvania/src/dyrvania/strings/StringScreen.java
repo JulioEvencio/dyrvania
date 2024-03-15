@@ -22,4 +22,7 @@ public class StringScreen {
 
 	public static final GameString BACK = new GameString("Back");
 
+	public static final GameString CONFIRM_NEW_GAME_LINE_1 = new GameString("Do you want to start a new Game?");
+	public static final GameString CONFIRM_NEW_GAME_LINE_2 = new GameString("Your current progress will be lost");
+
 }

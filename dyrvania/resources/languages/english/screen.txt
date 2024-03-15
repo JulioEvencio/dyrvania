@@ -9,3 +9,5 @@ Yes
 No
 No Data
 Back
+Do you want to start a new Game?
+Your current progress will be lost

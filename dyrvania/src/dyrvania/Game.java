@@ -25,6 +25,7 @@ import dyrvania.resources.GameAudio;
 import dyrvania.resources.GameFont;
 import dyrvania.scenes.Scene;
 import dyrvania.scenes.levels.Tutorial;
+import dyrvania.screens.ConfirmNewGame;
 import dyrvania.screens.Exit;
 import dyrvania.screens.MainMenu;
 import dyrvania.screens.NoData;
@@ -190,6 +191,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.screens.clear();
 
 		this.screens.add(new MainMenu(this));
+		this.screens.add(new ConfirmNewGame(this));
 		this.screens.add(new NoData(this));
 		this.screens.add(new Exit(this));
 		this.screens.add(new SelectLanguage(this));

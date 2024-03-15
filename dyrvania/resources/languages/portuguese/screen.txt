@@ -9,3 +9,5 @@ Sim
 Não
 Sem dados
 Voltar
+Deseja iniciar um novo Jogo?
+Seu progresso atual será perdido

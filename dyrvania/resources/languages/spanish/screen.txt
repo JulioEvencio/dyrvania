@@ -9,3 +9,5 @@ Sí
 No
 Sin datos
 Volver
+¿Quieres empezar un nuevo juego?
+Tu progreso actual se perderá

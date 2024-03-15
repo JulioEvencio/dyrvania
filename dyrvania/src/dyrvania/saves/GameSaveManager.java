@@ -19,6 +19,10 @@ public class GameSaveManager {
 
 	private static GameSave save;
 
+	public static boolean saveIsEmpty() {
+		return GameSaveManager.save == null || GameSaveManager.save.getLastScene() == null;
+	}
+
 	public static GameSave getSave() {
 		return GameSaveManager.save;
 	}
@@ -31,17 +35,17 @@ public class GameSaveManager {
 		Scene scene;
 
 		switch (GameSaveManager.save.getLastScene()) {
-			case "level-02":
-				scene = new Level02(game, new Teleport(0, 0, 0xFFFF006C, false));
-				break;
-			case "level-03":
-				scene = new Level03(game, new Teleport(0, 0, 0xFF0000FF, false));
-				break;
-			case "level-06":
-				scene = new Level06(game, new Teleport(0, 0, 0xFF0000FF, false));
-				break;
-			default:
-				scene = new Tutorial(game, new Teleport(0, 0, 0xFF0000FF, false));
+		case "level-02":
+			scene = new Level02(game, new Teleport(0, 0, 0xFFFF006C, false));
+			break;
+		case "level-03":
+			scene = new Level03(game, new Teleport(0, 0, 0xFF0000FF, false));
+			break;
+		case "level-06":
+			scene = new Level06(game, new Teleport(0, 0, 0xFF0000FF, false));
+			break;
+		default:
+			scene = new Tutorial(game, new Teleport(0, 0, 0xFF0000FF, false));
 		}
 
 		return scene;
