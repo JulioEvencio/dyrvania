@@ -7,3 +7,5 @@ Salir
 ¿Quieres abandonar el juego?
 Sí
 No
+Sin datos
+Volver

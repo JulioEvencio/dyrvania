@@ -7,3 +7,5 @@ Exit
 Do you want to leave the game?
 Yes
 No
+No Data
+Back

@@ -34,7 +34,7 @@ public class MainMenu extends Screen {
 			GameSaveManager.loadData();
 
 			if (GameSaveManager.getSave() == null || GameSaveManager.getSave().getLastScene() == null) {
-				System.out.println("Sem dados salvos!");
+				game.setGameStatus(GameStatus.NO_DATA);
 			} else {
 				if (GameSaveManager.getSave().isSceneSaveRight()) {
 					game.initializeScene(new SaveRight(game, new Teleport(0, 0, 0xFF0000FF, false), GameSaveManager.getSave().getLastScene()));

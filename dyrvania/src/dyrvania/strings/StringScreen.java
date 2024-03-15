@@ -18,4 +18,8 @@ public class StringScreen {
 	public static final GameString YES = new GameString("Yes");
 	public static final GameString NO = new GameString("No");
 
+	public static final GameString NO_DATA = new GameString("No Data");
+
+	public static final GameString BACK = new GameString("Back");
+
 }
