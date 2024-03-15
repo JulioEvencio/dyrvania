@@ -235,7 +235,7 @@ public abstract class Scene {
 		return true;
 	}
 
-	public boolean canRender(GameRect rect) {
+	private boolean canRender(GameRect rect) {
 		return new GameRect(Camera.x, Camera.y, this.game.getGameWidth(), this.game.getGameHeight()).isColliding(rect);
 	}
 
