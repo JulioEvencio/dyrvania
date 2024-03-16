@@ -24,7 +24,6 @@ import dyrvania.managers.GameManagerAudio;
 import dyrvania.resources.GameAudio;
 import dyrvania.resources.GameFont;
 import dyrvania.scenes.Scene;
-import dyrvania.scenes.levels.Boss01;
 import dyrvania.scenes.levels.Tutorial;
 import dyrvania.screens.ConfirmMainMenu;
 import dyrvania.screens.ConfirmNewGame;
@@ -140,9 +139,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.setAudio(GameManagerAudio.getAudioMenu());
 		this.initializeScreen();
 		this.initializeScene(new Tutorial(this, null));
-		// this.setGameStatus(GameStatus.TRANSITION);
-		this.setGameStatus(GameStatus.RUN);
-		this.scene = new Boss01(this, null);
+		this.setGameStatus(GameStatus.TRANSITION);
 	}
 
 	public String getVersion() {
@@ -363,8 +360,6 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		int frames = 0;
 
 		while (true) {
-			frames++;
-
 			long now = System.nanoTime();
 
 			delta += (now - lastTime) / ns;
@@ -374,7 +369,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 				this.tick();
 				this.render();
 
-				// frames++;
+				frames++;
 				delta--;
 			}
 

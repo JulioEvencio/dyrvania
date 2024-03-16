@@ -41,8 +41,7 @@ public class Boss {
 
 		this.rect = new GameRect(this.newX, this.newY, 32, 32);
 
-		// this.hpMax = 20;
-		this.hpMax = 1;
+		this.hpMax = 20;
 		this.hp = this.hpMax;
 
 		GameRect spriteRect = new GameRect(0, 0, 128, 128);
@@ -114,7 +113,6 @@ public class Boss {
 
 				for (Spawn spawn : this.scene.getSpawns()) {
 					this.scene.getEnemies().add(new Skeleton(this.scene, spawn.getRect().getX(), spawn.getRect().getY() - 8));
-					break;
 				}
 			}
 

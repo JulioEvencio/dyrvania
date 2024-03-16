@@ -13,3 +13,5 @@ Life restored
 Negative effects removed
 Double jump learned
 Press the jump button 2 times
+Thanks for playing!
+The game will soon have more levels

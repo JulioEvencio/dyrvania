@@ -13,3 +13,5 @@ Vida restaurada
 Efeitos negativos removidos
 Pulo duplo aprendido
 Pressione o botão de pular 2 vezes
+Obrigado por jogar!
+O jogo em breve terá mais níveis
