@@ -17,6 +17,7 @@ public class Spritesheet {
 	private static final BufferedImage spritesheetThing;
 	private static final BufferedImage spritesheetSkull;
 	private static final BufferedImage spritesheetSkeleton;
+	private static final BufferedImage spritesheetBoss;
 	private static final BufferedImage spritesheetBackground;
 
 	static {
@@ -28,6 +29,7 @@ public class Spritesheet {
 		BufferedImage auxSpritesheetThing = null;
 		BufferedImage auxSpritesheetSkull = null;
 		BufferedImage auxSpritesheetSkeleton = null;
+		BufferedImage auxSpritesheetBoss = null;
 		BufferedImage auxSpritesheetBackground = null;
 
 		try {
@@ -39,6 +41,7 @@ public class Spritesheet {
 			auxSpritesheetThing = ImageIO.read(Spritesheet.class.getResource("/sprites/thing.png"));
 			auxSpritesheetSkull = ImageIO.read(Spritesheet.class.getResource("/sprites/skull.png"));
 			auxSpritesheetSkeleton = ImageIO.read(Spritesheet.class.getResource("/sprites/skeleton.png"));
+			auxSpritesheetBoss = ImageIO.read(Spritesheet.class.getResource("/sprites/boss.png"));
 			auxSpritesheetBackground = ImageIO.read(Spritesheet.class.getResource("/sprites/background.png"));
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_SPRITES.getValue());
@@ -52,6 +55,7 @@ public class Spritesheet {
 		spritesheetThing = auxSpritesheetThing;
 		spritesheetSkull = auxSpritesheetSkull;
 		spritesheetSkeleton = auxSpritesheetSkeleton;
+		spritesheetBoss = auxSpritesheetBoss;
 		spritesheetBackground = auxSpritesheetBackground;
 	}
 
@@ -85,6 +89,10 @@ public class Spritesheet {
 
 	public static BufferedImage getSpriteSkeleton(int x, int y, int width, int height) {
 		return Spritesheet.spritesheetSkeleton.getSubimage(x, y, width, height);
+	}
+
+	public static BufferedImage getSpriteBoss(int x, int y, int width, int height) {
+		return Spritesheet.spritesheetBoss.getSubimage(x, y, width, height);
 	}
 
 	public static BufferedImage getSpriteBackground(int x, int y, int width, int height) {

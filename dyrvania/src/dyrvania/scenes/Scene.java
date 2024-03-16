@@ -22,10 +22,13 @@ import dyrvania.scenes.entities.enemies.Enemy;
 import dyrvania.scenes.entities.enemies.Skeleton;
 import dyrvania.scenes.entities.enemies.Skull;
 import dyrvania.scenes.entities.enemies.Thing;
+import dyrvania.scenes.entities.enemies.bosses.Boss;
 import dyrvania.scenes.objects.Life;
+import dyrvania.scenes.objects.Spawn;
 import dyrvania.scenes.objects.Sword;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.scenes.tiles.BackgroundTile;
+import dyrvania.scenes.tiles.Block;
 import dyrvania.scenes.tiles.Floor;
 import dyrvania.scenes.tiles.Wall;
 import dyrvania.strings.StringLevel;
@@ -53,6 +56,8 @@ public abstract class Scene {
 
 	private final Player player;
 
+	private Boss boss;
+
 	private final List<Enemy> enemies;
 
 	private final List<Background> backgrounds;
@@ -60,8 +65,14 @@ public abstract class Scene {
 
 	private final List<Floor> floors;
 	private final List<Wall> walls;
-
+	private final List<Block> blocks;
+	private final List<Spawn> spawns;
+	
 	public Scene(Game game, Teleport teleport, List<Background> backgrounds) {
+		this(game, teleport, null, backgrounds);
+	}
+
+	public Scene(Game game, Teleport teleport, Boss boss, List<Background> backgrounds) {
 		this.game = game;
 
 		this.canSave = false;
@@ -95,9 +106,17 @@ public abstract class Scene {
 		this.backgrounds = backgrounds;
 		this.backgroundsTiles = new ArrayList<>();
 
+		this.boss = boss;
+
+		if (this.boss != null) {
+			this.boss.setScene(this);
+		}
+
 		this.enemies = new ArrayList<>();
 		this.floors = new ArrayList<>();
 		this.walls = new ArrayList<>();
+		this.blocks = new ArrayList<>();
+		this.spawns = new ArrayList<>();
 
 		this.buildGame();
 	}
@@ -154,6 +173,14 @@ public abstract class Scene {
 		return this.sizeBaseTiles;
 	}
 
+	public List<Enemy> getEnemies() {
+		return enemies;
+	}
+
+	public List<Spawn> getSpawns() {
+		return spawns;
+	}
+
 	protected abstract String currentLevelString();
 
 	protected abstract BufferedImage loadLevel();
@@ -199,6 +226,10 @@ public abstract class Scene {
 						break;
 					case 0xFFFA81B5:
 						this.teleports.add(new Teleport(x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFFFF006c, false));
+
+						if (this.currentLevelString().equals("boss-01")) {
+							this.blocks.add(new Block(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+						}
 						break;
 					case 0xFF7D4DD9:
 						this.teleports.add(new Teleport(x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFF5800FF, false));
@@ -230,6 +261,9 @@ public abstract class Scene {
 							this.life.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles);
 						}
 						break;
+					case 0xFF520000:
+						this.spawns.add(new Spawn(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
+						break;
 					default:
 						if (currentPixel == this.teleportCurrent.getColor()) {
 							this.player.setPosition(x * this.sizeBaseTiles, y * this.sizeBaseTiles - 12);
@@ -256,6 +290,12 @@ public abstract class Scene {
 			}
 		}
 
+		for (Block block : this.blocks) {
+			if (block.getRect().isColliding(rect)) {
+				return false;
+			}
+		}
+
 		return true;
 	}
 
@@ -275,6 +315,10 @@ public abstract class Scene {
 		List<Enemy> enemiesRemove = new ArrayList<>();
 
 		this.player.tick();
+
+		if (this.boss != null) {
+			this.boss.tick();
+		}
 
 		for (Enemy enemy : this.enemies) {
 			if (this.player.isAttacking() && this.player.getAreaAttack().isColliding(enemy.getRect())) {
@@ -350,6 +394,12 @@ public abstract class Scene {
 			}
 		}
 
+		if (this.boss != null) {
+			if (this.canRender(this.boss.getRect())) {
+				this.boss.render(render);
+			}
+		}
+
 		for (GameTextRender textRender : this.texts) {
 			if (this.canRender(textRender.getRect())) {
 				textRender.render(render);
@@ -359,6 +409,12 @@ public abstract class Scene {
 		for (Wall wall : this.walls) {
 			if (this.canRender(wall.getRect())) {
 				wall.render(render);
+			}
+		}
+
+		for (Block block : this.blocks) {
+			if (this.canRender(block.getRect())) {
+				block.render(render);
 			}
 		}
 

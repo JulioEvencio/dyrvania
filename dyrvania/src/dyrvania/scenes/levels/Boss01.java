@@ -10,13 +10,14 @@ import dyrvania.Game;
 import dyrvania.Main;
 import dyrvania.scenes.Scene;
 import dyrvania.scenes.backgrounds.BackgroundMoon;
+import dyrvania.scenes.entities.enemies.bosses.Boss;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
 
 public class Boss01 extends Scene {
 
 	public Boss01(Game game, Teleport teleport) {
-		super(game, teleport, new ArrayList<>(List.of(new BackgroundMoon(game, 0, 0))));
+		super(game, teleport, new Boss(), new ArrayList<>(List.of(new BackgroundMoon(game, 0, 0))));
 	}
 
 	@Override
