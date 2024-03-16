@@ -25,11 +25,13 @@ import dyrvania.resources.GameAudio;
 import dyrvania.resources.GameFont;
 import dyrvania.scenes.Scene;
 import dyrvania.scenes.levels.Tutorial;
+import dyrvania.screens.ConfirmMainMenu;
 import dyrvania.screens.ConfirmNewGame;
 import dyrvania.screens.Exit;
 import dyrvania.screens.MainMenu;
 import dyrvania.screens.NoData;
 import dyrvania.screens.OpeningScreen;
+import dyrvania.screens.Pause;
 import dyrvania.screens.Screen;
 import dyrvania.screens.SelectLanguage;
 import dyrvania.screens.Transition;
@@ -190,7 +192,9 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public void initializeScreen() {
 		this.screens.clear();
 
+		this.screens.add(new Pause(this));
 		this.screens.add(new MainMenu(this));
+		this.screens.add(new ConfirmMainMenu(this));
 		this.screens.add(new dyrvania.screens.Tutorial(this));
 		this.screens.add(new ConfirmNewGame(this));
 		this.screens.add(new NoData(this));
@@ -382,6 +386,10 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public void keyReleased(KeyEvent e) {
 		if (this.gameStatus == GameStatus.RUN) {
 			this.scene.keyReleased(e);
+		} else if (this.gameStatus == GameStatus.PAUSE) {
+			if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				this.setGameStatus(GameStatus.RUN);
+			}
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_F2) {

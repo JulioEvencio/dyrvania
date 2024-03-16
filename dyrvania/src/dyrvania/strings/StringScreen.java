@@ -25,4 +25,9 @@ public class StringScreen {
 	public static final GameString CONFIRM_NEW_GAME_LINE_1 = new GameString("Do you want to start a new Game?");
 	public static final GameString CONFIRM_NEW_GAME_LINE_2 = new GameString("Your current progress will be lost");
 
+	public static final GameString CONFIRM_MAIN_MENU = new GameString("Go to menu?");
+
+	public static final GameString CONTINUE = new GameString("Continue");
+	public static final GameString MENU = new GameString("Menu");
+
 }

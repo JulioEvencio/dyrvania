@@ -46,7 +46,10 @@ public class Translation {
 					StringScreen.NO_DATA,
 					StringScreen.BACK,
 					StringScreen.CONFIRM_NEW_GAME_LINE_1,
-					StringScreen.CONFIRM_NEW_GAME_LINE_2
+					StringScreen.CONFIRM_NEW_GAME_LINE_2,
+					StringScreen.CONFIRM_MAIN_MENU,
+					StringScreen.CONTINUE,
+					StringScreen.MENU
 			});
 
 			Translation.toTranslation("level", new GameString[] {

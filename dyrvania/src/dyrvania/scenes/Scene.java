@@ -372,6 +372,10 @@ public abstract class Scene {
 	}
 
 	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			this.game.setGameStatus(GameStatus.PAUSE);
+		}
+
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			this.player.stopRight();
 		}

@@ -11,3 +11,6 @@ No Data
 Back
 Do you want to start a new Game?
 Your current progress will be lost
+Go to menu?
+Continue
+Menu
