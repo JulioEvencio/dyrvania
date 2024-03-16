@@ -2,30 +2,32 @@ package dyrvania.scenes.levels;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import dyrvania.Game;
 import dyrvania.Main;
 import dyrvania.scenes.Scene;
+import dyrvania.scenes.backgrounds.BackgroundMoon;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
 
-public class Level07 extends Scene {
+public class Boss01 extends Scene {
 
-	public Level07(Game game, Teleport teleport) {
-		super(game, teleport, new ArrayList<>());
+	public Boss01(Game game, Teleport teleport) {
+		super(game, teleport, new ArrayList<>(List.of(new BackgroundMoon(game, 0, 0))));
 	}
 
 	@Override
 	protected String currentLevelString() {
-		return "level-07";
+		return "boss-01";
 	}
 
 	@Override
 	protected BufferedImage loadLevel() {
 		try {
-			return ImageIO.read(this.getClass().getResource("/levels/level-07.png"));
+			return ImageIO.read(this.getClass().getResource("/levels/boss-01.png"));
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());
 		}
@@ -37,15 +39,7 @@ public class Level07 extends Scene {
 	protected Scene nextScene() {
 		Teleport teleport = super.getTeleportCurrent();
 
-		if (teleport.getColor() == 0xFF7AFF00) {
-			return new Level05(super.getGame(), teleport);
-		}
-
-		if (teleport.getColor() == 0xFF0000FF) {
-			return new Boss01(super.getGame(), teleport);
-		}
-
-		return new Level06(super.getGame(), teleport);
+		return new Level07(super.getGame(), teleport);
 	}
 
 }

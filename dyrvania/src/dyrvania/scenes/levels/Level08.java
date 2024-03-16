@@ -11,21 +11,21 @@ import dyrvania.scenes.Scene;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
 
-public class Level07 extends Scene {
+public class Level08 extends Scene {
 
-	public Level07(Game game, Teleport teleport) {
+	public Level08(Game game, Teleport teleport) {
 		super(game, teleport, new ArrayList<>());
 	}
 
 	@Override
 	protected String currentLevelString() {
-		return "level-07";
+		return "level-08";
 	}
 
 	@Override
 	protected BufferedImage loadLevel() {
 		try {
-			return ImageIO.read(this.getClass().getResource("/levels/level-07.png"));
+			return ImageIO.read(this.getClass().getResource("/levels/level-08.png"));
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());
 		}
@@ -38,14 +38,10 @@ public class Level07 extends Scene {
 		Teleport teleport = super.getTeleportCurrent();
 
 		if (teleport.getColor() == 0xFF7AFF00) {
-			return new Level05(super.getGame(), teleport);
+			return new Level02(super.getGame(), teleport);
 		}
 
-		if (teleport.getColor() == 0xFF0000FF) {
-			return new Boss01(super.getGame(), teleport);
-		}
-
-		return new Level06(super.getGame(), teleport);
+		return new Tutorial(super.getGame(), teleport);
 	}
 
 }
