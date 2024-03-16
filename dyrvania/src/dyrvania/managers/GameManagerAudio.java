@@ -13,6 +13,8 @@ public class GameManagerAudio {
 
 	private static final GameAudio audioEnemyHit;
 
+	private static final GameAudio audioSave;
+
 	static {
 		audioMenu = new GameAudio("/audios/menu.wav");
 		audioObject = new GameAudio("/audios/objects.wav");
@@ -22,6 +24,8 @@ public class GameManagerAudio {
 		audioPlayerAttack = new GameAudio("/audios/attack.wav");
 
 		audioEnemyHit = new GameAudio("/audios/hit.wav", -15f);
+
+		audioSave = new GameAudio("/audios/save.wav");
 	}
 
 	public static GameAudio getAudioMenu() {
@@ -46,6 +50,10 @@ public class GameManagerAudio {
 
 	public static GameAudio getAudioEnemyHit() {
 		return GameManagerAudio.audioEnemyHit;
+	}
+
+	public static GameAudio getAudioSave() {
+		return GameManagerAudio.audioSave;
 	}
 
 }

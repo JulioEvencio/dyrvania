@@ -265,6 +265,8 @@ public abstract class Scene {
 
 	public void tick() {
 		if (this.canSave) {
+			GameManagerAudio.getAudioSave().play();
+
 			this.toSave();
 
 			this.canSave = false;
