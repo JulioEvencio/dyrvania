@@ -11,3 +11,5 @@ Pressione Enter para salvar o jogo
 Jogo salvo
 Vida restaurada
 Efeitos negativos removidos
+Pulo duplo aprendido
+Pressione o botão de pular 2 vezes

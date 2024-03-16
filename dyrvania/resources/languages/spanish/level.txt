@@ -11,3 +11,5 @@ Pulsa Enter para guardar el juego
 Juego guardado
 Vida restaurada
 Se eliminaron los efectos negativos
+Doble salto aprendido
+Presione el botón de salto 2 veces

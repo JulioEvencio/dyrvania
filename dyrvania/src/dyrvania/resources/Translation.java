@@ -83,7 +83,9 @@ public class Translation {
 					StringLevel.INFO_SAVE,
 					StringLevel.INFO_GAME_SAVED,
 					StringLevel.INFO_LIFE_RESTORED,
-					StringLevel.INFO_NEGATIVE_EFFECTS_REMOVED
+					StringLevel.INFO_NEGATIVE_EFFECTS_REMOVED,
+					StringLevel.INFO_DOUBLE_JUMP,
+					StringLevel.TUTORIAL_DOUBLE_JUMP
 			});
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());

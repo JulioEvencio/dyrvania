@@ -20,4 +20,7 @@ public class StringLevel {
 	public static final GameString INFO_LIFE_RESTORED = new GameString("Life restored");
 	public static final GameString INFO_NEGATIVE_EFFECTS_REMOVED = new GameString("Negative effects removed");
 
+	public static final GameString INFO_DOUBLE_JUMP = new GameString("Double jump learned");
+	public static final GameString TUTORIAL_DOUBLE_JUMP = new GameString("Press the jump button 2 times");
+
 }

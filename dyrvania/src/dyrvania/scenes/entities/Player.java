@@ -13,6 +13,7 @@ import dyrvania.generics.GameSpriteAnimation;
 import dyrvania.managers.GameManagerAudio;
 import dyrvania.managers.entities.GameManagerSpritePlayer;
 import dyrvania.resources.GameFont;
+import dyrvania.saves.GameSaveManager;
 import dyrvania.scenes.Scene;
 
 public class Player {
@@ -46,6 +47,7 @@ public class Player {
 	private boolean keyAttack;
 
 	private boolean isJump;
+	private boolean canDoubleJump;
 	private final float jumpHeight;
 	private float jumpFrames;
 
@@ -93,6 +95,7 @@ public class Player {
 		this.keyAttack = false;
 
 		this.isJump = false;
+		this.canDoubleJump = false;
 		this.jumpHeight = 100f;
 		this.jumpFrames = 0f;
 
@@ -218,6 +221,13 @@ public class Player {
 
 			this.isJump = true;
 			this.keyJump = true;
+			this.canDoubleJump = true;
+		} else if (GameSaveManager.getSave().isBossDefeated() && this.canDoubleJump) {
+			GameManagerAudio.getAudioPlayerJump().play();
+
+			this.canDoubleJump = false;
+
+			this.toJumpSpecial();
 		}
 	}
 
@@ -279,6 +289,7 @@ public class Player {
 				this.rect.setY(this.rect.getY() + 0.5f);
 			} else {
 				this.speedY = 0f;
+				this.canDoubleJump = false;
 				break;
 			}
 		}

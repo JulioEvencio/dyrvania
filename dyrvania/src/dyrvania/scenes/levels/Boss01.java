@@ -8,11 +8,13 @@ import javax.imageio.ImageIO;
 
 import dyrvania.Game;
 import dyrvania.Main;
+import dyrvania.saves.GameSaveManager;
 import dyrvania.scenes.Scene;
 import dyrvania.scenes.backgrounds.BackgroundMoon;
 import dyrvania.scenes.entities.enemies.bosses.Boss;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
+import dyrvania.strings.StringLevel;
 
 public class Boss01 extends Scene {
 
@@ -41,6 +43,16 @@ public class Boss01 extends Scene {
 		Teleport teleport = super.getTeleportCurrent();
 
 		return new Level07(super.getGame(), teleport);
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		if (GameSaveManager.getSave().isBossDefeated() && super.texts.isEmpty()) {
+			super.addText(StringLevel.INFO_DOUBLE_JUMP.getValue(), 100);
+			super.addText(StringLevel.TUTORIAL_DOUBLE_JUMP.getValue(), 130);
+		}
 	}
 
 }
