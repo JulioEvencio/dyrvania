@@ -16,11 +16,6 @@ public class SaveRight extends Save {
 	}
 
 	@Override
-	protected boolean isSceneRight() {
-		return true;
-	}
-
-	@Override
 	protected String currentLevelString() {
 		return "save-right";
 	}

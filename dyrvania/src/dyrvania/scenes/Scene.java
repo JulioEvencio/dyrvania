@@ -28,10 +28,13 @@ import dyrvania.scenes.objects.Teleport;
 import dyrvania.scenes.tiles.BackgroundTile;
 import dyrvania.scenes.tiles.Floor;
 import dyrvania.scenes.tiles.Wall;
+import dyrvania.strings.StringLevel;
 
 public abstract class Scene {
 
 	private final Game game;
+
+	private boolean canSave;
 
 	private final float gravity;
 
@@ -60,6 +63,8 @@ public abstract class Scene {
 
 	public Scene(Game game, Teleport teleport, List<Background> backgrounds) {
 		this.game = game;
+
+		this.canSave = false;
 
 		this.gravity = 0.5f;
 
@@ -97,13 +102,32 @@ public abstract class Scene {
 		this.buildGame();
 	}
 
-	protected void savePlayer() {
+	protected void addText(String text, int y) {
+		GameTextRender textRender = new GameTextRender(this.getGame(), text, 0, y);
+
+		textRender.getRect().setX((this.getGame().getGameWidth() - textRender.getRect().getWidth()) / 2);
+
+		this.texts.add(textRender);
+	}
+
+	protected void gameSave() {
+		this.canSave = true;
+	}
+
+	private void toSave() {
 		this.player.setHp(GameSaveManager.getSave().getHpMax());
 		this.player.setPoisoning(false);
 
 		GameSaveManager.getSave().setHp(GameSaveManager.getSave().getHpMax());
 		GameSaveManager.getSave().setPoisoning(false);
 		GameSaveManager.getSave().setIsDirRight(this.player.isDirRight());
+		GameSaveManager.getSave().setSceneSaveRight(this.player.isDirRight());
+
+		this.addText(StringLevel.INFO_GAME_SAVED.getValue(), 190);
+		this.addText(StringLevel.INFO_LIFE_RESTORED.getValue(), 230);
+		this.addText(StringLevel.INFO_NEGATIVE_EFFECTS_REMOVED.getValue(), 270);
+
+		GameSaveManager.saveData();
 	}
 
 	public Game getGame() {
@@ -240,6 +264,12 @@ public abstract class Scene {
 	}
 
 	public void tick() {
+		if (this.canSave) {
+			this.toSave();
+
+			this.canSave = false;
+		}
+
 		List<Enemy> enemiesRemove = new ArrayList<>();
 
 		this.player.tick();
