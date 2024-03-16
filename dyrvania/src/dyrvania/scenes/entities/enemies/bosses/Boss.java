@@ -2,8 +2,11 @@ package dyrvania.scenes.entities.enemies.bosses;
 
 import java.awt.Graphics;
 
+import dyrvania.generics.GameDamage;
 import dyrvania.generics.GameRect;
 import dyrvania.generics.GameSpriteAnimation;
+import dyrvania.managers.GameManagerAudio;
+import dyrvania.managers.GameManagerSpriteDeath;
 import dyrvania.managers.entities.enemies.bosses.GameManagerSpriteBoss;
 import dyrvania.scenes.Scene;
 import dyrvania.scenes.entities.enemies.Skeleton;
@@ -30,13 +33,16 @@ public class Boss {
 	private final GameSpriteAnimation spriteTeleport02;
 	private final GameSpriteAnimation spriteInvoking;
 
+	private final GameSpriteAnimation spriteDeath;
+
 	public Boss() {
 		this.newX = 650;
 		this.newY = 150;
 
 		this.rect = new GameRect(this.newX, this.newY, 32, 32);
 
-		this.hpMax = 20;
+		// this.hpMax = 20;
+		this.hpMax = 1;
 		this.hp = this.hpMax;
 
 		GameRect spriteRect = new GameRect(0, 0, 128, 128);
@@ -45,6 +51,8 @@ public class Boss {
 		this.spriteTeleport01 = GameManagerSpriteBoss.createSpriteTeleport01(spriteRect);
 		this.spriteTeleport02 = GameManagerSpriteBoss.createSpriteTeleport02(spriteRect);
 		this.spriteInvoking = GameManagerSpriteBoss.createSpriteInvoking(spriteRect);
+
+		this.spriteDeath = GameManagerSpriteDeath.createSpriteDeath(spriteRect);
 
 		this.currentSprite = this.spriteTeleport02;
 
@@ -70,39 +78,69 @@ public class Boss {
 	public GameRect getRect() {
 		return this.rect;
 	}
+	
+	public boolean isAnimationDead() {
+		return this.currentSprite == this.spriteDeath;
+	}
 
-	public void tick() {
-		if (this.spriteInvoking.finishedAnimation()) {
-			this.spriteInvoking.reset();
+	public boolean isDead() {
+		return this.hp <= 0 && this.currentSprite.finishedAnimation();
+	}
 
-			this.currentSprite = this.spriteIdle;
+	public void takeDamage(GameDamage damage) {
+		if (!this.hasAShield && this.currentSprite == this.spriteIdle) {
+			GameManagerAudio.getAudioEnemyHit().play();
 
-			for (Spawn spawn : this.scene.getSpawns()) {
-				this.scene.getEnemies().add(new Skeleton(this.scene, spawn.getRect().getX(), spawn.getRect().getY() - 8));
-				break;
-			}
-		}
+			this.hp -= damage.getDamage();
+			this.hasAShield = true;
 
-		if (this.spriteTeleport01.finishedAnimation()) {
-			this.rect.setX(this.newX);
-			this.rect.setY(this.newY);
-
-			this.spriteTeleport01.reset();
-
-			this.currentSprite = this.spriteTeleport02;
-		}
-
-		if (this.spriteTeleport02.finishedAnimation()) {
-			this.spriteTeleport02.reset();
-
-			this.currentSprite = this.spriteInvoking;
-		}
-
-		if (this.scene.getEnemies().isEmpty() && this.currentSprite == this.spriteIdle) {
 			this.newX = (this.newX == 384) ? 650 : 384;
 			this.newY = (this.newY == 192) ? 150 : 192;
 
 			this.currentSprite = this.spriteTeleport01;
+		}
+	}
+	
+	public void resetShield() {
+		this.hasAShield = false;
+	}
+
+	public void tick() {
+		if (this.hp > 0) {
+			if (this.spriteInvoking.finishedAnimation()) {
+				this.spriteInvoking.reset();
+
+				this.currentSprite = this.spriteIdle;
+
+				for (Spawn spawn : this.scene.getSpawns()) {
+					this.scene.getEnemies().add(new Skeleton(this.scene, spawn.getRect().getX(), spawn.getRect().getY() - 8));
+					break;
+				}
+			}
+
+			if (this.spriteTeleport01.finishedAnimation()) {
+				this.rect.setX(this.newX);
+				this.rect.setY(this.newY);
+
+				this.spriteTeleport01.reset();
+
+				this.currentSprite = this.spriteTeleport02;
+			}
+
+			if (this.spriteTeleport02.finishedAnimation()) {
+				this.spriteTeleport02.reset();
+
+				this.currentSprite = this.spriteInvoking;
+			}
+
+			if (this.scene.getEnemies().isEmpty() && this.currentSprite == this.spriteIdle) {
+				this.newX = (this.newX == 384) ? 650 : 384;
+				this.newY = (this.newY == 192) ? 150 : 192;
+
+				this.currentSprite = this.spriteTeleport01;
+			}
+		} else {
+			this.currentSprite = this.spriteDeath;
 		}
 
 		this.currentSprite.tick();
@@ -111,7 +149,11 @@ public class Boss {
 	}
 
 	public void render(Graphics render) {
-		this.currentSprite.render(render);
+		if (this.hasAShield) {
+			this.currentSprite.renderSpritesSecondary(render);
+		} else {
+			this.currentSprite.render(render);
+		}
 	}
 
 }

@@ -14,6 +14,8 @@ public class GameSave implements Serializable {
 	private boolean isPoisoning;
 	private boolean isDirRight;
 
+	private boolean bossDefeated;
+
 	private String lastScene;
 
 	private boolean sceneSaveRight;
@@ -27,6 +29,8 @@ public class GameSave implements Serializable {
 		this.damage = damage;
 		this.isPoisoning = isPoisoning;
 		this.isDirRight = isDirRight;
+
+		this.bossDefeated = false;
 
 		this.lastScene = lastScene;
 
@@ -74,6 +78,14 @@ public class GameSave implements Serializable {
 
 	public void setIsDirRight(boolean isDirRight) {
 		this.isDirRight = isDirRight;
+	}
+
+	public boolean isBossDefeated() {
+		return this.bossDefeated;
+	}
+
+	public void setBossDefeated(boolean bossDefeated) {
+		this.bossDefeated = bossDefeated;
 	}
 
 	public String getLastScene() {

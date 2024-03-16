@@ -106,7 +106,11 @@ public abstract class Scene {
 		this.backgrounds = backgrounds;
 		this.backgroundsTiles = new ArrayList<>();
 
-		this.boss = boss;
+		if (GameSaveManager.getSave().isBossDefeated()) {
+			this.boss = null;
+		} else {
+			this.boss = boss;
+		}
 
 		if (this.boss != null) {
 			this.boss.setScene(this);
@@ -122,9 +126,9 @@ public abstract class Scene {
 	}
 
 	protected void addText(String text, int y) {
-		GameTextRender textRender = new GameTextRender(this.getGame(), text, 0, y);
+		GameTextRender textRender = new GameTextRender(this.game, text, 0, y);
 
-		textRender.getRect().setX((this.getGame().getGameWidth() - textRender.getRect().getWidth()) / 2);
+		textRender.getRect().setX((this.game.getGameWidth() - textRender.getRect().getWidth()) / 2);
 
 		this.texts.add(textRender);
 	}
@@ -227,7 +231,7 @@ public abstract class Scene {
 					case 0xFFFA81B5:
 						this.teleports.add(new Teleport(x * this.sizeBaseTiles, y * this.sizeBaseTiles, 0xFFFF006c, false));
 
-						if (this.currentLevelString().equals("boss-01")) {
+						if (this.boss != null) {
 							this.blocks.add(new Block(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
 						}
 						break;
@@ -317,7 +321,23 @@ public abstract class Scene {
 		this.player.tick();
 
 		if (this.boss != null) {
+			if (this.player.isAttacking() && this.player.getAreaAttack().isColliding(this.boss.getRect())) {
+				this.boss.takeDamage(this.player.dealDamage());
+			}
+
 			this.boss.tick();
+
+			if (this.player.finishedAnimation()) {
+				this.boss.resetShield();
+			}
+
+			if (this.boss.isDead()) {
+				GameSaveManager.getSave().setBossDefeated(true);
+
+				this.blocks.clear();
+
+				this.boss = null;
+			}
 		}
 
 		for (Enemy enemy : this.enemies) {

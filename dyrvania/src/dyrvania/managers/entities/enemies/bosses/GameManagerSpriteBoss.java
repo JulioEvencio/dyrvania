@@ -18,7 +18,6 @@ public class GameManagerSpriteBoss {
 
 	// Sprites Damage
 	private final static BufferedImage[] spriteIdleDamage;
-	private final static BufferedImage[] spriteInvokingDamage;
 
 	static {
 		int spriteWidth = 64;
@@ -58,11 +57,9 @@ public class GameManagerSpriteBoss {
 		spriteHeight = 80;
 
 		spriteInvoking = new BufferedImage[4];
-		spriteInvokingDamage = new BufferedImage[4];
 
 		for (int i = 0; i < spriteInvoking.length; i++) {
 			spriteInvoking[i] = Spritesheet.getSpriteBoss(spriteWidth * i, 80, spriteWidth, spriteHeight);
-			spriteInvokingDamage[i] = GameUtil.createSpriteColor(spriteIdle[i], GameColors.DAMAGE);
 		}
 	}
 
@@ -79,7 +76,7 @@ public class GameManagerSpriteBoss {
 	}
 
 	public static GameSpriteAnimation createSpriteInvoking(GameRect rect) {
-		return new GameSpriteAnimation(rect, 10, GameManagerSpriteBoss.spriteInvoking, GameManagerSpriteBoss.spriteInvokingDamage);
+		return new GameSpriteAnimation(rect, 10, GameManagerSpriteBoss.spriteInvoking, GameManagerSpriteBoss.spriteInvoking);
 	}
 
 }
