@@ -28,6 +28,7 @@ import dyrvania.scenes.levels.Tutorial;
 import dyrvania.screens.ConfirmMainMenu;
 import dyrvania.screens.ConfirmNewGame;
 import dyrvania.screens.Exit;
+import dyrvania.screens.Lore;
 import dyrvania.screens.MainMenu;
 import dyrvania.screens.NoData;
 import dyrvania.screens.OpeningScreen;
@@ -73,6 +74,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	private final Transition transition;
 	private final OpeningScreen openingScreen;
 
+	private Lore lore;
 	private final List<Screen> screens;
 
 	private Scene scene;
@@ -128,6 +130,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.transition = new Transition(this, GameStatus.OPENING_SCREEN);
 		this.openingScreen = new OpeningScreen(this);
 
+		this.lore = null;
 		this.scene = null;
 		this.screens = new ArrayList<>();
 
@@ -191,6 +194,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	public void initializeScreen() {
 		this.screens.clear();
+
+		this.lore = new Lore(this);
 
 		this.screens.add(new Pause(this));
 		this.screens.add(new MainMenu(this));
@@ -276,6 +281,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			this.scene.tick();
 		} else if (this.gameStatus == GameStatus.TRANSITION) {
 			this.transition.tick();
+		} else if (this.gameStatus == GameStatus.LORE) {
+			this.lore.tick();
 		} else if (this.gameStatus == GameStatus.OPENING_SCREEN) {
 			this.openingScreen.tick();
 		} else {
@@ -302,6 +309,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			this.scene.render(render);
 		} else if (this.gameStatus == GameStatus.TRANSITION) {
 			this.transition.render(render);
+		} else if (this.gameStatus == GameStatus.LORE) {
+			this.lore.render(render);
 		} else if (this.gameStatus == GameStatus.OPENING_SCREEN) {
 			this.openingScreen.render(render);
 		} else {
@@ -390,6 +399,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				this.setGameStatus(GameStatus.RUN);
 			}
+		} else if (this.gameStatus == GameStatus.LORE) {
+			this.lore.keyReleased(e);
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_F2) {

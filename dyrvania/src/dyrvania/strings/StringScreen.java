@@ -30,4 +30,24 @@ public class StringScreen {
 	public static final GameString CONTINUE = new GameString("Continue");
 	public static final GameString MENU = new GameString("Menu");
 
+	public static final GameString ENTER_CONTINUE = new GameString("Press enter to continue");
+
+	public static final GameString LORE_LINE_01 = new GameString("Peace reigned under protection great empire");
+	public static final GameString LORE_LINE_02 = new GameString("Humanity thrived");
+	public static final GameString LORE_LINE_03 = new GameString("But every empire must fall");
+	public static final GameString LORE_LINE_04 = new GameString("On a beautiful night, the Bloody Moon appeared");
+	public static final GameString LORE_LINE_05 = new GameString("Bringing with it the creatures of the night");
+	public static final GameString LORE_LINE_06 = new GameString("Despite the grandeur of the empire");
+	public static final GameString LORE_LINE_07 = new GameString("It succumbed within a few weeks");
+	public static final GameString LORE_LINE_08 = new GameString("It seemed like the end of humanity");
+	public static final GameString LORE_LINE_09 = new GameString("But then emerged the Order of Dyrvanias");
+	public static final GameString LORE_LINE_10 = new GameString("A group of skilled warriors");
+	public static final GameString LORE_LINE_11 = new GameString("After a long battle");
+	public static final GameString LORE_LINE_12 = new GameString("The Bloody Moon was sealed");
+	public static final GameString LORE_LINE_13 = new GameString("But that was long ago");
+	public static final GameString LORE_LINE_14 = new GameString("Today, for many, it's just a legend");
+	public static final GameString LORE_LINE_15 = new GameString("But recently...");
+	public static final GameString LORE_LINE_16 = new GameString("The Moon has been turning increasingly red");
+	public static final GameString LORE_LINE_17 = new GameString("And strange events have begun to occur");
+
 }

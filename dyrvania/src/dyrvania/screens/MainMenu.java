@@ -30,7 +30,7 @@ public class MainMenu extends Screen {
 
 			if (GameSaveManager.saveIsEmpty()) {
 				game.initializeScene(new Tutorial(game, null));
-				game.setTransition(GameStatus.RUN);
+				game.setTransition(GameStatus.LORE);
 			} else {
 				game.setGameStatus(GameStatus.CONFIRM_NEW_GAME);
 			}

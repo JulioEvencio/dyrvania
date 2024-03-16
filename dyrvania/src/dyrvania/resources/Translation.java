@@ -49,7 +49,25 @@ public class Translation {
 					StringScreen.CONFIRM_NEW_GAME_LINE_2,
 					StringScreen.CONFIRM_MAIN_MENU,
 					StringScreen.CONTINUE,
-					StringScreen.MENU
+					StringScreen.MENU,
+					StringScreen.ENTER_CONTINUE,
+					StringScreen.LORE_LINE_01,
+					StringScreen.LORE_LINE_02,
+					StringScreen.LORE_LINE_03,
+					StringScreen.LORE_LINE_04,
+					StringScreen.LORE_LINE_05,
+					StringScreen.LORE_LINE_06,
+					StringScreen.LORE_LINE_07,
+					StringScreen.LORE_LINE_08,
+					StringScreen.LORE_LINE_09,
+					StringScreen.LORE_LINE_10,
+					StringScreen.LORE_LINE_11,
+					StringScreen.LORE_LINE_12,
+					StringScreen.LORE_LINE_13,
+					StringScreen.LORE_LINE_14,
+					StringScreen.LORE_LINE_15,
+					StringScreen.LORE_LINE_16,
+					StringScreen.LORE_LINE_17
 			});
 
 			Translation.toTranslation("level", new GameString[] {
