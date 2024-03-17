@@ -51,7 +51,10 @@ public abstract class Enemy {
 
 		this.loadSprites();
 
-		this.setCurrentSprite(this.spriteRunRight);
+		if (this.currentSprite == null) {
+			this.setCurrentSprite(this.spriteRunRight);
+		}
+
 		this.setSpritePosition();
 	}
 
