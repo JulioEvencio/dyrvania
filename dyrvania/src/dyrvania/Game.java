@@ -118,6 +118,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		try {
 			this.frame.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(ImageIO.read(getClass().getResource("/sprites/cursor.png")), new Point(0, 0), "cursor"));
+			this.frame.setIconImage(ImageIO.read(Game.class.getResource("/sprites/icon.png")));
 		} catch (Exception e) {
 			Main.exitWithError(StringError.ERROR_LOADING_FILES.getValue());
 		}
