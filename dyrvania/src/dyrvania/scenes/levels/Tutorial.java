@@ -10,6 +10,7 @@ import dyrvania.Game;
 import dyrvania.Main;
 import dyrvania.gui.GameTextRender;
 import dyrvania.scenes.Scene;
+import dyrvania.scenes.backgrounds.Background;
 import dyrvania.scenes.backgrounds.BackgroundMoon;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
@@ -18,7 +19,7 @@ import dyrvania.strings.StringLevel;
 public class Tutorial extends Scene {
 
 	public Tutorial(Game game, Teleport teleport) {
-		super(game, teleport, new ArrayList<>(List.of(new BackgroundMoon(game, 0, 0))));
+		super(game, teleport, Tutorial.getBackgrounds(game));
 
 		super.texts.add(new GameTextRender(game, StringLevel.TUTORIAL_PAUSE.getValue(), 80, 110));
 
@@ -29,6 +30,14 @@ public class Tutorial extends Scene {
 		super.texts.add(new GameTextRender(game, StringLevel.TUTORIAL_OBJECT_SWORD.getValue(), 80, 270));
 
 		super.texts.add(new GameTextRender(game, StringLevel.TUTORIAL_OBJECT_LIFE.getValue(), 80, 310));
+	}
+
+	private static List<Background> getBackgrounds(Game game) {
+		List<Background> backgrounds = new ArrayList<>();
+
+		backgrounds.add(new BackgroundMoon(game, 0, 0));
+
+		return backgrounds;
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import dyrvania.Game;
 import dyrvania.Main;
 import dyrvania.saves.GameSaveManager;
 import dyrvania.scenes.Scene;
+import dyrvania.scenes.backgrounds.Background;
 import dyrvania.scenes.backgrounds.BackgroundMoon;
 import dyrvania.scenes.entities.enemies.bosses.Boss;
 import dyrvania.scenes.objects.Teleport;
@@ -19,7 +20,15 @@ import dyrvania.strings.StringLevel;
 public class Boss01 extends Scene {
 
 	public Boss01(Game game, Teleport teleport) {
-		super(game, teleport, new Boss(), new ArrayList<>(List.of(new BackgroundMoon(game, 0, 0))));
+		super(game, teleport, new Boss(), Boss01.getBackgrounds(game));
+	}
+
+	private static List<Background> getBackgrounds(Game game) {
+		List<Background> backgrounds = new ArrayList<>();
+
+		backgrounds.add(new BackgroundMoon(game, 0, 0));
+
+		return backgrounds;
 	}
 
 	@Override

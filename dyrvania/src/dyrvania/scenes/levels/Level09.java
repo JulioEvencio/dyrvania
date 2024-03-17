@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import dyrvania.Game;
 import dyrvania.Main;
 import dyrvania.scenes.Scene;
+import dyrvania.scenes.backgrounds.Background;
 import dyrvania.scenes.backgrounds.BackgroundMoon;
 import dyrvania.scenes.objects.Teleport;
 import dyrvania.strings.StringError;
@@ -17,10 +18,18 @@ import dyrvania.strings.StringLevel;
 public class Level09 extends Scene {
 
 	public Level09(Game game, Teleport teleport) {
-		super(game, teleport, new ArrayList<>(List.of(new BackgroundMoon(game, 0, 0))));
+		super(game, teleport, Level09.getBackgrounds(game));
 
 		super.addText(StringLevel.INFO_THANK_YOU.getValue(), 300);
 		super.addText(StringLevel.INFO_SOON.getValue(), 330);
+	}
+
+	private static List<Background> getBackgrounds(Game game) {
+		List<Background> backgrounds = new ArrayList<>();
+
+		backgrounds.add(new BackgroundMoon(game, 0, 0));
+
+		return backgrounds;
 	}
 
 	@Override
