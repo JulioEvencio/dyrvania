@@ -50,7 +50,7 @@ public class OpeningScreen {
 			this.sum = true;
 		} else if (this.alpha >= 1.0f) {
 			this.alpha = 1.0f;
-			this.game.setTransition(GameStatus.SELECT_LANGUAGE);
+			this.game.setGameStatus(GameStatus.SELECT_LANGUAGE);
 		}
 	}
 

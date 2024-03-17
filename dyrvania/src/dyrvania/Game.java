@@ -142,7 +142,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.setAudio(GameManagerAudio.getAudioMenu());
 		this.initializeScreen();
 		this.initializeScene(new Tutorial(this, null));
-		this.setGameStatus(GameStatus.TRANSITION);
+		this.setGameStatus(GameStatus.OPENING_SCREEN);
 	}
 
 	public String getVersion() {
@@ -193,6 +193,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	public void setGameStatus(GameStatus gameStatus) {
 		this.lastGameStatus = this.gameStatus;
 		this.gameStatus = gameStatus;
+
+		if (this.gameStatus == GameStatus.RUN || this.gameStatus == GameStatus.PAUSE || (this.lastGameStatus == GameStatus.PAUSE && this.gameStatus == GameStatus.EXIT) || this.gameStatus == GameStatus.TRANSITION) {
+			this.setAudio(GameManagerAudio.getAudioGame());
+		} else {
+			this.setAudio(GameManagerAudio.getAudioMenu());
+		}
 	}
 
 	public void initializeScreen() {

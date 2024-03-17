@@ -5,6 +5,8 @@ import dyrvania.resources.GameAudio;
 public class GameManagerAudio {
 
 	private static final GameAudio audioMenu;
+	private static final GameAudio audioGame;
+
 	private static final GameAudio audioObject;
 
 	private static final GameAudio audioPlayerJump;
@@ -17,6 +19,8 @@ public class GameManagerAudio {
 
 	static {
 		audioMenu = new GameAudio("/audios/menu.wav");
+		audioGame = new GameAudio("/audios/game.wav", -5f);
+
 		audioObject = new GameAudio("/audios/objects.wav");
 
 		audioPlayerJump = new GameAudio("/audios/jump.wav");
@@ -30,6 +34,10 @@ public class GameManagerAudio {
 
 	public static GameAudio getAudioMenu() {
 		return GameManagerAudio.audioMenu;
+	}
+
+	public static GameAudio getAudioGame() {
+		return GameManagerAudio.audioGame;
 	}
 
 	public static GameAudio getAudioObject() {
