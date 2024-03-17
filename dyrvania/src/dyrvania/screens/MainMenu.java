@@ -30,7 +30,7 @@ public class MainMenu extends Screen {
 
 			if (GameSaveManager.saveIsEmpty()) {
 				game.initializeScene(new Tutorial(game, null));
-				game.setTransition(GameStatus.LORE);
+				game.setGameStatus(GameStatus.LORE);
 			} else {
 				game.setGameStatus(GameStatus.CONFIRM_NEW_GAME);
 			}
@@ -52,7 +52,7 @@ public class MainMenu extends Screen {
 			}
 		}));
 
-		super.buttons.add(new GameButton(game, StringScreen.CREDITS.getValue(), leftX, 220, () -> System.out.println("Credits")));
+		super.buttons.add(new GameButton(game, StringScreen.CREDITS.getValue(), leftX, 220, () -> game.setGameStatus(GameStatus.CREDITS)));
 
 		super.buttons.add(new GameButton(game, StringScreen.TUTORIAL.getValue(), rightX, 220, () -> {
 			game.setGameStatus(GameStatus.TUTORIAL);

@@ -1,5 +1,6 @@
 package dyrvania.screens;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -16,7 +17,7 @@ import dyrvania.resources.Spritesheet;
 
 public abstract class Screen {
 
-	private final Game game;
+	protected final Game game;
 
 	private static final BufferedImage background;
 
@@ -86,6 +87,9 @@ public abstract class Screen {
 
 	public void render(Graphics render) {
 		render.drawImage(Screen.background, 0, 0, this.game.getGameWidth(), this.game.getGameHeight(), null);
+
+		render.setColor(new Color(0, 0, 0, 0.5f));
+		render.fillRect(0, 0, this.game.getGameWidth(), this.game.getGameHeight());
 
 		this.title.render(render);
 
