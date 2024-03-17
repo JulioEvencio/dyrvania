@@ -4,7 +4,7 @@ A simple puzzle game
 
 ## Links
 
-Click [here](julio-igreja.itch.io/dyrvania) to download the game
+Click [here](https://julio-igreja.itch.io/dyrvania) to download the game
 
 ## How to run
 
