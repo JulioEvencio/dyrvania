@@ -320,6 +320,10 @@ public abstract class Scene {
 
 		this.player.tick();
 
+		if (this.player.isDead()) {
+			this.game.setGameStatus(GameStatus.GAME_OVER);
+		}
+
 		if (this.boss != null) {
 			if (this.player.isAttacking() && this.player.getAreaAttack().isColliding(this.boss.getRect())) {
 				this.boss.takeDamage(this.player.dealDamage());

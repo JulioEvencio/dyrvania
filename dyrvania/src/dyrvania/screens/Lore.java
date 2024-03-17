@@ -82,6 +82,8 @@ public class Lore {
 		}
 
 		if (this.control >= this.lore.length) {
+			this.control = 0;
+
 			this.game.setTransition(GameStatus.RUN);
 		}
 	}

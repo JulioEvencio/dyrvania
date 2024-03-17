@@ -51,7 +51,7 @@ public class Boss {
 		this.spriteTeleport02 = GameManagerSpriteBoss.createSpriteTeleport02(spriteRect);
 		this.spriteInvoking = GameManagerSpriteBoss.createSpriteInvoking(spriteRect);
 
-		this.spriteDeath = GameManagerSpriteDeath.createSpriteDeath(spriteRect);
+		this.spriteDeath = GameManagerSpriteDeath.createSpriteDeathBlue(spriteRect);
 
 		this.currentSprite = this.spriteTeleport02;
 

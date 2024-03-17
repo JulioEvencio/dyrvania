@@ -28,6 +28,7 @@ import dyrvania.scenes.levels.Tutorial;
 import dyrvania.screens.ConfirmMainMenu;
 import dyrvania.screens.ConfirmNewGame;
 import dyrvania.screens.Exit;
+import dyrvania.screens.GameOver;
 import dyrvania.screens.Lore;
 import dyrvania.screens.MainMenu;
 import dyrvania.screens.NoData;
@@ -73,6 +74,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	private final Transition transition;
 	private final OpeningScreen openingScreen;
+	private final GameOver gameOver;
 
 	private Lore lore;
 	private final List<Screen> screens;
@@ -129,6 +131,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		this.transition = new Transition(this, GameStatus.OPENING_SCREEN);
 		this.openingScreen = new OpeningScreen(this);
+		this.gameOver = new GameOver(this);
 
 		this.lore = null;
 		this.scene = null;
@@ -279,6 +282,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		if (this.gameStatus == GameStatus.RUN) {
 			this.scene.tick();
+		} else if (this.gameStatus == GameStatus.GAME_OVER) {
+			this.gameOver.tick();
 		} else if (this.gameStatus == GameStatus.TRANSITION) {
 			this.transition.tick();
 		} else if (this.gameStatus == GameStatus.LORE) {
@@ -307,6 +312,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		if (this.gameStatus == GameStatus.RUN) {
 			this.scene.render(render);
+		} else if (this.gameStatus == GameStatus.GAME_OVER) {
+			this.gameOver.render(render);
 		} else if (this.gameStatus == GameStatus.TRANSITION) {
 			this.transition.render(render);
 		} else if (this.gameStatus == GameStatus.LORE) {

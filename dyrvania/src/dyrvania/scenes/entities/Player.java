@@ -11,6 +11,7 @@ import dyrvania.generics.GameRect;
 import dyrvania.generics.GameRectEntity;
 import dyrvania.generics.GameSpriteAnimation;
 import dyrvania.managers.GameManagerAudio;
+import dyrvania.managers.GameManagerSpriteDeath;
 import dyrvania.managers.entities.GameManagerSpritePlayer;
 import dyrvania.resources.GameFont;
 import dyrvania.saves.GameSaveManager;
@@ -66,6 +67,8 @@ public class Player {
 	private final GameSpriteAnimation spriteAttackRight;
 	private final GameSpriteAnimation spriteAttackLeft;
 
+	private final GameSpriteAnimation spriteDeath;
+
 	public Player(Scene scene) {
 		this.scene = scene;
 
@@ -115,6 +118,9 @@ public class Player {
 		this.spriteAttackRight = GameManagerSpritePlayer.createSpriteAttackRight(spriteRect);
 		this.spriteAttackLeft = GameManagerSpritePlayer.createSpriteAttackLeft(spriteRect);
 
+		this.spriteDeath = GameManagerSpriteDeath.createSpriteDeathBlue(spriteRect);
+		this.spriteDeath.reset();
+
 		this.setCurrentSprite(this.spriteIdleRight);
 		this.setSpritePosition();
 	}
@@ -144,7 +150,7 @@ public class Player {
 	}
 
 	public boolean isDead() {
-		return this.hp <= 0;
+		return this.hp <= 0 && this.currentSprite.finishedAnimation();
 	}
 
 	public boolean isAttacking() {
@@ -164,7 +170,7 @@ public class Player {
 	}
 
 	public void takeDamage(GameDamage damage) {
-		if (!this.shieldActive) {
+		if (!this.shieldActive && this.hp > 0) {
 			GameManagerAudio.getAudioPlayerHit().play();
 
 			this.hp -= damage.getDamage();
@@ -216,13 +222,13 @@ public class Player {
 	}
 
 	public void toJump() {
-		if (!this.isJump && !this.keyJump && this.isOnTheFloor()) {
+		if (!this.isJump && !this.keyJump && this.isOnTheFloor() && this.hp > 0) {
 			GameManagerAudio.getAudioPlayerJump().play();
 
 			this.isJump = true;
 			this.keyJump = true;
 			this.canDoubleJump = true;
-		} else if (GameSaveManager.getSave().isBossDefeated() && this.canDoubleJump) {
+		} else if (GameSaveManager.getSave().isBossDefeated() && this.canDoubleJump && this.hp > 0) {
 			GameManagerAudio.getAudioPlayerJump().play();
 
 			this.canDoubleJump = false;
@@ -240,7 +246,7 @@ public class Player {
 	}
 
 	public void toAttack() {
-		if (!this.keyAttack && !this.isAttacking && this.isOnTheFloor()) {
+		if (!this.keyAttack && !this.isAttacking && this.isOnTheFloor() && this.hp > 0) {
 			GameManagerAudio.getAudioPlayerAttack().play();
 
 			this.keyAttack = true;
@@ -385,6 +391,12 @@ public class Player {
 	}
 
 	public void tick() {
+		if (this.hp <= 0) {
+			this.currentSprite = this.spriteDeath;
+			this.currentSprite.tick();
+			return;
+		}
+
 		if (this.isPoisoning && this.hp > 1) {
 			this.poisonControl++;
 

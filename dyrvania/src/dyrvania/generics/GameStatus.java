@@ -4,6 +4,7 @@ public enum GameStatus {
 
 	RUN,
 	PAUSE,
+	GAME_OVER,
 	NEW_GAME,
 	LORE,
 	LOAD_GAME,
