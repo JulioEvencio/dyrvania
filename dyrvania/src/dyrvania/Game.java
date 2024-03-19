@@ -367,30 +367,42 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 		long lastTime = System.nanoTime();
 
-		double amountOfTicks = 60.0;
-		double ns = 1000000000.0 / amountOfTicks;
-		double delta = 0.0;
-
-		double timer = System.currentTimeMillis();
+		double unprocessed = 0;
+		double nsPerTick = 1000000000.0 / 60;
 
 		int frames = 0;
+
+		long lastTimer1 = System.currentTimeMillis();
 
 		while (true) {
 			long now = System.nanoTime();
 
-			delta += (now - lastTime) / ns;
+			unprocessed += (now - lastTime) / nsPerTick;
 			lastTime = now;
 
-			if (delta >= 1) {
+			boolean shouldRender = true;
+
+			while (unprocessed >= 1) {
 				this.tick();
+
+				unprocessed -= 1;
+				shouldRender = true;
+			}
+
+			try {
+				Thread.sleep(2);
+			} catch (InterruptedException e) {
+				// Code
+			}
+
+			if (shouldRender) {
 				this.render();
 
 				frames++;
-				delta--;
 			}
 
-			if (System.currentTimeMillis() - timer >= 1000) {
-				timer = System.currentTimeMillis();
+			if (System.currentTimeMillis() - lastTimer1 > 1000) {
+				lastTimer1 += 1000;
 
 				this.fps = frames;
 				frames = 0;
