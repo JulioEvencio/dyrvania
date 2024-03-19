@@ -17,6 +17,7 @@ import dyrvania.managers.GameManagerAudio;
 import dyrvania.saves.GameSave;
 import dyrvania.saves.GameSaveManager;
 import dyrvania.scenes.backgrounds.Background;
+import dyrvania.scenes.backgrounds.BackgroundCastle;
 import dyrvania.scenes.entities.Player;
 import dyrvania.scenes.entities.enemies.Enemy;
 import dyrvania.scenes.entities.enemies.Skeleton;
@@ -27,7 +28,6 @@ import dyrvania.scenes.objects.Life;
 import dyrvania.scenes.objects.Spawn;
 import dyrvania.scenes.objects.Sword;
 import dyrvania.scenes.objects.Teleport;
-import dyrvania.scenes.tiles.BackgroundTile;
 import dyrvania.scenes.tiles.Block;
 import dyrvania.scenes.tiles.Floor;
 import dyrvania.scenes.tiles.Wall;
@@ -61,7 +61,6 @@ public abstract class Scene {
 	private final List<Enemy> enemies;
 
 	private final List<Background> backgrounds;
-	private final List<BackgroundTile> backgroundsTiles;
 
 	private final List<Floor> floors;
 	private final List<Wall> walls;
@@ -104,7 +103,10 @@ public abstract class Scene {
 		this.player.setDir(GameSaveManager.getSave().isDirRight());
 
 		this.backgrounds = backgrounds;
-		this.backgroundsTiles = new ArrayList<>();
+
+		if (this.backgrounds.isEmpty()) {
+			this.backgrounds.add(new BackgroundCastle(game, 0, 0));
+		}
 
 		if (GameSaveManager.getSave().isBossDefeated()) {
 			this.boss = null;
@@ -204,10 +206,6 @@ public abstract class Scene {
 		for (int x = 0; x < map.getWidth(); x++) {
 			for (int y = 0; y < map.getHeight(); y++) {
 				int currentPixel = pixels[x + (y * map.getWidth())];
-
-				if (this.backgrounds.isEmpty()) {
-					this.backgroundsTiles.add(new BackgroundTile(x * this.sizeBaseTiles, y * this.sizeBaseTiles, this.sizeBaseTiles, this.sizeBaseTiles));
-				}
 
 				switch (currentPixel) {
 					case 0xFFFFFFFF:
@@ -410,12 +408,6 @@ public abstract class Scene {
 
 		for (Background background : this.backgrounds) {
 			background.render(render);
-		}
-
-		for (BackgroundTile background : this.backgroundsTiles) {
-			if (this.canRender(background.getRect())) {
-				background.render(render);
-			}
 		}
 
 		if (this.boss != null) {
