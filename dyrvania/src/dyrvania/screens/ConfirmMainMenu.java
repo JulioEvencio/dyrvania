@@ -8,12 +8,13 @@ import dyrvania.generics.GameStatus;
 import dyrvania.gui.GameButton;
 import dyrvania.gui.GameText;
 import dyrvania.resources.GameFont;
+import dyrvania.strings.StringGame;
 import dyrvania.strings.StringScreen;
 
 public class ConfirmMainMenu extends Screen {
 
 	public ConfirmMainMenu(Game game) {
-		super(game, StringScreen.NEW_GAME.getValue());
+		super(game, StringGame.TITLE.getValue());
 
 		Graphics render = game.getRender();
 
