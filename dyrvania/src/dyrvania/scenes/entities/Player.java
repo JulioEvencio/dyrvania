@@ -69,9 +69,7 @@ public class Player {
 
 	private final GameSpriteAnimation spriteDeath;
 
-	public Player(Scene scene) {
-		this.scene = scene;
-
+	public Player() {
 		this.rect = new GameRectEntity(0, 0, 20, 44);
 		this.rectAttack = new GameRect(0, 0, 31, 12);
 
@@ -123,6 +121,14 @@ public class Player {
 
 		this.setCurrentSprite(this.spriteIdleRight);
 		this.setSpritePosition();
+	}
+
+	public void setScene(Scene scene) {
+		this.scene = scene;
+	}
+
+	private void resetJump() {
+		this.jumpFrames = 0f;
 	}
 
 	public int getHp() {
@@ -238,6 +244,7 @@ public class Player {
 	}
 
 	public void toJumpSpecial() {
+		this.resetJump();
 		this.isJump = true;
 	}
 

@@ -58,7 +58,7 @@ public class GameOver {
 			this.sum = false;
 
 			if (GameSaveManager.saveIsEmpty()) {
-				GameSaveManager.setSave(null);
+				GameSaveManager.resetSave();
 
 				this.game.initializeScene(new Tutorial(this.game, null));
 				this.game.setTransition(GameStatus.RUN);

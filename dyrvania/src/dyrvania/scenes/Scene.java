@@ -14,7 +14,6 @@ import dyrvania.generics.GameRect;
 import dyrvania.generics.GameStatus;
 import dyrvania.gui.GameTextRender;
 import dyrvania.managers.GameManagerAudio;
-import dyrvania.saves.GameSave;
 import dyrvania.saves.GameSaveManager;
 import dyrvania.scenes.backgrounds.Background;
 import dyrvania.scenes.backgrounds.BackgroundCastle;
@@ -90,17 +89,9 @@ public abstract class Scene {
 
 		this.teleports = new ArrayList<>();
 
-		if (GameSaveManager.getSave() == null) {
-			GameSaveManager.setSave(new GameSave(10, 10, 1, false, true, null, false));
-		}
+		this.player = GameSaveManager.getPlayer();
 
-		this.player = new Player(this);
-
-		this.player.setHp(GameSaveManager.getSave().getHp());
-		this.player.setHpMax(GameSaveManager.getSave().getHpMax());
-		this.player.setDamage(GameSaveManager.getSave().getDamage());
-		this.player.setPoisoning(GameSaveManager.getSave().isPoisoning());
-		this.player.setDir(GameSaveManager.getSave().isDirRight());
+		this.player.setScene(this);
 
 		this.backgrounds = backgrounds;
 
@@ -143,7 +134,6 @@ public abstract class Scene {
 		this.player.setHp(GameSaveManager.getSave().getHpMax());
 		this.player.setPoisoning(false);
 
-		GameSaveManager.getSave().setHp(GameSaveManager.getSave().getHpMax());
 		GameSaveManager.getSave().setPoisoning(false);
 		GameSaveManager.getSave().setIsDirRight(this.player.isDirRight());
 		GameSaveManager.getSave().setSceneSaveRight(this.player.isDirRight());
@@ -392,7 +382,6 @@ public abstract class Scene {
 			}
 		}
 
-		GameSaveManager.getSave().setHp(this.player.getHp());
 		GameSaveManager.getSave().setPoisoning(this.player.isPoisoning());
 		GameSaveManager.getSave().setIsDirRight(this.player.isDirRight());
 
@@ -476,10 +465,6 @@ public abstract class Scene {
 	}
 
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			this.game.setGameStatus(GameStatus.PAUSE);
-		}
-
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			this.player.stopRight();
 		}

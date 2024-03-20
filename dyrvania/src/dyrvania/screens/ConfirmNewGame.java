@@ -31,7 +31,7 @@ public class ConfirmNewGame extends Screen {
 		int rightX = game.getGameWidth() / 2 + 25;
 
 		super.buttons.add(new GameButton(game, StringScreen.YES.getValue(), leftX, 220, () -> {
-			GameSaveManager.setSave(null);
+			GameSaveManager.resetSave();
 
 			game.initializeScene(new Tutorial(game, null));
 			game.setGameStatus(GameStatus.LORE);

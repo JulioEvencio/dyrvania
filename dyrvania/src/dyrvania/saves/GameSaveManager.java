@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 
 import dyrvania.Game;
 import dyrvania.scenes.Scene;
+import dyrvania.scenes.entities.Player;
 import dyrvania.scenes.levels.Level02;
 import dyrvania.scenes.levels.Level03;
 import dyrvania.scenes.levels.Level06;
@@ -21,19 +22,39 @@ public class GameSaveManager {
 
 	private static GameSave save;
 
+	private static final Player player;
+
 	private static final String SAVE_FILE = "save.obj";
 	private static final String SAVE_FOLDER = "data";
 
+	static {
+		player = new Player();
+	}
+
+	public static Player getPlayer() {
+		return GameSaveManager.player;
+	}
+
 	public static boolean saveIsEmpty() {
-		return GameSaveManager.save == null || GameSaveManager.save.getLastScene() == null;
+		return GameSaveManager.save.getLastScene() == null;
+	}
+
+	public static void resetSave() {
+		GameSaveManager.save = new GameSave(10, 1, false, true, null, false);
+
+		GameSaveManager.resetPlayer();
+	}
+
+	public static void resetPlayer() {
+		GameSaveManager.player.setHp(GameSaveManager.save.getHpMax());
+		GameSaveManager.player.setHpMax(GameSaveManager.save.getHpMax());
+		GameSaveManager.player.setDamage(GameSaveManager.save.getDamage());
+		GameSaveManager.player.setPoisoning(GameSaveManager.save.isPoisoning());
+		GameSaveManager.player.setDir(GameSaveManager.save.isDirRight());
 	}
 
 	public static GameSave getSave() {
 		return GameSaveManager.save;
-	}
-
-	public static void setSave(GameSave save) {
-		GameSaveManager.save = save;
 	}
 
 	public static Scene getScene(Game game) {
@@ -67,8 +88,10 @@ public class GameSaveManager {
 	public static void loadData() {
 		try (ObjectInput in = new ObjectInputStream(new FileInputStream(GameSaveManager.getFileDirectory()))) {
 			GameSaveManager.save = (GameSave) in.readObject();
+
+			GameSaveManager.resetPlayer();
 		} catch (Exception e) {
-			GameSaveManager.save = new GameSave(10, 10, 1, false, true, null, false);
+			GameSaveManager.resetSave();
 		}
 	}
 

@@ -8,7 +8,6 @@ public class GameSave implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int hp;
 	private int hpMax;
 	private int damage;
 	private boolean isPoisoning;
@@ -23,8 +22,7 @@ public class GameSave implements Serializable {
 	private List<String> swords;
 	private List<String> lifes;
 
-	public GameSave(int hp, int hpMax, int damage, boolean isPoisoning, boolean isDirRight, String lastScene, boolean sceneSaveRight) {
-		this.hp = hp;
+	public GameSave(int hpMax, int damage, boolean isPoisoning, boolean isDirRight, String lastScene, boolean sceneSaveRight) {
 		this.hpMax = hpMax;
 		this.damage = damage;
 		this.isPoisoning = isPoisoning;
@@ -38,14 +36,6 @@ public class GameSave implements Serializable {
 
 		this.swords = new ArrayList<>();
 		this.lifes = new ArrayList<>();
-	}
-
-	public int getHp() {
-		return this.hp;
-	}
-
-	public void setHp(int hp) {
-		this.hp = hp;
 	}
 
 	public int getHpMax() {

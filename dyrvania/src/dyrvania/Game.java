@@ -23,6 +23,7 @@ import dyrvania.generics.GameStatus;
 import dyrvania.managers.GameManagerAudio;
 import dyrvania.resources.GameAudio;
 import dyrvania.resources.GameFont;
+import dyrvania.saves.GameSaveManager;
 import dyrvania.scenes.Scene;
 import dyrvania.scenes.levels.Tutorial;
 import dyrvania.screens.ConfirmMainMenu;
@@ -86,6 +87,8 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	private GameAudio audioNow;
 
 	public Game() {
+		GameSaveManager.loadData();
+
 		this.addKeyListener(this);
 		this.addMouseListener(this);
 
@@ -407,8 +410,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		this.scene.keyReleased(e);
+
 		if (this.gameStatus == GameStatus.RUN) {
-			this.scene.keyReleased(e);
+			if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+				this.setGameStatus(GameStatus.PAUSE);
+			}
 		} else if (this.gameStatus == GameStatus.PAUSE) {
 			if (e.getKeyCode() == KeyEvent.VK_P || e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 				this.setGameStatus(GameStatus.RUN);
