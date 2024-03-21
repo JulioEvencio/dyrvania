@@ -31,4 +31,9 @@ public class SaveLeft extends Save {
 		return null;
 	}
 
+	@Override
+	protected boolean isSceneSaveRight() {
+		return false;
+	}
+
 }

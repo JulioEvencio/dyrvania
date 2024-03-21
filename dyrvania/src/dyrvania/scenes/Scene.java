@@ -136,7 +136,6 @@ public abstract class Scene {
 
 		GameSaveManager.getSave().setPoisoning(false);
 		GameSaveManager.getSave().setIsDirRight(this.player.isDirRight());
-		GameSaveManager.getSave().setSceneSaveRight(this.player.isDirRight());
 
 		this.addText(StringLevel.INFO_GAME_SAVED.getValue(), 190);
 		this.addText(StringLevel.INFO_LIFE_RESTORED.getValue(), 230);

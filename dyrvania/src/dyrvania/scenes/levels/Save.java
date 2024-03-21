@@ -24,11 +24,15 @@ public abstract class Save extends Scene {
 		return GameSaveManager.getScene(super.getGame());
 	}
 
+	protected abstract boolean isSceneSaveRight();
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		super.keyReleased(e);
 
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			GameSaveManager.getSave().setSceneSaveRight(this.isSceneSaveRight());
+
 			super.gameSave();
 		}
 	}
