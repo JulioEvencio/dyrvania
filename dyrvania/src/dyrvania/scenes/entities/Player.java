@@ -446,6 +446,8 @@ public class Player {
 			} else {
 				this.setCurrentSprite(this.spriteAttackLeft);
 			}
+		} else if (this.keyRight && this.keyLeft) {
+			this.setCurrentSprite(this.spriteIdleRight);
 		} else if (this.keyRight || this.keyLeft) {
 			if (this.isDirRight) {
 				this.setCurrentSprite(this.spriteRunRight);
