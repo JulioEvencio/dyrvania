@@ -207,6 +207,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 			}
 		} else if (this.gameStatus == GameStatus.LORE) {
 			this.setAudio(GameManagerAudio.getAudioLore());
+		} else if (this.gameStatus == GameStatus.GAME_OVER) {
+			this.audioNow.stop();
+			this.setAudio(null);
+
+			GameManagerAudio.getAudioGameOver().play();
 		} else {
 			this.setAudio(GameManagerAudio.getAudioMenu());
 		}
@@ -290,10 +295,12 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 	}
 
 	private void tick() {
-		if (this.enableAudio) {
-			this.audioNow.loop();
-		} else {
-			this.audioNow.stop();
+		if (this.audioNow != null) {
+			if (this.enableAudio) {
+				this.audioNow.loop();
+			} else {
+				this.audioNow.stop();
+			}
 		}
 
 		this.toggleFullscreen();
