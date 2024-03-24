@@ -18,7 +18,7 @@ public class Level06 extends Scene {
 	}
 
 	@Override
-	protected String currentLevelString() {
+	public String currentLevelString() {
 		return "level-06";
 	}
 

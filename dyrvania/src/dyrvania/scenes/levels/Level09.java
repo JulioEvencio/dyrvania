@@ -33,7 +33,7 @@ public class Level09 extends Scene {
 	}
 
 	@Override
-	protected String currentLevelString() {
+	public String currentLevelString() {
 		return "level-09";
 	}
 

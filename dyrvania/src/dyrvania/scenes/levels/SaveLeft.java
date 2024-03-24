@@ -16,7 +16,7 @@ public class SaveLeft extends Save {
 	}
 
 	@Override
-	protected String currentLevelString() {
+	public String currentLevelString() {
 		return "save-left";
 	}
 

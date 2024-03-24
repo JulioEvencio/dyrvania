@@ -200,7 +200,11 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.gameStatus = gameStatus;
 
 		if (this.gameStatus == GameStatus.RUN || this.gameStatus == GameStatus.PAUSE || (this.lastGameStatus == GameStatus.PAUSE && this.gameStatus == GameStatus.EXIT) || this.gameStatus == GameStatus.TRANSITION || this.gameStatus == GameStatus.CONFIRM_MAIN_MENU) {
-			this.setAudio(GameManagerAudio.getAudioGame());
+			if (!GameSaveManager.getSave().isBossDefeated() && this.scene.currentLevelString().equals("boss-01")) {
+				this.setAudio(GameManagerAudio.getAudioBoss());
+			} else {
+				this.setAudio(GameManagerAudio.getAudioGame());
+			}
 		} else if (this.gameStatus == GameStatus.LORE) {
 			this.setAudio(GameManagerAudio.getAudioLore());
 		} else {

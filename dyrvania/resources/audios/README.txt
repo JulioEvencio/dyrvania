@@ -8,3 +8,4 @@ https://opengameart.org/content/plingy-coin
 https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
 https://opengameart.org/content/monstervania-ghost-land
 https://opengameart.org/content/death-to-the-king
+https://opengameart.org/content/boss-battle-2-symphonic-metal

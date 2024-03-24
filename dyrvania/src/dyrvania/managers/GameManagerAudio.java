@@ -7,6 +7,7 @@ public class GameManagerAudio {
 	private static final GameAudio audioMenu;
 	private static final GameAudio audioGame;
 	private static final GameAudio audioLore;
+	private static final GameAudio audioBoss;
 
 	private static final GameAudio audioObject;
 
@@ -22,6 +23,7 @@ public class GameManagerAudio {
 		audioMenu = new GameAudio("/audios/menu.wav");
 		audioGame = new GameAudio("/audios/game.wav", -5f);
 		audioLore = new GameAudio("/audios/lore.wav", -10f);
+		audioBoss = new GameAudio("/audios/boss.wav");
 
 		audioObject = new GameAudio("/audios/objects.wav");
 
@@ -44,6 +46,10 @@ public class GameManagerAudio {
 
 	public static GameAudio getAudioLore() {
 		return GameManagerAudio.audioLore;
+	}
+
+	public static GameAudio getAudioBoss() {
+		return GameManagerAudio.audioBoss;
 	}
 
 	public static GameAudio getAudioObject() {

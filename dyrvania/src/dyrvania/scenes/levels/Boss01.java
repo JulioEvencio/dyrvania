@@ -32,7 +32,7 @@ public class Boss01 extends Scene {
 	}
 
 	@Override
-	protected String currentLevelString() {
+	public String currentLevelString() {
 		return "boss-01";
 	}
 

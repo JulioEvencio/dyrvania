@@ -176,7 +176,7 @@ public abstract class Scene {
 		return spawns;
 	}
 
-	protected abstract String currentLevelString();
+	public abstract String currentLevelString();
 
 	protected abstract BufferedImage loadLevel();
 

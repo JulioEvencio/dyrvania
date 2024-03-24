@@ -41,7 +41,7 @@ public class Tutorial extends Scene {
 	}
 
 	@Override
-	protected String currentLevelString() {
+	public String currentLevelString() {
 		return "tutorial";
 	}
 
