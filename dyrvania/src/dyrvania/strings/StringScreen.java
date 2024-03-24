@@ -11,7 +11,7 @@ public class StringScreen {
 	public static final GameString NEW_GAME = new GameString("New Game");
 	public static final GameString LOAD_GAME = new GameString("Load Game");
 	public static final GameString CREDITS = new GameString("Credits");
-	public static final GameString TUTORIAL = new GameString("Tutorial");
+	public static final GameString OPTIONS = new GameString("Options");
 	public static final GameString EXIT = new GameString("Exit");
 
 	public static final GameString EXIT_GAME = new GameString("Do you want to leave the game?");
@@ -32,7 +32,7 @@ public class StringScreen {
 
 	public static final GameString ENTER_CONTINUE = new GameString("Press enter to continue");
 
-	public static final GameString LORE_LINE_01 = new GameString("Peace reigned under protection great empire");
+	public static final GameString LORE_LINE_01 = new GameString("Peace reigned under protection of the great empire");
 	public static final GameString LORE_LINE_02 = new GameString("Humanity thrived");
 	public static final GameString LORE_LINE_03 = new GameString("But every empire must fall");
 	public static final GameString LORE_LINE_04 = new GameString("On a beautiful night, the Bloody Moon appeared");

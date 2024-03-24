@@ -2,7 +2,7 @@ Pressione F2 para ativar/desativar tela cheia
 Novo Jogo
 Carregar Jogo
 Créditos
-Tutorial
+Opções
 Sair
 Você quer sair do jogo?
 Sim
@@ -18,10 +18,10 @@ Pressione enter para continuar
 A paz reinava sob a proteção do grande império
 A humanidade prosperava
 Mas todo império deve cair
-Em uma bela noite a Lua Sangrenta apareceu
+Em uma bela noite, a Lua Sangrenta apareceu
 Trazendo consigo as criaturas da noite
 Apesar da grandiosidade do império
-Ele sucumbiu em algumas de semanas
+Ele sucumbiu em algumas semanas
 Parecia o fim da humanidade
 Mas então surgiu a Ordem dos Dyrvanias
 Um grupo de guerreiros habilidosos

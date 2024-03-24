@@ -12,7 +12,7 @@ import dyrvania.strings.StringScreen;
 public class Tutorial extends Screen {
 
 	public Tutorial(Game game) {
-		super(game, StringScreen.TUTORIAL.getValue());
+		super(game, StringScreen.OPTIONS.getValue());
 
 		super.texts.add(new GameText(StringScreen.TUTORIAL_FULL_SCREEN.getValue(), 20, 150, GameColors.WHITE, GameFont.getSmall()));
 		super.texts.add(new GameText(StringLevel.TUTORIAL_FPS.getValue(), 20, 180, GameColors.WHITE, GameFont.getSmall()));
@@ -26,7 +26,7 @@ public class Tutorial extends Screen {
 
 	@Override
 	public GameStatus getGameStatus() {
-		return GameStatus.TUTORIAL;
+		return GameStatus.OPTIONS;
 	}
 
 }

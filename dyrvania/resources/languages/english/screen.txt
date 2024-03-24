@@ -2,7 +2,7 @@ Press F2 to enable/disable full screen
 New Game
 Load Game
 Credits
-Tutorial
+Options
 Exit
 Do you want to leave the game?
 Yes
@@ -15,7 +15,7 @@ Go to menu?
 Continue
 Menu
 Press enter to continue
-Peace reigned under protection great empire
+Peace reigned under protection of the great empire
 Humanity thrived
 But every empire must fall
 On a beautiful night, the Bloody Moon appeared

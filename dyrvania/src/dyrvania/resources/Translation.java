@@ -38,7 +38,7 @@ public class Translation {
 					StringScreen.NEW_GAME,
 					StringScreen.LOAD_GAME,
 					StringScreen.CREDITS,
-					StringScreen.TUTORIAL,
+					StringScreen.OPTIONS,
 					StringScreen.EXIT,
 					StringScreen.EXIT_GAME,
 					StringScreen.YES,

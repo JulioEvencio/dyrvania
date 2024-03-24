@@ -2,7 +2,7 @@ F2 para habilitar/deshabilitar pantalla completa
 Nuevo Juego
 Cargar Juego
 Créditos
-Tutorial
+Opciones
 Salir
 ¿Quieres abandonar el juego?
 Sí
@@ -15,20 +15,20 @@ Tu progreso actual se perderá
 Continuar
 Menú
 Pulsa enter para continuar
-La paz reinó bajo la protección del gran imperio
-La humanidad prosperó
+La paz reinaba bajo la protección del gran imperio
+La humanidad prosperaba
 Pero todo imperio debe caer
-Una hermosa noche apareció la Luna de Sangre
-Trayendo consigo a las criaturas de la noche
+En una hermosa noche, apareció la Luna Sangrienta
+Trayendo consigo las criaturas de la noche
 A pesar de la grandeza del imperio
-Sucumbió en unas pocas semanas
+Sucumbió en cuestión de semanas
 Parecía el fin de la humanidad
-Pero entonces apareció la Orden de Dyrvanias
-Un grupo de guerreros expertos
+Pero entonces surgió la Orden de Dyrvanias
+Un grupo de guerreros hábiles
 Después de una larga batalla
-La Luna de Sangre fue sellada
+La Luna Sangrienta fue sellada
 Pero eso fue hace mucho tiempo
 Hoy, para muchos, esto es sólo una leyenda
 Pero recientemente...
-La Luna se pone cada vez más roja
-Y empezaron a ocurrir sucesos extraños
+La Luna ha estado volviéndose cada vez más roja
+Y han comenzado a ocurrir eventos extraños
