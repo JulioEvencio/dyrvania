@@ -21,7 +21,7 @@ public class Credits extends Screen {
 		this.addText("StumpyStrust, itsmars, ansimuz and pauliuw", 230);
 		this.addText("Music and sounds (Open Game Art):", 270);
 		this.addText("qubodup, IgnasD, KASTLE Knight, TinyWorlds", 310);
-		this.addText("Fupi, wobbleboxx and HydroGene", 350);
+		this.addText("Fupi, wobbleboxx, HydroGene and Eldritch Grim", 350);
 
 		int centerX = (game.getGameWidth() - GameButton.getWidth()) / 2;
 

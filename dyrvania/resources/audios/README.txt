@@ -7,3 +7,4 @@ https://opengameart.org/content/5-hit-sounds-dying
 https://opengameart.org/content/plingy-coin
 https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
 https://opengameart.org/content/monstervania-ghost-land
+https://opengameart.org/content/death-to-the-king
