@@ -214,7 +214,7 @@ public class Game extends Canvas implements Runnable, KeyListener, MouseListener
 		this.screens.add(new Pause(this));
 		this.screens.add(new MainMenu(this));
 		this.screens.add(new ConfirmMainMenu(this));
-		this.screens.add(new dyrvania.screens.Tutorial(this));
+		this.screens.add(new dyrvania.screens.Options(this));
 		this.screens.add(new ConfirmNewGame(this));
 		this.screens.add(new NoData(this));
 		this.screens.add(new Credits(this));

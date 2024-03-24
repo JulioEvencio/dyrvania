@@ -9,9 +9,9 @@ import dyrvania.resources.GameFont;
 import dyrvania.strings.StringLevel;
 import dyrvania.strings.StringScreen;
 
-public class Tutorial extends Screen {
+public class Options extends Screen {
 
-	public Tutorial(Game game) {
+	public Options(Game game) {
 		super(game, StringScreen.OPTIONS.getValue());
 
 		super.texts.add(new GameText(StringScreen.TUTORIAL_FULL_SCREEN.getValue(), 20, 150, GameColors.WHITE, GameFont.getSmall()));
