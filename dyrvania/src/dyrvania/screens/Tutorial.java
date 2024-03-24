@@ -17,7 +17,6 @@ public class Tutorial extends Screen {
 		super.texts.add(new GameText(StringScreen.TUTORIAL_FULL_SCREEN.getValue(), 20, 150, GameColors.WHITE, GameFont.getSmall()));
 		super.texts.add(new GameText(StringLevel.TUTORIAL_FPS.getValue(), 20, 180, GameColors.WHITE, GameFont.getSmall()));
 		super.texts.add(new GameText(StringLevel.TUTORIAL_MUSIC.getValue(), 20, 210, GameColors.WHITE, GameFont.getSmall()));
-		super.texts.add(new GameText(StringLevel.TUTORIAL_PAUSE.getValue(), 20, 240, GameColors.WHITE, GameFont.getSmall()));
 
 		int centerX = (game.getGameWidth() - GameButton.getWidth()) / 2;
 
