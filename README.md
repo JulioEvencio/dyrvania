@@ -1,6 +1,6 @@
 # Dyrvania - DEMO
 
-A simple puzzle game
+A simple metroidvania
 
 ## Links
 
