@@ -1,4 +1,4 @@
-# Dyrvania
+# Dyrvania - DEMO
 
 A simple puzzle game
 
