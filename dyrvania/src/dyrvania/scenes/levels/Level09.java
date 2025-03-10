@@ -21,7 +21,7 @@ public class Level09 extends Scene {
 		super(game, teleport, Level09.getBackgrounds(game));
 
 		super.addText(StringLevel.INFO_THANK_YOU.getValue(), 300);
-		super.addText(StringLevel.INFO_SOON.getValue(), 330);
+		// super.addText(StringLevel.INFO_SOON.getValue(), 330);
 	}
 
 	private static List<Background> getBackgrounds(Game game) {
