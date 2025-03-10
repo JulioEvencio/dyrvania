@@ -1,4 +1,4 @@
-# Dyrvania - DEMO
+# Dyrvania
 
 A simple metroidvania game
 
