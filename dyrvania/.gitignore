@@ -59,3 +59,5 @@ build/
 
 /bin/
 
+### CUSTOM ###
+/data/save.obj
